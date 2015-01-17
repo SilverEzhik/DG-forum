@@ -22,7 +22,7 @@ nunjucks.configure('views', {
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.get('/', function (req, res) {
-	res.send('Get Request On /');
+	res.render('index.html');
 });
 
 var server = app.listen(3000, function () {
