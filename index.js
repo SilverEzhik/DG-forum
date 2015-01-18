@@ -1,16 +1,22 @@
-var express = require('express');
-var path = require('path');
-var mongo = require('mongodb');
-var monk = require('monk');
-var nunjucks = require('nunjucks');
+var bcrypt = require('bcrypt');
 var bodyParser = require('body-parser');
+var cookieParser = require('cookie-parser');
+var express = require('express');
+var mongo = require('mongodb');
+var mongoose = require('mongoose');
+var nunjucks = require('nunjucks');
+var path = require('path');
+var validator = require('validator');
 
 var app = express();
-app.use(bodyParser());
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(cookieParser());
 
 // Tell Monk where our db is located
 // TODO: Host the DB on another server to avoid headaches.
-var db = monk('localhost:27017/dg-site');
+mongoose.connect('mongodb://localhost/27017');
+var db = mongoose.connection;
 
 // Tell Nunjucks where the templates are stored.
 nunjucks.configure('views', { 
