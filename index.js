@@ -1,4 +1,4 @@
-var bcrypt = require('bcrypt');
+var bcrypt = require('bcrypt-nodejs');
 var bodyParser = require('body-parser');
 var cookieParser = require('cookie-parser');
 var express = require('express');
@@ -15,8 +15,10 @@ app.use(cookieParser());
 
 // Tell Monk where our db is located
 // TODO: Host the DB on another server to avoid headaches.
+/*
 mongoose.connect('mongodb://localhost/27017');
 var db = mongoose.connection;
+*/
 
 // Tell Nunjucks where the templates are stored.
 nunjucks.configure('views', { 
@@ -27,9 +29,7 @@ nunjucks.configure('views', {
 // Tell Express to serve static objects from the /public/ directory
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.get('/', function (req, res) {
-	res.render('index.html');
-});
+require('./routes/forum')(app);
 
 var server = app.listen(3000, function () {
 

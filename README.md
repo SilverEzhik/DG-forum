@@ -39,8 +39,8 @@
 - Alex - Project Lead, Frontend Developer
 - Brandon - Frontend Developer
 - Ben - Frontend Developer
-- Kareem - Backend Developer
 - Chris - Backend Developer
+- Kareem - Backend Developer
 
 **License (MIT)**
 
