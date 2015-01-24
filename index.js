@@ -29,6 +29,8 @@ nunjucks.configure('views', {
 // Tell Express to serve static objects from the /public/ directory
 app.use(express.static(path.join(__dirname, 'public')));
 
+
+require('./routes/index')(app);
 require('./routes/forum')(app);
 
 var server = app.listen(3000, function () {
