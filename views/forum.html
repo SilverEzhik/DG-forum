@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+
+{% block page %}
+
+<div>
+
+	  <form action = "forum/makethread" method = "post" name = "makethread">
+	    <input type = "text" placeholder = "subject" name = "subject">
+	    <input type = "text" placeholder = "message" name = "message">
+	    <button type = "submit">Submit</button>
+	  </form>
+</div>
+
+
+<div>
+	<!-- Loop through threads array-->
+	{% for thread in threads %}
+
+		<!-- Thread title and author -->
+		<h3>{{ thread.subject }} by {{ thread.author }}</h3> 
+
+		<!-- Thread time -->
+		<h6>{{ thread.datetime }}</h6>
+
+		<!-- Thread content -->
+		<p>{{ thread.message }}</p>
+
+		<!-- Thread replies -->
+		<h4>Replies</h4>
+
+		<!-- Loop through replies array-->
+		{% for reply in thread.replies %}
+
+			<!-- Reply Author -->
+			<h5>{{ reply.author }}</h5>
+
+			<!-- Reply time -->
+			<h7>{{ reply.datetime }}</h7>
+
+			<!-- Reply content -->
+			<p>{{ reply.message }}</p>
+
+		{% endfor %}
+
+
+		<br><br><br><br>
+	{% endfor %}
+</div>
+
+{% endblock %}
