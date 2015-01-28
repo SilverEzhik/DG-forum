@@ -1,68 +1,164 @@
 
-module.exports = function(app) {
+// TODO: Clean up this code
+// TODO: Add checks to prevent abuse
+module.exports = function(app, validator, mongoose) {
+
+  var threadSchema = mongoose.Schema({
+    subject: String,
+    message: String,
+    author: String,
+    timestamp: Number,
+    lastupdate: Number,
+    replies: [{
+      author: String,
+      message: String,
+      timestamp: Number
+    }]
+  });
+
+  var Thread = mongoose.model('thread', threadSchema);
+
+  // Convert milliseconds(argument) to Unix seconds
+  function convertToUnix(time) {
+    return Math.floor(time / 1000);
+  }
+
+  // Convert unix seconds(argument) to readable human time
+  function convertToDate(timeStamp) {
+    var date = new Date();
+
+    // Get Current Time in Unix
+    var curTime = convertToUnix(date.getTime());
+
+    var timeDifference = (curTime - timeStamp);
+    if (timeDifference < 60) {
+
+      return (timeDifference + ' seconds ago');
+
+      // else if time difference is less than an hour
+    } else if (timeDifference < (60 * 60) ) {
+
+      var minutes = Math.floor(timeDifference / 60);
+      return (minutes + ' minutes ago');
+
+      // else if time is less than a day
+    } else if (timeDifference < (60 * 60 * 24) ) {
+
+      var hours = Math.floor(timeDifference / (60 * 60) );
+      return (hours + ' hours ago');
+
+      // else if time is less than 7 days (a week)
+    } else if (timeDifference < (60 * 60 * 24 * 7) ) {
+
+      var days = Math.floor(timeDifference / (60 * 60 * 24) );
+      return (days + ' days ago');
+
+      // else if time is less than 4 weeks
+    } else if (timeDifference < (60 * 60 * 24 * 7 * 4) ) {
+
+      var weeks = Math.floor(timeDifference / (60 * 60 * 24 * 7) );
+      return (weeks + ' weeks ago');
+
+    } else {
+
+      // TODO: Make this return a proper time stamp etc. January 21, 2015
+      return Date(timeStamp);
+    }
+
+  }
+
 	app.get('/forum', function (req, res) {
 
-		var threadsArray = [{
-			subject: 'Thread 1',
-			message: 'Thread 1 message content here',
-			author: 'Thread 1 Author',
-			timestamp: 1422059784,
-			datetime: '1/23/2015, 4:36:24 PM',
-			replies: [{
-				author: 'Reply 1 User',
-				message: 'Reply 1 Content here',
-				timestamp: 1422059998,
-				datetime: '1/23/2015, 4:39:58 PM'
-			},{
-				author: 'Reply 2 User',
-				message: 'Reply 2 Content here',
-				timestamp: 1422060000,
-				datetime: '1/23/2015, 4:40:00 PM'
-			}]
-		},{
-			subject: 'Lorem Ipsum',
-			message: 'dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
-			author: 'SirLoremIpsum',
-			timestamp: 1422060077,
-			datetime: '1/23/2015, 4:41:17 PM',
-			replies: [{
-				author: 'KingLoremIpsum',
-				message: 'Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?',
-				timestamp: 1422061077,
-				datetime: '1/23/2015, 4:57:57 PM'
-			},{
-				author: 'QueenLoremIpsum',
-				message: 'But I must explain to you how all this mistaken idea of denouncing pleasure and praising pain was born and I will give you a complete account of the system, and expound the actual teachings of the great explorer of the truth, the master-builder of human happiness. No one rejects, dislikes, or avoids pleasure itself, because it is pleasure, but because those who do not know how to pursue pleasure rationally encounter consequences that are extremely painful. Nor again is there anyone who loves or pursues or desires to obtain pain of itself, because it is pain, but because occasionally circumstances occur in which toil and pain can procure him some great pleasure. To take a trivial example, which of us ever undertakes laborious physical exercise, except to obtain some advantage from it? But who has any right to find fault with a man who chooses to enjoy a pleasure that has no annoying consequences, or one who avoids a pain that produces no resultant pleasure?',
-				timestamp: 1422062077,
-				datetime: '1/23/2015, 5:14:37 PM'
-			},{
-				author: 'GovernorLoremIpsum',
-				message: 'At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio. Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus id quod maxime placeat facere possimus, omnis voluptas assumenda est, omnis dolor repellendus. Temporibus autem quibusdam et aut officiis debitis aut rerum necessitatibus saepe eveniet ut et voluptates repudiandae sint et molestiae non recusandae. Itaque earum rerum hic tenetur a sapiente delectus, ut aut reiciendis voluptatibus maiores alias consequatur aut perferendis doloribus asperiores repellat',
-				timestamp: 1422063077,
-				datetime: '1/23/2015, 5:31:17 PM'
-			}]
-		}];
-	
+    // We grab all the threads and sort by its last update
+    Thread.find({}, null, {sort: {lastupdate: -1}}, function (err, doc) {
+      if (err) return console.error(err);
+    
 
-		var template_vars = {
-			title: 'Forums',
-			threads: threadsArray
-				
-		};
-		res.render('forum.html', template_vars);
+      // Send function to template instead
+      var templateVars = {
+        title: 'Forums',
+        threads: doc,
+        convertToDate: convertToDate
+        
+      };
+
+      
+      // Render template
+      res.render('forum.html', templateVars);
+    });
+
 	});
 
 	app.post('/forum/makethread', function (req, res) {
 
-		var subject = req.body.subject;
-		var message = req.body.message;
-		//var author = req.body.author;
-		//var timestamp = currenttime;
+		var subject = validator.toString(req.body.subject);
+		var message = validator.toString(req.body.message);
 
+		// TODO: Replace this with the actual name of the author
+		var author = 'Anonymous';
 
-		res.send('subject: ' + subject + ' | message: ' + message);
+		//var author = req.session.author;
+
+    var date = new Date();
+
+    // Convert to Unix Time (NO DECIMALS)
+		var timeStamp = convertToUnix(date.getTime());
+
+    var newThread = new Thread({
+      subject: subject,
+      message: message,
+      author: author,
+      timestamp: timeStamp,
+      lastupdate: timeStamp
+     });
+
+    newThread.save(function(err, newThread) {
+
+      if (err) {
+        res.send('Error 500: Something went wrong in the database');
+        return console.error(err);
+      } else {
+
+        console.log('New thread created');
+        res.redirect('/forum');
+      }
+
+    });
 
 	});
+
+  app.post('/forum/thread/:id/reply', function (req, res) {
+
+    // No need for sanitation
+    var threadID = req.params.id;
+    var date = new Date();
+
+    // Convert to Unix Time (NO DECIMALS)
+    var timeStamp = convertToUnix(date.getTime());
+
+    // TODO: Change this to the actually author
+    var author = 'Anonymous';
+
+    var message = validator.toString(req.body.message);
+
+    var reply = {
+      author: author,
+      message: message,
+      timestamp: timeStamp
+    };
+
+    Thread.findByIdAndUpdate(threadID, {$push: {replies: reply}, lastupdate: timeStamp}, 
+    {safe: true, upsert: true}, function(err, doc) {
+        if (err) {
+          res.send('Error 500: Something went wrong in the database');
+          return console.error(err);
+        }
+
+        console.log('New reply created');
+        res.redirect('/forum');
+      });
+
+  });
 
 };
 
