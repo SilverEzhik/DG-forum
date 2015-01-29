@@ -1,142 +1,132 @@
-a:visited{
-  color:#5289DB;
+.container {
+	height: 29px;
+	margin: 0px, 3px;
+	background: #ffffff;
 }
 
-#menu {
-    list-style: none;
-    padding: 0;
-    margin: 0;
+#header {
+	height: 29px;
+	background: #ffffff;
+	padding: 14px;
+	color: #000000;
+	font: 1em/1.45 'Economica', sans-serif;
+	font-weight: bold;
 }
 
-#reply
-{
-	font-family: 'Lucida Sans Unicode';
+#subheader {
+	height: 25px;
+	background: #ffffff;
+	padding: 10px;
 }
 
-.clear {
-    clear: both;
+#title {
+	display: inline;
+	margin-left: 5px;
+	margin-right: 5px;
+	height: 29px;
 }
 
-
-.row0 {
-	background:#EEEEEE;
-	font-family: 'Lucida Sans Unicode';
-	font-size: 14px;
-	font-style: normal;
-	font-variant: normal;
-	font-weight: 400;
-	line-height: 20px;
+#logo {
+	display: inline;
+	float: left;
+	height: 25px;
+	margin-left: 5px;
+	margin-right: 5px;
 }
 
-.row1 {
-	background:WHITE;
-	font-family: 'Lucida Sans Unicode';
-	font-size: 14px;
-	font-style: normal;
-	font-variant: normal;
-	font-weight: 400;
-	line-height: 20px;
+.menu{
+	display: inline;
+	margin-left: 5px;
+	margin-right: 5px;
+	height: 25px;
+	font-family: 'Oswald', sans-serif;
+	font-size: .9em;
 }
 
-.banner {
-	background:#d4d4d4;
-	font-size:13px;
-	font-family: 'Lucida Sans Unicode';
-	font-size: 14px;
-	font-style: normal;
-	font-variant: normal;
-	font-weight: 400;
-	line-height: 20px;
+#mainmenu{
+	float: right;
 }
 
-.banner2 {
-	background:WHITE;
-	font-size:13px;
-	font-family: 'Lucida Grande', 'Lucida Sans Unicode', 'Lucida Sans', Geneva, Verdana, sans-serif;
-	font-style: normal;
-	font-variant: normal;
-	font-weight: 500;
-	line-height: 26.3999996185303px;
+#sortmenu{
+	float: left;
+}
+
+#threadmenu{
+	margin-left: 250px;
+	margin-right: 250px;
 	vertical-align: middle;
-	color:#5289DB;
 }
 
-.logo {
-	background:WHITE;
-	font-family: 'Lucida Grande', 'Lucida Sans Unicode', 'Lucida Sans', Geneva, Verdana, sans-serif;
-	font-size: 24px;
-	font-style: normal;
-	font-variant: normal;
-	font-weight: 500;
-	line-height: 26.3999996185303px;
-	vertical-align: middle;
-	color:#5289DB;
+.menu a{
+	display: inline;
+	margin-right: 25px
 }
 
-ul.thread {
-	margin-top: 0.4em;
-	margin-bottom: 0.6em;
+#page a, #prev a, #next a{
+	margin: 0px;
 }
 
-/********************/
-/* EXPANDABLE LIST  */
-/********************/
-#listContainer{
-  margin-top:15px;
+#sortmenu a, #threadmenu a{
+	color: #777777;
 }
 
-#expList ul, li {
-    list-style: square;
-    margin:0;
-    padding:0;
-    cursor: pointer;
+a:link {
+	color: #000000;
+	text-decoration: none;
 }
 
-/*
-#expList p {
-    margin:0;
-    display:block;
-}
-#expList p:hover {
-    background-color:#121212;
-}*/
-
-#expList li {
-    line-height:140%;
-    text-indent:0px;
-    background-position: 1px 8px;
-    padding-left: 20px;
-    background-repeat: no-repeat;
+a:visited {
+	color: #000000;
+	text-decoration: none;
 }
 
-/* Collapsed state for list element */
-#expList .collapsed {
-    background-image: url(img/collapsed.png);
-}
-/* Expanded state for list element
-/* NOTE: This class must be located UNDER the collapsed one */
-#expList .expanded {
-    background-image: url(img/expanded.png);
-}
-#expList {
-    clear: both;
+.post, .thread{
+	font-family: 'Oswald', sans-serif;
+	font-size: 14px;
 }
 
-.listControl{
-  margin-bottom: 15px;
+#mainsection{
+	height: 1237px;
+	padding: 20px;
 }
 
-.listControl a {
-    background-image: url(../img/collapsed.png);
-    line-height:140%;
-    text-indent:0px;
-    background-position: 1px 8px;
-    padding-left: 20px;
-    background-repeat: no-repeat;
+li{
+	list-style: square;
 }
 
-.listControl a:hover {
-    background-color:#555555;
-    color:#222222; 
-    font-weight:normal;
+#posttitle{
+	color: #000000;
+	margin-right: 20px;
+}
+
+#author, #timestamp, #views, #reply{
+	color: #777777;
+}
+
+.replylist{
+	margin: 0;
+}
+
+#page, #prev, #next{
+	margin-left: 5px;
+	margin-right: 5px;
+}
+
+#search-btn{
+	background:#000000;
+	color:white;
+	border:0 none;
+	font-weight:bold;
+	padding:5px 10px;
+}
+
+#search-box{
+	background: #eee;
+	padding:5px;
+	border:0 none;
+	width:160px;
+}
+
+#search{
+	float: right;
 }
