@@ -3,7 +3,7 @@
 	<head>
 		<meta charset="utf-8">
 		<title>Developer's Guild Forum</title>
-		<link rel="stylesheet" href="style.css">
+		<link rel="stylesheet" href="style.css" type="text/css" media="screen, projection">
 		<link href='http://fonts.googleapis.com/css?family=Economica' rel='stylesheet' type='text/css'>
 		<link href='http://fonts.googleapis.com/css?family=Oswald:300' rel='stylesheet' type='text/css'>
 	</head>
@@ -13,14 +13,13 @@
 			<div class="container">
 				<!-- logo -->
 				<div id="logo">
-					<img src="dglogo.png" alt="DGLOGO" height="25px" width="25px">
+					<img src="img/dglogo.png" alt="DGLOGO" height="25px" width="25px">
 				</div>
 				<!-- main menu -->
 				<nav id="mainmenu" class="menu">
 					<a href="#">Register</a>
 					<a href="#">Profile</a>
-					<a href="#">Login</a>
-					<a href="#">Logout</a>
+					<a href="#">About</a>
 				</nav>
 				<!-- page title -->
 				<div id="title">
@@ -29,7 +28,33 @@
 			</div>
 		</div>
 		<!-- sub header -->
-		<div id="subheader">
+		<div id="subheader1">
+			<div class="container">
+				<!-- login -->
+				<nav id="loginbar" class="menu">
+					<form id="login" action="/login" method="post" class="menu">
+						<input id="user" placeholder="username" type="text" maxlength="20">
+						<input id="password" placeholder="password" type="password">
+						<input id="login-btn" value="Login" type="submit">
+					</form>
+				</nav>
+			</div>
+			<div class="container">
+				<div id="loginhelp" class="menu">
+					<a href="#">Forgot Password?</a>
+				</div>
+			</div>
+		</div>
+		<div id="subheader2">
+			<div class="container">	
+				<nav id="threadmenu" class="menu">
+					<span>
+						<a href="#">Post New Thread</a>
+					</span>
+				</nav>
+			</div>
+		</div>
+		<div id="subheader2">
 			<div class="container">
 				<!-- sort menu -->	
 				<nav id="sortmenu" class="menu">
@@ -42,9 +67,16 @@
 					<span>
 						<a href="#">Oldest</a>
 					</span>
-				</nav>		
-				<!-- thread menu -->
-				<nav id="threadmenu" class="menu">
+				</nav>	
+				<!-- searchbar -->
+				<nav id="searchbar" class="menu">
+					<form id="search" action="/search" method="get" class="menu">
+						<input id="search-box" name="q" size="40" type="text" placeholder="SEARCH FORUM"/>
+						<input id="search-btn" value="Search" type="submit"/>
+					</form>
+				</nav>
+				<!-- pagemenu -->
+				<nav id="pagemenu" class="menu">
 					<span id="prev">
 						<a href="#">&laquo Prev Page</a>
 					</span>
@@ -60,13 +92,6 @@
 					<span id="next">
 						<a href="#">Next Page &raquo</a>
 					</span>
-				</nav>
-				<!-- searchbar -->
-				<nav id="searchbar" class="menu">
-					<form id="search" action="/search" method="get" class="menu">
-						<input id="search-box" name="q" size="40" type="text" placeholder="SEARCH"/>
-						<input id="search-btn" value="Search" type="submit"/>
-					</form>
 				</nav>
 			</div>
 		</div>
