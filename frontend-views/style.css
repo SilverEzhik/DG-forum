@@ -13,12 +13,17 @@
 	font-weight: bold;
 }
 
-#subheader {
+#subheader2, #subheader3{
 	height: 25px;
 	background: #ffffff;
 	padding: 10px;
 }
 
+#subheader1 {
+	height: 50px;
+	background: #ffffff;
+	padding: 10px;
+}
 #title {
 	display: inline;
 	margin-left: 5px;
@@ -51,22 +56,29 @@
 	float: left;
 }
 
-#threadmenu{
-	margin-left: 250px;
-	margin-right: 250px;
+#pagemenu{
+	margin-left: 300px;
 	vertical-align: middle;
 }
 
-.menu a{
-	display: inline;
+#threadmenu{
+	text-align: center;
+	margin-left: 565px;
+}
+
+#mainmenu a{
+	margin-left: 25px
+}
+
+#sortmenu a{
 	margin-right: 25px
 }
 
-#page a, #prev a, #next a{
+#page a, #prev a, #next a, #newthread a, #loginhelp a{
 	margin: 0px;
 }
 
-#sortmenu a, #threadmenu a{
+#sortmenu a, #threadmenu a, #pagemenu a{
 	color: #777777;
 }
 
@@ -83,10 +95,11 @@ a:visited {
 .post, .thread{
 	font-family: 'Oswald', sans-serif;
 	font-size: 14px;
+	background-color:#F0F0F0; 
+	color: #777777;
 }
 
 #mainsection{
-	height: 1237px;
 	padding: 20px;
 }
 
@@ -112,8 +125,8 @@ li{
 	margin-right: 5px;
 }
 
-#search-btn{
-	background:#000000;
+#search-btn, #login-btn{
+	background:#777777;
 	color:white;
 	border:0 none;
 	font-weight:bold;
@@ -127,6 +140,19 @@ li{
 	width:160px;
 }
 
-#search{
+#user, #password{
+	background: #eee;
+	padding:5px;
+	border:0 none;
+	width:120px;
+}
+
+#search, #login, #loginhelp
+{
 	float: right;
 }
+
+p{
+	margin: 0;
+}
+
