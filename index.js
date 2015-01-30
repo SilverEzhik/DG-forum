@@ -1,4 +1,4 @@
-var bcrypt = require('bcrypt-nodejs');
+var bcrypt = require('bcrypt');
 var bodyParser = require('body-parser');
 var cookieParser = require('cookie-parser');
 var express = require('express');
