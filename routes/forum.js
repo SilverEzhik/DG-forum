@@ -67,8 +67,7 @@ module.exports = function(app, validator, mongoose) {
 
   }
 
-	app.get('/forum', function (req, res) {
-
+  function handleForumFetch(req, res) {
     // We grab all the threads and sort by its last update
     Thread.find({}, null, {sort: {lastupdate: -1}}, function (err, doc) {
       if (err) return console.error(err);
@@ -86,23 +85,21 @@ module.exports = function(app, validator, mongoose) {
       // Render template
       res.render('forum.html', templateVars);
     });
+  }
 
-	});
+  function handleThreadCreate(req, res) {
+    var subject = validator.toString(req.body.subject);
+    var message = validator.toString(req.body.message);
 
-	app.post('/forum/makethread', function (req, res) {
+    // TODO: Replace this with the actual name of the author
+    var author = 'Anonymous';
 
-		var subject = validator.toString(req.body.subject);
-		var message = validator.toString(req.body.message);
-
-		// TODO: Replace this with the actual name of the author
-		var author = 'Anonymous';
-
-		//var author = req.session.author;
+    //var author = req.session.author;
 
     var date = new Date();
 
     // Convert to Unix Time (NO DECIMALS)
-		var timeStamp = convertToUnix(date.getTime());
+    var timeStamp = convertToUnix(date.getTime());
 
     var newThread = new Thread({
       subject: subject,
@@ -120,17 +117,15 @@ module.exports = function(app, validator, mongoose) {
       } else {
 
         console.log('New thread created');
-        res.redirect('/forum');
+        res.redirect('/');
       }
 
     });
+  }
 
-	});
+  function handleThreadReply(req, res) {
 
-  app.post('/forum/thread/:id/reply', function (req, res) {
-
-    // No need for sanitation
-    var threadID = req.params.id;
+    var threadID = validator.toString(req.params.id);
     var date = new Date();
 
     // Convert to Unix Time (NO DECIMALS)
@@ -155,10 +150,14 @@ module.exports = function(app, validator, mongoose) {
         }
 
         console.log('New reply created');
-        res.redirect('/forum');
+        res.redirect('/');
       });
 
-  });
+  }
+
+	app.get('/', handleForumFetch);
+	app.post('/makethread', handleThreadCreate);
+  app.post('/thread/:id/reply', handleThreadReply);
 
 };
 

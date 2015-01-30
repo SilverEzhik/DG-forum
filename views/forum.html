@@ -4,13 +4,12 @@
 
 <div>
     <h2>Create New Thread</h2>
-    <form action = "forum/makethread" method = "post" name = "makethread">
+    <form action = "makethread" method = "post" name = "makethread">
       <textarea name="subject" rows="1" cols="52" placeholder = "title"></textarea><br> 
       <textarea name="message" rows="10" cols="52" placeholder = "message"></textarea><br>
       <button type = "submit">Submit</button>
     </form>
 </div>
-
 
 <div>
   <h2>Threads</h2>
@@ -53,7 +52,7 @@
 
     <div>
       <h3>Reply to Thread</h3>
-        <form action = "forum/thread/{{ thread._id }}/reply" method = "post" name = "makereply">
+        <form action = "thread/{{ thread._id }}/reply" method = "post" name = "makereply">
           <input type = "text" placeholder = "message" name = "message">
           <button type = "submit">Submit</button>
         </form>
