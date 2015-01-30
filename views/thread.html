@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+
+{% block page %}
+
+<div>
+    <!-- Thread title and author -->
+    <h3>{{ thread.subject }} by {{ thread.author }}</h3> 
+
+    <!-- Thread time -->
+    <h6>{{ convertToDate(thread.timestamp) }}</h6>
+
+
+    <!-- Thread content -->
+    <p>{{ thread.message }}</p>
+
+    <!-- Test to see if the array has any elements -->
+    {% if thread.replies[0] %}
+    <div>
+      <hr>
+      <h4>Replies</h4>
+      <!-- Loop through replies array-->
+      {% for reply in thread.replies %}
+        <div>
+          <!-- Reply Author -->
+          <h5>{{ reply.author }}</h5>
+
+          <!-- Reply time -->
+          <h6>{{ convertToDate(reply.timestamp) }}</h6>
+
+          <!-- Reply content -->
+          <p>{{ reply.message }}</p>
+
+          --------------
+        </div>
+      {% endfor %}  
+
+      {% endif%}
+
+
+
+      <div>
+        <h3>Reply to Thread</h3>
+          <form action = "{{ thread._id }}/reply" method = "post" name = "makereply">
+            <input type = "text" placeholder = "message" name = "message">
+            <button type = "submit">Submit</button>
+          </form>
+      </div>
+    </div>  
+</div>
+
+{% endblock %}

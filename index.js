@@ -1,7 +1,10 @@
-var bcrypt = require('bcrypt');
+
+// TODO: Uncomment this after Alex fixes his bcrypt
+// var bcrypt = require('bcrypt');
 var bodyParser = require('body-parser');
 var cookieParser = require('cookie-parser');
 var express = require('express');
+var moment = require('moment');
 var mongo = require('mongodb');
 var mongoose = require('mongoose');
 var nunjucks = require('nunjucks');
@@ -38,7 +41,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 
 //require('./routes/index')(app);
-require('./routes/forum')(app, validator, mongoose);
+require('./routes/forum')(app, validator, mongoose, moment);
 
 var server = app.listen(3000, function () {
 

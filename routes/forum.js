@@ -1,7 +1,7 @@
 
 // TODO: Clean up this code
 // TODO: Add checks to prevent abuse
-module.exports = function(app, validator, mongoose) {
+module.exports = function(app, validator, mongoose, moment) {
 
   var threadSchema = mongoose.Schema({
     subject: String,
@@ -16,20 +16,14 @@ module.exports = function(app, validator, mongoose) {
     }]
   });
 
+
   var Thread = mongoose.model('thread', threadSchema);
 
-  // Convert milliseconds(argument) to Unix seconds
-  function convertToUnix(time) {
-    return Math.floor(time / 1000);
-  }
-
-  // Convert unix seconds(argument) to readable human time
+  // Convert timestamps into readable human time
   function convertToDate(timeStamp) {
-    var date = new Date();
 
-    // Get Current Time in Unix
-    var curTime = convertToUnix(date.getTime());
-
+    // Get current time in Unix
+    var curTime = moment().unix();
     var timeDifference = (curTime - timeStamp);
     if (timeDifference < 60) {
 
@@ -61,8 +55,8 @@ module.exports = function(app, validator, mongoose) {
 
     } else {
 
-      // TODO: Make this return a proper time stamp etc. January 21, 2015
-      return Date(timeStamp);
+      // TODO: Make this return a proper date etc. January 21, 2015
+      return moment.unix(timeStamp).format("MMMM Do, YYYY");
     }
 
   }
@@ -87,6 +81,28 @@ module.exports = function(app, validator, mongoose) {
     });
   }
 
+  function handleThreadFetch(req, res) {
+    // Find the thread
+
+    var threadID = validator.toString(req.params.id);
+
+    Thread.findById(threadID, function (err, doc) {
+      if (err) return console.error(err);   
+
+      // Send function to template instead
+      var templateVars = {
+        title: doc.subject,
+        thread: doc,
+        convertToDate: convertToDate
+        
+      };
+     
+
+      // Render template
+      res.render('thread.html', templateVars);
+    });
+  }
+
   function handleThreadCreate(req, res) {
     var subject = validator.toString(req.body.subject);
     var message = validator.toString(req.body.message);
@@ -96,17 +112,15 @@ module.exports = function(app, validator, mongoose) {
 
     //var author = req.session.author;
 
-    var date = new Date();
-
-    // Convert to Unix Time (NO DECIMALS)
-    var timeStamp = convertToUnix(date.getTime());
+    // Get current time in Unix
+    var curTime = moment().unix();
 
     var newThread = new Thread({
       subject: subject,
       message: message,
       author: author,
-      timestamp: timeStamp,
-      lastupdate: timeStamp
+      timestamp: curTime,
+      lastupdate: curTime
      });
 
     newThread.save(function(err, newThread) {
@@ -126,10 +140,9 @@ module.exports = function(app, validator, mongoose) {
   function handleThreadReply(req, res) {
 
     var threadID = validator.toString(req.params.id);
-    var date = new Date();
 
-    // Convert to Unix Time (NO DECIMALS)
-    var timeStamp = convertToUnix(date.getTime());
+    // Get current time in unix
+    var curTime = moment().unix();
 
     // TODO: Change this to the actually author
     var author = 'Anonymous';
@@ -139,10 +152,10 @@ module.exports = function(app, validator, mongoose) {
     var reply = {
       author: author,
       message: message,
-      timestamp: timeStamp
+      timestamp: curTime
     };
 
-    Thread.findByIdAndUpdate(threadID, {$push: {replies: reply}, lastupdate: timeStamp}, 
+    Thread.findByIdAndUpdate(threadID, {$push: {replies: reply}, lastupdate: curTime}, 
     {safe: true, upsert: true}, function(err, doc) {
         if (err) {
           res.send('Error 500: Something went wrong in the database');
@@ -150,13 +163,14 @@ module.exports = function(app, validator, mongoose) {
         }
 
         console.log('New reply created');
-        res.redirect('/');
+        res.redirect('/thread/' + threadID);
       });
 
   }
 
 	app.get('/', handleForumFetch);
 	app.post('/makethread', handleThreadCreate);
+  app.get('/thread/:id', handleThreadFetch);
   app.post('/thread/:id/reply', handleThreadReply);
 
 };
