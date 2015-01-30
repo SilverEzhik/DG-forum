@@ -37,7 +37,7 @@ nunjucks.configure('views', {
 app.use(express.static(path.join(__dirname, 'public')));
 
 
-require('./routes/index')(app);
+//require('./routes/index')(app);
 require('./routes/forum')(app, validator, mongoose);
 
 var server = app.listen(3000, function () {
