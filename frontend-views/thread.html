@@ -8,8 +8,7 @@
 		<link href='http://fonts.googleapis.com/css?family=Oswald:300' rel='stylesheet' type='text/css'>
 	</head>
 	<body>
-		<script src="jquery-1.11.2.min"></script>
-		<script>
+	    <script>
 		    function toggledisplay(elementID)
 		    {
 		        (function(style) {
@@ -91,85 +90,83 @@
 			<div class="container">	
 				<nav id="threadmenu" class="menu">
 					<span>
-						<a href="#">Post New Thread</a>
-
+						<a href="index.html">Return to Forum</a>
 					</span>
 				</nav>
 			</div>
 		</div>
 		<div id="subheader3">
 			<div class="container">
-				<!-- sort menu -->	
-				<nav id="sortmenu" class="menu">
-					<span>
-						<a href="index.html">Popular</a>
-					</span>
-					<span>
-						<a href="index.html">Recent</a>
-					</span>
-					<span>
-						<a href="index.html">Oldest</a>
-					</span>
-				</nav>	
 				<!-- searchbar -->
 				<nav id="searchbar" class="menu">
 					<form id="search" action="/search" method="get" class="menu">
 						<input id="search-box" name="q" size="40" type="text" placeholder="SEARCH FORUM"/>
 						<input id="search-btn" class="button" value="Search" type="submit"/>
 					</form>
-				</nav>
+				</nav> 
 			</div>
-		</div>
+			<!-- pagemenu -->
 			<nav id="pagemenu" class="menu">
-					<span id="prev">
-						<a href="#">&laquo Prev Page</a>
-					</span>
-					<span id="page">
-						<a href="#">1</a>
-					</span>
-					<span id="page">
-						<a href="#">2</a>
-					</span>
-					<span id="page">
-						<a href="#">3</a>
-					</span>
-					<span id="next">
-						<a href="#">Next Page &raquo</a>
-					</span>
+				<span id="prev">
+					<a href="#">&laquo Prev Page</a>
+				</span>
+				<span id="page">
+					<a href="#">1</a>
+				</span>
+				<span id="page">
+					<a href="#">2</a>
+				</span>
+				<span id="page">
+					<a href="#">3</a>
+				</span>
+				<span id="next">
+					<a href="#">Next Page &raquo</a>
+				</span>
 			</nav>
 		</div>
 		<!-- main section-->
 		<div id="mainsection">
 			<!-- thread list -->
 			<u1 class="threadlist">
+				<p id="threadtitle" class="thread">Official DG Forum Project Thread</p>
 				<li id="post-1" class="thread">
-					<a href="thread.html" id="posttitle">Official DG Forum Project Thread</a>
+					<span id="posttitle">Official DG Forum Project ThreadOfficial DG Forum Project ThreadOfficial DG Forum Project ThreadOfficial DG Forum Project ThreadOfficial DG Forum Project ThreadOfficial DG Forum Project ThreadOfficial DG Forum Project ThreadOfficial DG Forum Project ThreadOfficial DG Forum Project ThreadOfficial DG Forum Project ThreadOfficial DG Forum Project ThreadOfficial DG Forum Project ThreadOfficial DG Forum Project ThreadOfficial DG Forum Project ThreadOfficial DG Forum Project ThreadOfficial DG Forum Project ThreadOfficial DG Forum Project ThreadOfficial DG Forum Project ThreadOfficial DG Forum Project Thread</span>
 					<span id="author">brandonchai</span>
 					<span id="timestamp">01-27-2015 23:26:39</span>
 					<span id="views">(12 views)</span>
 				</li>
 				</br>
 				<li id="post-1" class="thread">
-					<a href="thread.html" id="posttitle">IOS App Thread</a>
+					<span id="posttitle">Official DG Forum Project ThreadOfficial DG Forum Project ThreadOfficial DG Forum Project ThreadOfficial DG Forum Project ThreadOfficial DG Forum Project ThreadOfficial DG Forum Project ThreadOfficial DG Forum Project </span>
+					<span id="author">brandonchai</span>
+					<span id="timestamp">01-27-2015 23:26:39</span>
+					<span id="views">(12 views)</span>
+				</li>
+				</br>
+				<li id="post-1" class="thread">
+					<span id="posttitle">Official DG Forum Project ThreadOfficial DG Forum Project ThreadOfficial DG Forum Project ThreadOfficial DG Forum Project ThreadOfficial DG Forum Project ThreadOfficial DG Forum Project ThreadOfficial DG Forum Project </span>
+					</br>
+					<img src="http://upload.wikimedia.org/wikipedia/commons/e/ed/UML_diagrams_overview.svg">
+					</br>
 					<span id="author">brandonchai</span>
 					<span id="timestamp">01-27-2015 23:26:39</span>
 					<span id="views">(12 views)</span>
 				</li>
 			</u1>
 		</div>
-		<!-- Post New Thread -->
+		<!-- Reply -->
 		<div id="subheader4">
 			<div class="container">	
 				<nav id="threadmenu" class="menu">
 					<span>
-						<a href="#" title="Reply" onClick="toggledisplay('changethis');">Post New Thread</a>
+						<a href="#" title="Reply" onClick="toggledisplay('changethis');">Reply</a>
 					</span>
 					<div id="changethis" style="display:none">
 						<textarea id="replybox" name="reply" rows="10" cols="60" dir="ltr">
 						</textarea>
 						<div>
 							<form action="" method="post" name="" onsubmit="" id="">
-								<input id="search-btn" value="POST" type="submit"/>
+								<input id="search-btn" value="REPLY" type="submit"/>
 							</form>
 						</div>
 					</div>

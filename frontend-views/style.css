@@ -13,7 +13,7 @@
 	font-weight: bold;
 }
 
-#subheader2, #subheader3{
+#subheader2, #subheader3, #subheader4{
 	height: 25px;
 	background: #ffffff;
 	padding: 10px;
@@ -25,14 +25,13 @@
 	padding: 10px;
 }
 #title {
-	display: inline;
+	float:left;
 	margin-left: 5px;
 	margin-right: 5px;
 	height: 29px;
 }
 
 #logo {
-	display: inline;
 	float: left;
 	height: 25px;
 	margin-left: 5px;
@@ -40,12 +39,13 @@
 }
 
 .menu{
-	display: inline;
+	float:right;
 	margin-left: 5px;
 	margin-right: 5px;
 	height: 25px;
 	font-family: 'Oswald', sans-serif;
 	font-size: .9em;
+	text-align: center;
 }
 
 #mainmenu{
@@ -57,13 +57,22 @@
 }
 
 #pagemenu{
-	margin-left: 300px;
-	vertical-align: middle;
+	float: none;
+	text-align: center;
+	margin:0 auto;
+	position: relative;
+	top: -34px;
+  width: 350px;
 }
 
+#test{
+	display: inline;
+	text-align: center;
+
+}
 #threadmenu{
 	text-align: center;
-	margin-left: 565px;
+	float:none;
 }
 
 #mainmenu a{
@@ -99,6 +108,10 @@ a:visited {
 	color: #777777;
 }
 
+#threadtitle{
+	text-align: center;
+}
+
 #mainsection{
 	padding: 20px;
 }
@@ -125,12 +138,13 @@ li{
 	margin-right: 5px;
 }
 
-#search-btn, #login-btn{
+.button{
 	background:#777777;
 	color:white;
 	border:0 none;
 	font-weight:bold;
 	padding:5px 10px;
+  font-family: 'Economica', sans-serif;
 }
 
 #search-box{
@@ -156,3 +170,94 @@ p{
 	margin: 0;
 }
 
+#fillerleft{
+	width: 185px;
+	float: left;
+}
+
+#fillerright{
+	width: 246px; 
+	float: right;
+}
+
+#replybox, #threadbox{
+	width: 50%;
+	height: 100%;
+	border: 1px solid #000000;
+	padding: 10px;
+	margin: 10px;
+}
+
+.modalDialog {
+    position: fixed;
+    font-family: Arial, Helvetica, sans-serif;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background: rgba(0, 0, 0, 0.8);
+    z-index: 99999;
+    opacity:0;
+    -webkit-transition: opacity 400ms ease-in;
+    -moz-transition: opacity 400ms ease-in;
+    transition: opacity 400ms ease-in;
+    pointer-events: none;
+}
+.modalDialog:target {
+    opacity:1;
+    pointer-events: auto;
+}
+.modalDialog > div {
+    width: 400px;
+    position: relative;
+    margin: 10% auto;
+    padding: 5px 20px 13px 20px;
+    background: #fff;
+
+}
+.close {
+    background: #606061;
+    color: #FFFFFF;
+    line-height: 25px;
+    position: absolute;
+    right: -12px;
+    text-align: center;
+    top: -10px;
+    width: 24px;
+    text-decoration: none;
+    font-weight: bold;
+}
+.close:hover {
+    background: #00d9ff;
+}
+
+#registerForm {
+    font-family: 'Economica', sans-serif;
+}
+
+label {
+  display: block;
+  line-height: 40px;
+  font-size: 13px;
+}
+
+.field-wrap input {
+  border: 1px solid #ccc;
+  padding: 11px;
+  outline: none;
+  webkit border radius: 4px;
+  moz border-radius: 4px;
+  border-radius: 4px;
+  font-size: 0.8em;
+  color: #777;
+  margin: 0 auto;
+  width: 200px;
+  display: block;
+  margin-bottom: 5px;
+  background: #fff;
+}
+
+#register-btn {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
