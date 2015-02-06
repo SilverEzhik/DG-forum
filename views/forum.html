@@ -1,26 +1,25 @@
-{% extends "base.html" %}
+{% extends "base.html" %} {% block page %}
 
-{% block page %}
+<button onclick="window.location.href='/login'">Login</button>
 
 <div>
     <h2>Create New Thread</h2>
-    <form action = "makethread" method = "post" name = "makethread">
-      <textarea name="subject" rows="1" cols="52" placeholder = "title"></textarea><br> 
-      <textarea name="message" rows="10" cols="52" placeholder = "message"></textarea><br>
-      <button type = "submit">Submit</button>
+    <form action="makethread" method="post" name="makethread">
+        <textarea name="subject" rows="1" cols="52" placeholder="title"></textarea>
+        <br>
+        <textarea name="message" rows="10" cols="52" placeholder="message"></textarea>
+        <br>
+        <button type="submit">Submit</button>
     </form>
 </div>
-
 <div>
-  <h2>Threads</h2>
-  <!-- Loop through threads array-->
-  {% for thread in threads %}
+    <h2>Threads</h2>
+    <!-- Loop through threads array-->
+    {% for thread in threads %}
 
     <hr>
     <!-- Thread title and author -->
-    <a href = "thread/{{ thread._id }}"><h3>{{ thread.subject }} by {{ thread.author }} {{ convertToDate(thread.timestamp) }}</h3></a>
-
-  {% endfor %}
+    <a href="thread/{{ thread._id }}"><h3>{{ thread.subject }} by {{ thread.author }} {{ convertToDate(thread.timestamp) }}</h3></a> {% endfor %}
 </div>
 
 {% endblock %}

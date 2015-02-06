@@ -7,11 +7,10 @@
 3. Clone the repo.
 4. Navigate to the 'DG-forum' folder in terminal/cmd/bash.
 5. Run *npm install*. This will install all the packages used in the site.
-6. Run *mkdir data*. This will create the folder that we'll store DB data.
-7. Open a second terminal/cmd/bash and navigate to your MongoDB folder.
-8. Run *mongod --dbpath (Path of DG-forum/data)*. For example, I would run *./mongod --dbpath /Users/chrisbanh/Workspace/DG-forum/data*. IMPORTANT: Make sure you leave this window open, otherwise the database won't be running.
-9. Go back to your first terminal/cmd/bash and run *node index.js* to start up the server.
-10. Open [http://localhost:3000/](http://localhost:3000/) and you should be at the site. 
+6. If you have Windows, run *export MONGO_ADDRESS=(addressintheskypechat)* to set the environment variable to connect to the DB in the code.
+7. If you have Mac, run *MONGO_ADDRESS=(addressintheskypechat)* to set the environment variable to connect to the DB in the code.
+8. Go back to your first terminal/cmd/bash and run *node index.js* to start up the server.
+9. Open [http://localhost:3000/](http://localhost:3000/) and you should be at the site. 
 
 **Other Info**
 - HTML templates go in the "views" folder

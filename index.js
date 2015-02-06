@@ -16,22 +16,22 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
 
-// Tell Monk where our db is located
-// TODO: Host the DB on another server to avoid headaches.
-
-mongoose.connect('mongodb://localhost/27017');
+// Tell Mongoose where our db is located. In this case, we are getting
+// the environment variable SERVER_IP which should be saved in the bash
+// in the folder DG-Forum
+mongoose.connect('mongodb://' + process.env.MONGO_ADDRESS + '/27017');
 var db = mongoose.connection;
 
 // Let's check to see if the app has successfully connected to the DB.
-db.on('error', function (callback) {
-  console.error.bind(console, 'connection error:')
+db.on('error', function (err) {
+  throw err;
 });
-db.once('open', function (callback) {
+db.once('open', function () {
     console.log('Connection to DB established');
 });
 
 // Tell Nunjucks where the templates are stored.
-nunjucks.configure('views', { 
+nunjucks.configure('views', {
 	autoescape: true,
 	express: app
 });
@@ -39,9 +39,13 @@ nunjucks.configure('views', {
 // Tell Express to serve static objects from the /public/ directory
 app.use(express.static(path.join(__dirname, 'public')));
 
-
+//TODO give it bcrypt module
+require('./routes/login')(app, validator, mongoose, moment/*, bcrypt*/);
 //require('./routes/index')(app);
 require('./routes/forum')(app, validator, mongoose, moment);
+
+
+
 
 var server = app.listen(3000, function () {
 

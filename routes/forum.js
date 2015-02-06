@@ -87,7 +87,7 @@ module.exports = function(app, validator, mongoose, moment) {
     var threadID = validator.toString(req.params.id);
 
     Thread.findById(threadID, function (err, doc) {
-      if (err) return console.error(err);   
+      if (err) return console.error(err);
 
       // Send function to template instead
       var templateVars = {
@@ -155,7 +155,7 @@ module.exports = function(app, validator, mongoose, moment) {
       timestamp: curTime
     };
 
-    Thread.findByIdAndUpdate(threadID, {$push: {replies: reply}, lastupdate: curTime}, 
+    Thread.findByIdAndUpdate(threadID, {$push: {replies: reply}, lastupdate: curTime},
     {safe: true, upsert: true}, function(err, doc) {
         if (err) {
           res.send('Error 500: Something went wrong in the database');
