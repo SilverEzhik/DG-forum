@@ -1,3 +1,290 @@
 textarea {
     resize: none;
 }
+
+.container {
+	height: 1.813em;
+	margin: 0px, 0.188em;
+	background: #ffffff;
+}
+
+#header {
+	height: 1.813em;
+	background: #ffffff;
+	padding: 0.875em;
+	color: #000000;
+	font: 1em 'Economica', sans-serif;
+	font-weight: bold;
+}
+
+#subheader2, #subheader3, #subheader4{
+	height: 1.563em;
+	background: #ffffff;
+	padding: .625em;
+}
+
+#subheader1 {
+	height: 3.125em;
+	background: #ffffff;
+	padding: .625em;
+}
+#title {
+	float:left;
+	margin-left: .313em;
+	margin-right: .313em;
+	height: 1.813em;
+}
+
+#logo {
+	float: left;
+	height: 25px;
+	margin-left: .313em;
+	margin-right: .313em;
+}
+
+.menu{
+	float:right;
+	margin-left: .313em;
+	margin-right: .313em;
+	height: 1.563em;
+	font-family: 'Oswald', sans-serif;
+	font-size: .9em;
+	text-align: center;
+}
+
+#mainmenu{
+	float: right;
+}
+
+#sortmenu{
+	float: left;
+}
+
+#pagemenu{
+	float: none;
+	text-align: center;
+	margin:0 auto;
+	position: relative;
+	top: -2.361em;
+    width: 21.875em;
+}
+
+#test{
+	display: inline;
+	text-align: center;
+
+}
+#threadmenu{
+	text-align: center;
+	float:none;
+}
+
+#mainmenu a{
+	margin-left: 1.736em;
+}
+
+#sortmenu a{
+	margin-right: 1.736em;
+}
+
+#page a, #prev a, #next a, #newthread a, #loginhelp a{
+	margin: 0px;
+}
+
+#sortmenu a, #threadmenu a, #pagemenu a{
+	color: #777777;
+}
+
+a:link {
+	color: #000000;
+	text-decoration: none;
+}
+
+a:visited {
+	color: #000000;
+	text-decoration: none;
+}
+
+.post, .thread{
+	font-family: 'Oswald', sans-serif;
+	font-size: .875em;
+	background-color:#F0F0F0; 
+	color: #777777;
+}
+
+#threadtitle{
+	text-align: center;
+}
+
+#mainsection{
+	padding: 1.25em;
+}
+
+li{
+	list-style: square;
+}
+
+#posttitle{
+	color: #000000;
+	margin-right: 1.25em;
+}
+
+#author, #timestamp, #views, #reply{
+	color: #777777;
+}
+
+.replylist{
+	margin: 0;
+}
+
+#page, #prev, #next{
+	margin-left: .347em;
+	margin-right: .347em;
+}
+
+.button{
+	background:#777777;
+	color:white;
+	border:0 none;
+	font-weight:bold;
+	height: 1.875em;
+	padding: .375em .75em;
+    font-family: 'Economica', sans-serif;
+    vertical-align: baseline;
+}
+
+#search-box{
+	background: #eee;
+	padding:.375em;
+	border:0 none;
+	width:12em;
+}
+
+#user, #password{
+	background: #eee;
+	padding:.375em;
+	border:0 none;
+	width:9em;
+}
+
+#search, #login, #loginhelp
+{
+	float: right;
+}
+
+.modalDialog {
+    position: fixed;
+    font-family: Arial, Helvetica, sans-serif;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background: rgba(0, 0, 0, 0.8);
+    z-index: 99999;
+    opacity:0;
+    -webkit-transition: opacity 400ms ease-in;
+    -moz-transition: opacity 400ms ease-in;
+    transition: opacity 400ms ease-in;
+    pointer-events: none;
+}
+.modalDialog:target {
+    opacity:1;
+    pointer-events: auto;
+}
+.modalDialog > div {
+    width: 27.778em;
+    position: relative;
+    margin: 10% auto;
+    padding: 0.694em;
+    background: #fff;
+
+}
+.close {
+    background: #606061;
+    color: #FFFFFF;
+    line-height: 1.736em;
+    position: absolute;
+    right: -0.833em;
+    text-align: center;
+    top: -0.694em;
+    width: 1.667em;
+    text-decoration: none;
+    font-weight: bold;
+}
+.close:hover {
+    background: #00d9ff;
+}
+
+#registerForm, .form{
+    font-family: 'Economica', sans-serif;
+}
+
+label {
+  display: block;
+  line-height: 3.076em;
+  font-size: 0.903em;
+}
+
+.field-wrap input {
+  border: 0.069em solid #ccc;
+  padding: 0.764em;
+  outline: none;
+  webkit border radius: 0.278em;
+  moz border-radius: 0.278em;
+  border-radius: 0.278em;
+  font-size: 1em;
+  color: #777;
+  margin: 0 auto;
+  width: 13.889em;
+  display: block;
+  background: #fff;
+}
+
+#register-btn, #submit-btn{
+  margin: 0.750em 0;
+}
+
+h1 {
+	margin-bottom: 0.256em;
+	font-size: 2.441em;
+	font-family: 'Oswald', sans-serif;
+	font-weight: bold;
+	color: #222222;
+	line-height: 1.2;
+}
+
+p {
+	margin: 0;
+	color: #777777;
+	font-size: 1em; 
+	font-family:'Economica', sans-serif;
+}
+
+div .post-thread {
+	text-align: left;
+	margin-right: 22.917em;
+	text-align: center;
+}
+
+div .post-message {
+	text-align: left;
+	margin-right: 21.528em;
+	text-align: center;
+}
+
+#replybox {
+	margin: 0 auto;
+	border: 0.075em solid #777777;
+	padding: 0.150em;
+	width: 26.250em;
+}
+
+#post-btn{
+	margin: 0.694em 0;
+} 
+
+#threadtitle{
+	color: #777777;
+	font-size: 1.2em;
+}
+
