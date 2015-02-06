@@ -1,48 +1,48 @@
 .container {
-	height: 29px;
-	margin: 0px, 3px;
+	height: 1.813em;
+	margin: 0px, 0.188em;
 	background: #ffffff;
 }
 
 #header {
-	height: 29px;
+	height: 1.813em;
 	background: #ffffff;
-	padding: 14px;
+	padding: 0.875em;
 	color: #000000;
-	font: 1em/1.45 'Economica', sans-serif;
+	font: 1em 'Economica', sans-serif;
 	font-weight: bold;
 }
 
 #subheader2, #subheader3, #subheader4{
-	height: 25px;
+	height: 1.563em;
 	background: #ffffff;
-	padding: 10px;
+	padding: .625em;
 }
 
 #subheader1 {
-	height: 50px;
+	height: 3.125em;
 	background: #ffffff;
-	padding: 10px;
+	padding: .625em;
 }
 #title {
 	float:left;
-	margin-left: 5px;
-	margin-right: 5px;
-	height: 29px;
+	margin-left: .313em;
+	margin-right: .313em;
+	height: 1.813em;
 }
 
 #logo {
 	float: left;
 	height: 25px;
-	margin-left: 5px;
-	margin-right: 5px;
+	margin-left: .313em;
+	margin-right: .313em;
 }
 
 .menu{
 	float:right;
-	margin-left: 5px;
-	margin-right: 5px;
-	height: 25px;
+	margin-left: .313em;
+	margin-right: .313em;
+	height: 1.563em;
 	font-family: 'Oswald', sans-serif;
 	font-size: .9em;
 	text-align: center;
@@ -61,8 +61,8 @@
 	text-align: center;
 	margin:0 auto;
 	position: relative;
-	top: -34px;
-  width: 350px;
+	top: -2.361em;
+    width: 21.875em;
 }
 
 #test{
@@ -76,11 +76,11 @@
 }
 
 #mainmenu a{
-	margin-left: 25px
+	margin-left: 1.736em;
 }
 
 #sortmenu a{
-	margin-right: 25px
+	margin-right: 1.736em;
 }
 
 #page a, #prev a, #next a, #newthread a, #loginhelp a{
@@ -103,7 +103,7 @@ a:visited {
 
 .post, .thread{
 	font-family: 'Oswald', sans-serif;
-	font-size: 14px;
+	font-size: .875em;
 	background-color:#F0F0F0; 
 	color: #777777;
 }
@@ -113,7 +113,7 @@ a:visited {
 }
 
 #mainsection{
-	padding: 20px;
+	padding: 1.25em;
 }
 
 li{
@@ -122,7 +122,7 @@ li{
 
 #posttitle{
 	color: #000000;
-	margin-right: 20px;
+	margin-right: 1.25em;
 }
 
 #author, #timestamp, #views, #reply{
@@ -134,8 +134,8 @@ li{
 }
 
 #page, #prev, #next{
-	margin-left: 5px;
-	margin-right: 5px;
+	margin-left: .347em;
+	margin-right: .347em;
 }
 
 .button{
@@ -143,49 +143,29 @@ li{
 	color:white;
 	border:0 none;
 	font-weight:bold;
-	padding:5px 10px;
-  font-family: 'Economica', sans-serif;
+	height: 1.875em;
+	padding: .375em .75em;
+    font-family: 'Economica', sans-serif;
+    vertical-align: baseline;
 }
 
 #search-box{
 	background: #eee;
-	padding:5px;
+	padding:.375em;
 	border:0 none;
-	width:160px;
+	width:12em;
 }
 
 #user, #password{
 	background: #eee;
-	padding:5px;
+	padding:.375em;
 	border:0 none;
-	width:120px;
+	width:9em;
 }
 
 #search, #login, #loginhelp
 {
 	float: right;
-}
-
-p{
-	margin: 0;
-}
-
-#fillerleft{
-	width: 185px;
-	float: left;
-}
-
-#fillerright{
-	width: 246px; 
-	float: right;
-}
-
-#replybox, #threadbox{
-	width: 50%;
-	height: 100%;
-	border: 1px solid #000000;
-	padding: 10px;
-	margin: 10px;
 }
 
 .modalDialog {
@@ -208,22 +188,22 @@ p{
     pointer-events: auto;
 }
 .modalDialog > div {
-    width: 400px;
+    width: 27.778em;
     position: relative;
     margin: 10% auto;
-    padding: 5px 20px 13px 20px;
+    padding: 0.694em;
     background: #fff;
 
 }
 .close {
     background: #606061;
     color: #FFFFFF;
-    line-height: 25px;
+    line-height: 1.736em;
     position: absolute;
-    right: -12px;
+    right: -0.833em;
     text-align: center;
-    top: -10px;
-    width: 24px;
+    top: -0.694em;
+    width: 1.667em;
     text-decoration: none;
     font-weight: bold;
 }
@@ -231,33 +211,75 @@ p{
     background: #00d9ff;
 }
 
-#registerForm {
+#registerForm, .form{
     font-family: 'Economica', sans-serif;
 }
 
 label {
   display: block;
-  line-height: 40px;
-  font-size: 13px;
+  line-height: 3.076em;
+  font-size: 0.903em;
 }
 
 .field-wrap input {
-  border: 1px solid #ccc;
-  padding: 11px;
+  border: 0.069em solid #ccc;
+  padding: 0.764em;
   outline: none;
-  webkit border radius: 4px;
-  moz border-radius: 4px;
-  border-radius: 4px;
-  font-size: 0.8em;
+  webkit border radius: 0.278em;
+  moz border-radius: 0.278em;
+  border-radius: 0.278em;
+  font-size: 1em;
   color: #777;
   margin: 0 auto;
-  width: 200px;
+  width: 13.889em;
   display: block;
-  margin-bottom: 5px;
   background: #fff;
 }
 
-#register-btn {
-  margin-top: 10px;
-  margin-bottom: 10px;
+#register-btn, #submit-btn{
+  margin: 0.750em 0;
 }
+
+h1 {
+	margin-bottom: 0.256em;
+	font-size: 2.441em;
+	font-family: 'Oswald', sans-serif;
+	font-weight: bold;
+	color: #222222;
+	line-height: 1.2;
+}
+
+p {
+	margin: 0;
+	color: #777777;
+	font-size: 1em; 
+	font-family:'Economica', sans-serif;
+}
+
+div .post-thread {
+	text-align: left;
+	margin-right: 22.917em;
+	text-align: center;
+}
+
+div .post-message {
+	text-align: left;
+	margin-right: 21.528em;
+	text-align: center;
+}
+
+#replybox {
+	margin: 0 auto;
+	border: 0.075em solid #777777;
+	padding: 0.150em;
+	width: 26.250em;
+}
+
+#post-btn{
+	margin: 0.694em 0;
+} 
+
+#threadtitle{
+	color: #777777;
+}
+

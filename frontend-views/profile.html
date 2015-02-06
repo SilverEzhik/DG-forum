@@ -2,7 +2,7 @@
 <html>
 	<head>
 		<meta charset="utf-8">
-		<title>Developer's Guild Forum</title>
+		<title>Profile-Developer's Guild Forum</title>
 		<link rel="stylesheet" href="style.css" type="text/css" media="screen, projection">
 		<link href='http://fonts.googleapis.com/css?family=Economica' rel='stylesheet' type='text/css'>
 		<link href='http://fonts.googleapis.com/css?family=Oswald:300' rel='stylesheet' type='text/css'>
@@ -73,8 +73,8 @@
 		<div id="subheader1">
 			<div class="container">
 				<!-- login -->
-				<nav id="loginbar">
-					<form id="login" action="/login" method="post">
+				<nav id="loginbar" class="menu">
+					<form id="login" action="/login" method="post" class="menu">
 						<input id="user" placeholder="username" type="text" maxlength="20">
 						<input id="password" placeholder="password" type="password">
 						<input id="login-btn" class="button" value="Login" type="submit">
@@ -102,100 +102,14 @@
 				</div>
 			</div>
 		</div>
-		<div id="subheader2">
-			<div class="container">	
-				<nav id="threadmenu" class="menu">
-					<span>
-						<a href="#changethis" title="Reply" onClick="toggledisplay('changethis');">Post New Thread</a>
-					</span>
-				</nav>
-			</div>
-		</div>
-		<div id="subheader3">
-			<div class="container">
-				<!-- sort menu -->	
-				<nav id="sortmenu" class="menu">
-					<span>
-						<a href="index.html">Popular</a>
-					</span>
-					<span>
-						<a href="index.html">Recent</a>
-					</span>
-					<span>
-						<a href="index.html">Oldest</a>
-					</span>
-				</nav>	
-				<!-- searchbar -->
-				<nav id="searchbar">
-					<form id="search" action="/search" method="get">
-						<input id="search-box" name="q" size="40" type="text" placeholder="SEARCH FORUM"/>
-						<input id="search-btn" class="button" value="Search" type="submit"/>
-					</form>
-				</nav>
-			</div>
-		</div>
-			<nav id="pagemenu" class="menu">
-					<span id="prev">
-						<a href="#">&laquo Prev Page</a>
-					</span>
-					<span id="page">
-						<a href="#">1</a>
-					</span>
-					<span id="page">
-						<a href="#">2</a>
-					</span>
-					<span id="page">
-						<a href="#">3</a>
-					</span>
-					<span id="next">
-						<a href="#">Next Page &raquo</a>
-					</span>
-			</nav>
-		</div>
 		<!-- main section-->
 		<div id="mainsection">
-			<!-- thread list -->
-			<u1 class="threadlist">
-				<li id="post-1" class="thread">
-					<a href="thread.html" id="posttitle">Official DG Forum Project Thread</a>
-					<span id="author">brandonchai</span>
-					<span id="timestamp">01-27-2015 23:26:39</span>
-					<span id="views">(12 views)</span>
-				</li>
-				</br>
-				<li id="post-1" class="thread">
-					<a href="thread.html" id="posttitle">IOS App Thread</a>
-					<span id="author">brandonchai</span>
-					<span id="timestamp">01-27-2015 23:26:39</span>
-					<span id="views">(12 views)</span>
-				</li>
-			</u1>
+		<h1>brandonchai</h1>
+		<p>Name: Brandon Chai</p>
+		<p>Email: brandonchai99@yahoo.com</p>
+		<p>Join date: 2/1/15</p>
 		</div>
-		<!-- Post New Thread -->
-		<div id="subheader4">
-			<div class="container">	
-				<nav id="threadmenu" class="menu">
-					<span>
-						<a href="#" title="Reply" onClick="toggledisplay('changethis');">Post New Thread</a>
-					</span>
-					<div id="changethis" style="display:none">
-						<div class="post-thread">
-						Title:
-						</div>
-						<input type="text" name="title" value size="46" maxlength="120">
-						<div class="post-message">
-						Message:
-						</div>
-						<textarea id="replybox" name="reply" rows="10" cols="50" dir="ltr"></textarea>
-						<div>
-							<form action="" method="post" name="" onsubmit="" id="">
-								<input id="post-btn" class="button" value="POST" type="submit"/>
-							</form>
-						</div>
-					</div>
-				</nav>
-			</div>
-		</div>
+
 		<!-- footer -->
 		<div id="footer">
 			<div class="container">

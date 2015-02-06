@@ -2,7 +2,7 @@
 <html>
 	<head>
 		<meta charset="utf-8">
-		<title>Developer's Guild Forum</title>
+		<title>Official DG Forum Project Thread</title>
 		<link rel="stylesheet" href="style.css" type="text/css" media="screen, projection">
 		<link href='http://fonts.googleapis.com/css?family=Economica' rel='stylesheet' type='text/css'>
 		<link href='http://fonts.googleapis.com/css?family=Oswald:300' rel='stylesheet' type='text/css'>
@@ -59,8 +59,8 @@
 					        </form>
     					</div>
 					</div>
-					<a href="#">Profile</a>
-					<a href="#">About</a>
+					<a href="profile.html">Profile</a>
+					<a href="about.html">About</a>
 				</nav>
 				<!-- page title -->
 				<div id="title">
@@ -82,7 +82,22 @@
 			</div>
 			<div class="container">
 				<div id="loginhelp" class="menu">
-					<a href="#">Forgot Password?</a>
+					<a href="#forgot-pword">Forgot Password?</a>
+					<div id="forgot-pword" class="modalDialog">
+    					<div class="form">   
+    						<a href="#close" title="Close" class="close">X</a>
+    						<h2>Retrieve Password</h2>
+							<form action="/" method="post">
+					   			<div class="field-wrap">
+					                <label>
+					                	Email Adress<span class="req">*</span>
+					              	</label>
+					              	<input type="email"required autocomplete="off"/>
+					            </div>
+					            <input id="submit-btn" class="button" value="Submit" type="submit">
+					        </form>
+    					</div>
+					</div>
 				</div>
 			</div>
 		</div>
@@ -127,20 +142,18 @@
 		<!-- main section-->
 		<div id="mainsection">
 			<!-- thread list -->
+			<h1 id="threadtitle">Official DG Forum Project Thread</h1>
 			<u1 class="threadlist">
-				<p id="threadtitle" class="thread">Official DG Forum Project Thread</p>
 				<li id="post-1" class="thread">
 					<span id="posttitle">Official DG Forum Project ThreadOfficial DG Forum Project ThreadOfficial DG Forum Project ThreadOfficial DG Forum Project ThreadOfficial DG Forum Project ThreadOfficial DG Forum Project ThreadOfficial DG Forum Project ThreadOfficial DG Forum Project ThreadOfficial DG Forum Project ThreadOfficial DG Forum Project ThreadOfficial DG Forum Project ThreadOfficial DG Forum Project ThreadOfficial DG Forum Project ThreadOfficial DG Forum Project ThreadOfficial DG Forum Project ThreadOfficial DG Forum Project ThreadOfficial DG Forum Project ThreadOfficial DG Forum Project ThreadOfficial DG Forum Project Thread</span>
 					<span id="author">brandonchai</span>
 					<span id="timestamp">01-27-2015 23:26:39</span>
-					<span id="views">(12 views)</span>
 				</li>
 				</br>
 				<li id="post-1" class="thread">
 					<span id="posttitle">Official DG Forum Project ThreadOfficial DG Forum Project ThreadOfficial DG Forum Project ThreadOfficial DG Forum Project ThreadOfficial DG Forum Project ThreadOfficial DG Forum Project ThreadOfficial DG Forum Project </span>
 					<span id="author">brandonchai</span>
 					<span id="timestamp">01-27-2015 23:26:39</span>
-					<span id="views">(12 views)</span>
 				</li>
 				</br>
 				<li id="post-1" class="thread">
@@ -150,7 +163,6 @@
 					</br>
 					<span id="author">brandonchai</span>
 					<span id="timestamp">01-27-2015 23:26:39</span>
-					<span id="views">(12 views)</span>
 				</li>
 			</u1>
 		</div>
@@ -159,14 +171,16 @@
 			<div class="container">	
 				<nav id="threadmenu" class="menu">
 					<span>
-						<a href="#" title="Reply" onClick="toggledisplay('changethis');">Reply</a>
+						<a href="#changethis" title="Reply" onClick="toggledisplay('changethis');">Reply</a>
 					</span>
 					<div id="changethis" style="display:none">
-						<textarea id="replybox" name="reply" rows="10" cols="60" dir="ltr">
-						</textarea>
+						<div class="post-message">
+						Message:
+						</div>
+						<textarea id="replybox" name="reply" rows="10" cols="60" dir="ltr"></textarea>
 						<div>
 							<form action="" method="post" name="" onsubmit="" id="">
-								<input id="search-btn" value="REPLY" type="submit"/>
+								<input id="post-btn" class="button" value="POST" type="submit"/>
 							</form>
 						</div>
 					</div>
