@@ -6,7 +6,6 @@
   "maxlen": 80,
   "trailing": true,
   "curly": true,
-  "asi": true,
   "predef": ["console", "module", "require", "__dirname", "process"],
   "globalstrict": true,
   "laxcomma" : true,

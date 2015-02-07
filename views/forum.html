@@ -162,7 +162,7 @@
         <li id="post-1" class="thread">
           <a href="thread/{{ thread.shortid }}" id="posttitle">{{ thread.subject }}</a>
           <span id="author">{{ thread.author }}</span>
-          <span id="timestamp"> {{ convertToDate(thread.timestamp) }}</span>
+          <span id="timestamp"> {{ convertToDate(thread.creationDate) }}</span>
           <span id="views">({{ thread.views }} views)</span>
         </li>
         </br>

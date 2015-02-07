@@ -151,7 +151,7 @@
         <li id="post-1" class="thread">
           <span id="posttitle">{{ thread.message }}</span>
           <span id="author">{{ thread.author }}</span>
-          <span id="timestamp">{{ convertToDate(thread.timestamp) }}</span>
+          <span id="timestamp">{{ convertToDate(thread.creationDate) }}</span>
         </li>
         </br>
         {% if thread.replies[0] %}
@@ -159,7 +159,7 @@
           <li id="post-1" class="thread">
             <span id="posttitle">{{ reply.message }}</span>
             <span id="author">{{ reply.author }}</span>
-            <span id="timestamp">{{ convertToDate(reply.timestamp) }}</span>
+            <span id="timestamp">{{ convertToDate(reply.creationDate) }}</span>
           </li>
           </br>
           {% endfor %}

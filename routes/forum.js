@@ -2,32 +2,15 @@
 
 // TODO: Clean up this code
 // TODO: Add checks to prevent abuse
-module.exports = function(app, validator, mongoose, moment) {
+module.exports = function(app) {
 
-  var shortId = require('shortid');
+  var moment    = require('moment');
+  var validator = require('validator');
 
-  // Get the ObjectId datatype from mongo
-  var ObjectId = mongoose.Schema.ObjectId
+  var Thread  = require('.././models/thread');
 
-  var threadSchema = mongoose.Schema({
-    subject: { type: String, required: true },
-    message: { type: String, required: true },
-    author: { type: String, required: true },
-    shortid: { type: String, required: true, unique: true, default: shortId.generate },
-    views: { type: Number, required: true, default: 0},
-    timestamp: {type: Number, default: moment().unix()},
-    lastupdate: {type: Number, default: moment().unix()},
-    replies: [{
-      author: { type: String, required: true },
-      message: { type: String, required: true },
-      timestamp: {type: Number, default: moment().unix()}
-    }]
-  });
-
-  var Thread = mongoose.model('threads', threadSchema);
-
-  // Convert timestamps into readable human time
-  function convertToDate(timeStamp) {
+  // Convert unix timestamps into readable human time
+  var convertToDate = function(timeStamp) {
 
     // Get current time in Unix
     var curTime = moment().unix();
@@ -66,17 +49,18 @@ module.exports = function(app, validator, mongoose, moment) {
       return moment.unix(timeStamp).format('MMMM Do, YYYY');
     }
 
-  }
+  };
 
-  function handleForumFetch(req, res) {
-    // We grab all the threads and sort by its last update
-    Thread.find({}, null, {sort: {lastupdate: -1}}, function (err, doc) {
+  var handleForumFetch = function(req, res) {
+
+    // Grab all threads.
+    Thread.getAll(function(err, doc) {
+
       if (err) {
-        console.error(err);
+        res.send(err);
         return;
       }
 
-      // Send function to template instead
       var templateVars = {
         title: 'Forums',
         threads: doc,
@@ -87,31 +71,29 @@ module.exports = function(app, validator, mongoose, moment) {
       // Render template
       res.render('forum.html', templateVars);
     });
-  }
+  };
 
-  function handleThreadFetch(req, res) {
+  var handleThreadFetch = function(req, res) {
 
     // Find the thread
     var threadID = validator.toString(req.params.id);
 
     if (!threadID) {
+      var result = {
+        code    : 400,
+        message : 'Thread not found.'
+      };
 
-      res.send('Invalid Id');
+      res.send(result);
       return;
     }
 
-    Thread.findOneAndUpdate({ shortid: threadID },{$inc: {views: 1} }, function (err, doc) {
+    Thread.get(threadID, function(err, doc) {
       if (err) {
-        console.error(err);
+        res.send(err);
         return;
       }
 
-      if (!doc) {
-        res.send('');
-        return;
-      }
-
-      // Send function to template instead
       var templateVars = {
         title: doc.subject,
         thread: doc,
@@ -121,9 +103,9 @@ module.exports = function(app, validator, mongoose, moment) {
       // Render template
       res.render('thread.html', templateVars);
     });
-  }
+  };
 
-  function handleThreadCreate(req, res) {
+  var handleThreadCreate = function(req, res) {
     var subject = validator.toString(req.body.subject);
     var message = validator.toString(req.body.message);
 
@@ -131,76 +113,95 @@ module.exports = function(app, validator, mongoose, moment) {
     var author = 'Anonymous';
 
     //var author = req.session.author;
+    var result;
 
-    var newThread = new Thread({
-      subject: subject,
-      message: message,
-      author: author
-     });
+    if (!author) {
+      result = {
+        code    : 400,
+        message : 'You are not logged in.'
+      };
+      return;
+    }
 
-    newThread.save(function(err, newThread) {
+    if (!subject) {
+      result = {
+        code    : 400,
+        message : 'Subject body may not be blank.'
+      };
+      return;
+    }
+
+    if (!message) {
+      result = {
+        code    : 400,
+        message : 'Message field may not be blank.'
+      };
+      return;
+    }
+
+    Thread.create(subject, message, author, function(err, doc) {
 
       if (err) {
-        res.send('Error 500: Something went wrong in the database');
-        console.error(err);
+        res.send(err);
         return;
       } else {
 
         console.log('New thread created');
-        res.redirect('/');
+        res.redirect('/thread/'+ doc.shortid);
       }
 
     });
-  }
+  };
 
-  function handleThreadReply(req, res) {
+  var handleThreadReply = function(req, res) {
 
     var threadID = validator.toString(req.params.id);
 
-    // Get current time in unix
-    var curTime = moment().unix();
+    var message = validator.toString(req.body.message);
 
     // TODO: Change this to the actually author
     var author = 'Anonymous';
 
-    var message = validator.toString(req.body.message);
+    var result;
 
-    var reply = {
-      author: author,
-      message: message
-    };
+    if (!author) {
+      result = {
+        code    : 400,
+        message : 'You are not logged in.'
+      };
+      return;
+    }
 
-    Thread.findOneAndUpdate({ shortid: threadID }, {$push: {replies: reply},
-      lastupdate: curTime}, {safe: true, upsert: true}, function(err, doc) {
+    if (!threadID) {
+      result = {
+        code    : 400,
+        message : 'Thread not found.'
+      };
+      return;
+    }
+
+    if (!message) {
+      result = {
+        code    : 400,
+        message : 'Message body cannot be empty.'
+      };
+      return;
+    }
+
+    Thread.makeReply(threadID, message, author,
+      function(err, doc) {
         if (err) {
-          res.send('Error 500: Something went wrong in the database');
-          return console.error(err);
+          res.send(err);
+          return;
         }
-
-        console.log('New reply created');
         res.redirect('/thread/' + threadID);
       }
     );
-  }
+  };
 
-	app.get('/', handleForumFetch);
-	app.post('/makethread', handleThreadCreate);
-  app.get('/thread/:id', handleThreadFetch);
+  app.get('/'                 , handleForumFetch);
+  app.post('/makethread'      , handleThreadCreate);
+  app.get('/thread/:id'       , handleThreadFetch);
   app.post('/thread/:id/reply', handleThreadReply);
 
 };
-
-
-
-/*
-
-var threadsobject = {
-	subject: 'how do i make an html page',
-	message: 'Oh Shit, it's a forum',
-	author: 'brandon' //username
-	timestamp: 47474848
-	replies: replyarray
-
-};
-
-*/
