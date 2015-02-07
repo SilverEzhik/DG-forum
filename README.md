@@ -10,7 +10,7 @@
 6. If you have Windows, run *export MONGO_ADDRESS=(addressintheskypechat)* to set the environment variable to connect to the DB in the code.
 7. If you have Mac, run *MONGO_ADDRESS=(addressintheskypechat)* to set the environment variable to connect to the DB in the code.
 8. Go back to your first terminal/cmd/bash and run *node index.js* to start up the server.
-9. Open [http://localhost:3000/](http://localhost:3000/) and you should be at the site. 
+9. Open [http://localhost:3000/](http://localhost:3000/) and you should be at the site.
 
 **Other Info**
 - HTML templates go in the "views" folder
@@ -27,6 +27,8 @@
 - Cookie-Parser
 - Validator
 - Bcrypt
+- ShortId
+- Express-Session
 
 **Good Links to Check Out**
 - [Express' Website](http://expressjs.com/)
@@ -37,7 +39,6 @@
 **Group Members**
 - Alex - Project Lead, Frontend Developer
 - Brandon - Frontend Developer
-- Ben - Frontend Developer
 - Chris - Backend Developer
 - Kareem - Backend Developer
 

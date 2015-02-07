@@ -1,6 +1,6 @@
+'use strict';
 
 // TODO: Uncomment this after Alex fixes his bcrypt
-// var bcrypt = require('bcrypt');
 var bodyParser = require('body-parser');
 var cookieParser = require('cookie-parser');
 var express = require('express');
@@ -9,6 +9,7 @@ var mongo = require('mongodb');
 var mongoose = require('mongoose');
 var nunjucks = require('nunjucks');
 var path = require('path');
+var session = require('express-session');
 var validator = require('validator');
 
 var app = express();
@@ -32,26 +33,23 @@ db.once('open', function () {
 
 // Tell Nunjucks where the templates are stored.
 nunjucks.configure('views', {
-	autoescape: true,
-	express: app
+  autoescape: true,
+  express: app
 });
 
 // Tell Express to serve static objects from the /public/ directory
 app.use(express.static(path.join(__dirname, 'public')));
 
 //TODO give it bcrypt module
-require('./routes/login')(app, validator, mongoose, moment/*, bcrypt*/);
+require('./routes/login')(app, validator, mongoose, moment);
 //require('./routes/index')(app);
 require('./routes/forum')(app, validator, mongoose, moment);
 
-
-
-
 var server = app.listen(3000, function () {
 
-	var host = server.address().address;
-	var port = server.address().port;
+  var host = server.address().address;
+  var port = server.address().port;
 
-	console.log('Developers\' Guild Forum listening at http://%s:%s', host, port);
+  console.log('Developers\' Guild Forum listening at http://%s:%s', host, port);
 
 });

@@ -7,7 +7,7 @@
   <head>
     <meta charset="utf-8">
     <title>Official DG Forum Project Thread</title>
-    <link rel="stylesheet" href="styles.css" type="text/css" media="screen, projection">
+    <!--link rel="stylesheet" href="styles.css" type="text/css" media="screen, projection"-->
     <link href='http://fonts.googleapis.com/css?family=Economica' rel='stylesheet' type='text/css'>
     <link href='http://fonts.googleapis.com/css?family=Oswald:300' rel='stylesheet' type='text/css'>
   </head>
@@ -31,7 +31,7 @@
         <nav id="mainmenu" class="menu">
           <a href="#openModal">Register</a>
           <div id="openModal" class="modalDialog">
-              <div id="registerForm">   
+              <div id="registerForm">
                 <a href="#close" title="Close" class="close">X</a>
                 <h2>Register New Account</h2>
               <form action="/" method="post">
@@ -88,7 +88,7 @@
         <div id="loginhelp" class="menu">
           <a href="#forgot-pword">Forgot Password?</a>
           <div id="forgot-pword" class="modalDialog">
-              <div class="form">   
+              <div class="form">
                 <a href="#close" title="Close" class="close">X</a>
                 <h2>Retrieve Password</h2>
               <form action="/" method="post">
@@ -106,7 +106,7 @@
       </div>
     </div>
     <div id="subheader2">
-      <div class="container"> 
+      <div class="container">
         <nav id="threadmenu" class="menu">
           <span>
             <a href="index.html">Return to Forum</a>
@@ -122,7 +122,7 @@
             <input id="search-box" name="q" size="40" type="text" placeholder="SEARCH FORUM"/>
             <input id="search-btn" class="button" value="Search" type="submit"/>
           </form>
-        </nav> 
+        </nav>
       </div>
       <!-- pagemenu -->
       <nav id="pagemenu" class="menu">
@@ -151,7 +151,7 @@
         <li id="post-1" class="thread">
           <span id="posttitle">{{ thread.message }}</span>
           <span id="author">{{ thread.author }}</span>
-          <span id="timestamp">{{ thread.timestamp }}</span>
+          <span id="timestamp">{{ convertToDate(thread.timestamp) }}</span>
         </li>
         </br>
         {% if thread.replies[0] %}
@@ -159,7 +159,7 @@
           <li id="post-1" class="thread">
             <span id="posttitle">{{ reply.message }}</span>
             <span id="author">{{ reply.author }}</span>
-            <span id="timestamp">{{ reply.timestamp }}</span>
+            <span id="timestamp">{{ convertToDate(reply.timestamp) }}</span>
           </li>
           </br>
           {% endfor %}
@@ -168,13 +168,13 @@
     </div>
     <!-- Reply -->
     <div id="subheader4">
-      <div class="container"> 
+      <div class="container">
         <nav id="threadmenu" class="menu">
           <span>
             <a href="#changethis" title="Reply" onClick="toggledisplay('changethis');">Reply</a>
           </span>
           <div id="changethis" style="display:none">
-            <form action = "{{ thread._id }}/reply" method = "post" name = "makereply">
+            <form action = "{{ thread.shortid }}/reply" method = "post" name = "makereply">
               <div class="post-message">
               Message:
               </div>

@@ -1,23 +1,30 @@
+'use strict';
 
 // TODO: Clean up this code
 // TODO: Add checks to prevent abuse
 module.exports = function(app, validator, mongoose, moment) {
 
+  var shortId = require('shortid');
+
+  // Get the ObjectId datatype from mongo
+  var ObjectId = mongoose.Schema.ObjectId
+
   var threadSchema = mongoose.Schema({
-    subject: String,
-    message: String,
-    author: String,
-    timestamp: Number,
-    lastupdate: Number,
+    subject: { type: String, required: true },
+    message: { type: String, required: true },
+    author: { type: String, required: true },
+    shortid: { type: String, required: true, unique: true, default: shortId.generate },
+    views: { type: Number, required: true, default: 0},
+    timestamp: {type: Number, default: moment().unix()},
+    lastupdate: {type: Number, default: moment().unix()},
     replies: [{
-      author: String,
-      message: String,
-      timestamp: Number
+      author: { type: String, required: true },
+      message: { type: String, required: true },
+      timestamp: {type: Number, default: moment().unix()}
     }]
   });
 
-
-  var Thread = mongoose.model('thread', threadSchema);
+  var Thread = mongoose.model('threads', threadSchema);
 
   // Convert timestamps into readable human time
   function convertToDate(timeStamp) {
@@ -56,7 +63,7 @@ module.exports = function(app, validator, mongoose, moment) {
     } else {
 
       // TODO: Make this return a proper date etc. January 21, 2015
-      return moment.unix(timeStamp).format("MMMM Do, YYYY");
+      return moment.unix(timeStamp).format('MMMM Do, YYYY');
     }
 
   }
@@ -64,39 +71,52 @@ module.exports = function(app, validator, mongoose, moment) {
   function handleForumFetch(req, res) {
     // We grab all the threads and sort by its last update
     Thread.find({}, null, {sort: {lastupdate: -1}}, function (err, doc) {
-      if (err) return console.error(err);
-    
+      if (err) {
+        console.error(err);
+        return;
+      }
 
       // Send function to template instead
       var templateVars = {
         title: 'Forums',
         threads: doc,
         convertToDate: convertToDate
-        
       };
 
-      
+
       // Render template
       res.render('forum.html', templateVars);
     });
   }
 
   function handleThreadFetch(req, res) {
-    // Find the thread
 
+    // Find the thread
     var threadID = validator.toString(req.params.id);
 
-    Thread.findById(threadID, function (err, doc) {
-      if (err) return console.error(err);
+    if (!threadID) {
+
+      res.send('Invalid Id');
+      return;
+    }
+
+    Thread.findOneAndUpdate({ shortid: threadID },{$inc: {views: 1} }, function (err, doc) {
+      if (err) {
+        console.error(err);
+        return;
+      }
+
+      if (!doc) {
+        res.send('');
+        return;
+      }
 
       // Send function to template instead
       var templateVars = {
         title: doc.subject,
         thread: doc,
         convertToDate: convertToDate
-        
       };
-     
 
       // Render template
       res.render('thread.html', templateVars);
@@ -112,22 +132,18 @@ module.exports = function(app, validator, mongoose, moment) {
 
     //var author = req.session.author;
 
-    // Get current time in Unix
-    var curTime = moment().unix();
-
     var newThread = new Thread({
       subject: subject,
       message: message,
-      author: author,
-      timestamp: curTime,
-      lastupdate: curTime
+      author: author
      });
 
     newThread.save(function(err, newThread) {
 
       if (err) {
         res.send('Error 500: Something went wrong in the database');
-        return console.error(err);
+        console.error(err);
+        return;
       } else {
 
         console.log('New thread created');
@@ -151,12 +167,11 @@ module.exports = function(app, validator, mongoose, moment) {
 
     var reply = {
       author: author,
-      message: message,
-      timestamp: curTime
+      message: message
     };
 
-    Thread.findByIdAndUpdate(threadID, {$push: {replies: reply}, lastupdate: curTime},
-    {safe: true, upsert: true}, function(err, doc) {
+    Thread.findOneAndUpdate({ shortid: threadID }, {$push: {replies: reply},
+      lastupdate: curTime}, {safe: true, upsert: true}, function(err, doc) {
         if (err) {
           res.send('Error 500: Something went wrong in the database');
           return console.error(err);
@@ -164,8 +179,8 @@ module.exports = function(app, validator, mongoose, moment) {
 
         console.log('New reply created');
         res.redirect('/thread/' + threadID);
-      });
-
+      }
+    );
   }
 
 	app.get('/', handleForumFetch);
@@ -177,7 +192,7 @@ module.exports = function(app, validator, mongoose, moment) {
 
 
 
-/*	
+/*
 
 var threadsobject = {
 	subject: 'how do i make an html page',

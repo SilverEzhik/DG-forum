@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8">
     <title>Developer's Guild Forum</title>
-    <link rel="stylesheet" href="styles.css" type="text/css" media="screen, projection">
+    <!--link rel="stylesheet" href="styles.css" type="text/css" media="screen, projection"-->
     <link href='http://fonts.googleapis.com/css?family=Economica' rel='stylesheet' type='text/css'>
     <link href='http://fonts.googleapis.com/css?family=Oswald:300' rel='stylesheet' type='text/css'>
   </head>
@@ -30,7 +30,7 @@
         <nav id="mainmenu" class="menu">
           <a href="#openModal">Register</a>
           <div id="openModal" class="modalDialog">
-              <div id="registerForm">   
+              <div id="registerForm">
                 <a href="#close" title="Close" class="close">X</a>
                 <h2>Register New Account</h2>
               <form action="/" method="post">
@@ -87,7 +87,7 @@
         <div id="loginhelp" class="menu">
           <a href="#forgot-pword">Forgot Password?</a>
           <div id="forgot-pword" class="modalDialog">
-              <div class="form">   
+              <div class="form">
                 <a href="#close" title="Close" class="close">X</a>
                 <h2>Retrieve Password</h2>
               <form action="/" method="post">
@@ -105,7 +105,7 @@
       </div>
     </div>
     <div id="subheader2">
-      <div class="container"> 
+      <div class="container">
         <nav id="threadmenu" class="menu">
           <span>
             <a href="#changethis" title="Reply" onClick="toggledisplay('changethis');">Post New Thread</a>
@@ -115,7 +115,7 @@
     </div>
     <div id="subheader3">
       <div class="container">
-        <!-- sort menu -->  
+        <!-- sort menu -->
         <nav id="sortmenu" class="menu">
           <span>
             <a href="index.html">Popular</a>
@@ -126,7 +126,7 @@
           <span>
             <a href="index.html">Oldest</a>
           </span>
-        </nav>  
+        </nav>
         <!-- searchbar -->
         <nav id="searchbar">
           <form id="search" action="/search" method="get">
@@ -160,10 +160,10 @@
       {% for thread in threads %}
       <u1 class="threadlist">
         <li id="post-1" class="thread">
-          <a href="thread/{{ thread._id }}" id="posttitle">{{ thread.subject }}</a>
+          <a href="thread/{{ thread.shortid }}" id="posttitle">{{ thread.subject }}</a>
           <span id="author">{{ thread.author }}</span>
           <span id="timestamp"> {{ convertToDate(thread.timestamp) }}</span>
-          <span id="views">(12 views)</span>
+          <span id="views">({{ thread.views }} views)</span>
         </li>
         </br>
       </u1>
@@ -171,7 +171,7 @@
     </div>
     <!-- Post New Thread -->
     <div id="subheader4">
-      <div class="container"> 
+      <div class="container">
         <nav id="threadmenu" class="menu">
           <span>
             <a href="#" title="Reply" onClick="toggledisplay('changethis');">Post New Thread</a>
