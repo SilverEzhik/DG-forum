@@ -1,23 +1,35 @@
+<!-- TODO LIST
+- Do clientside input validation using JQuery
+
+
+-->
+
 <!DOCTYPE html>
 <html>
 
   <head>
 
-   <meta charset="utf-8">
-   <link rel="stylesheet" href="../css/styles.css" type="text/css" media="screen, projection">
-   <title>{{ title }}</title>
+    <meta charset="utf-8">
+    <title>{% if title %}{{ title }} :: {% endif %}The Developers' Guild Forums</title>
+
+    <link rel="stylesheet" href="../css/styles.css" type="text/css" media="screen, projection">
+
+    <!-- Load Fonts -->
+    <link href='http://fonts.googleapis.com/css?family=Economica' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Oswald:300' rel='stylesheet' type='text/css'>
+
+
   </head>
 
   <body>
-    <div>
-     <!-- <h1>{{ title }}</h1> -->
-    </div>
+    {% include "partials/header.html" %}
+
     {% block page %}
     {% endblock %}
 
+    {% include "partials/footer.html" %}
+    <!-- Load the scripts AFTER the body as been loaded-->
+    <script src="../js/jquery-2.1.3.min.js"></script>
+    <script src="../js/scripts.js"></script>
   </body>
-
-
-
-
 </html>

@@ -1,148 +1,6 @@
 {% extends "base.html" %}
 
 {% block page %}
-
-<!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="utf-8">
-    <title>Official DG Forum Project Thread</title>
-    <!--link rel="stylesheet" href="styles.css" type="text/css" media="screen, projection"-->
-    <link href='http://fonts.googleapis.com/css?family=Economica' rel='stylesheet' type='text/css'>
-    <link href='http://fonts.googleapis.com/css?family=Oswald:300' rel='stylesheet' type='text/css'>
-  </head>
-  <body>
-      <script>
-        function toggledisplay(elementID)
-        {
-            (function(style) {
-                style.display = style.display === 'none' ? '' : 'none';
-            })(document.getElementById(elementID).style);
-        }
-      </script>
-    <!-- header -->
-    <div id="header">
-      <div class="container">
-        <!-- logo -->
-        <div id="logo">
-          <img src="img/dglogo.png" alt="DGLOGO" height="25px" width="25px">
-        </div>
-        <!-- main menu -->
-        <nav id="mainmenu" class="menu">
-          <a href="#openModal">Register</a>
-          <div id="openModal" class="modalDialog">
-              <div id="registerForm">
-                <a href="#close" title="Close" class="close">X</a>
-                <h2>Register New Account</h2>
-              <form action="/" method="post">
-                <div class="field-wrap">
-                      <label>
-                          First Name<span class="req">*</span>
-                      </label>
-                      <input type="text" required autocomplete="off" />
-                  </div>
-                  <div class="field-wrap">
-                          <label>
-                            Last Name<span class="req">*</span>
-                          </label>
-                          <input type="text"required autocomplete="off"/>
-                      </div>
-                  <div class="field-wrap">
-                          <label>
-                            Email Adress<span class="req">*</span>
-                          </label>
-                          <input type="email"required autocomplete="off"/>
-                      </div>
-                      <div class="field-wrap">
-                          <label>
-                            Password<span class="req">*</span>
-                          </label>
-                          <input type="password"required autocomplete="off"/>
-                      </div>
-                      <input id="register-btn" class="button" value="Register" type="submit">
-                  </form>
-              </div>
-          </div>
-          <a href="profile.html">Profile</a>
-          <a href="about.html">About</a>
-        </nav>
-        <!-- page title -->
-        <div id="title">
-          <a href="index.html">DEVELOPER'S GUILD FORUM</a>
-        </div>
-      </div>
-    </div>
-    <!-- sub headers -->
-    <div id="subheader1">
-      <div class="container">
-        <!-- login -->
-        <nav id="loginbar" class="menu">
-          <form id="login" action="/login" method="post" class="menu">
-            <input id="user" placeholder="username" type="text" maxlength="20">
-            <input id="password" placeholder="password" type="password">
-            <input id="login-btn" class="button" value="Login" type="submit">
-          </form>
-        </nav>
-      </div>
-      <div class="container">
-        <div id="loginhelp" class="menu">
-          <a href="#forgot-pword">Forgot Password?</a>
-          <div id="forgot-pword" class="modalDialog">
-              <div class="form">
-                <a href="#close" title="Close" class="close">X</a>
-                <h2>Retrieve Password</h2>
-              <form action="/" method="post">
-                  <div class="field-wrap">
-                          <label>
-                            Email Adress<span class="req">*</span>
-                          </label>
-                          <input type="email"required autocomplete="off"/>
-                      </div>
-                      <input id="submit-btn" class="button" value="Submit" type="submit">
-                  </form>
-              </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div id="subheader2">
-      <div class="container">
-        <nav id="threadmenu" class="menu">
-          <span>
-            <a href="index.html">Return to Forum</a>
-          </span>
-        </nav>
-      </div>
-    </div>
-    <div id="subheader3">
-      <div class="container">
-        <!-- searchbar -->
-        <nav id="searchbar" class="menu">
-          <form id="search" action="/search" method="get" class="menu">
-            <input id="search-box" name="q" size="40" type="text" placeholder="SEARCH FORUM"/>
-            <input id="search-btn" class="button" value="Search" type="submit"/>
-          </form>
-        </nav>
-      </div>
-      <!-- pagemenu -->
-      <nav id="pagemenu" class="menu">
-        <span id="prev">
-          <a href="#">&laquo Prev Page</a>
-        </span>
-        <span id="page">
-          <a href="#">1</a>
-        </span>
-        <span id="page">
-          <a href="#">2</a>
-        </span>
-        <span id="page">
-          <a href="#">3</a>
-        </span>
-        <span id="next">
-          <a href="#">Next Page &raquo</a>
-        </span>
-      </nav>
-    </div>
     <!-- main section-->
     <div id="mainsection">
       <!-- thread list -->
@@ -154,7 +12,6 @@
           <span id="timestamp">{{ convertToDate(thread.creationDate) }}</span>
         </li>
         </br>
-        {% if thread.replies[0] %}
           {% for reply in thread.replies %}
           <li id="post-1" class="thread">
             <span id="posttitle">{{ reply.message }}</span>
@@ -163,22 +20,22 @@
           </li>
           </br>
           {% endfor %}
-        {% endif %}
       </u1>
     </div>
+
     <!-- Reply -->
     <div id="subheader4">
       <div class="container">
         <nav id="threadmenu" class="menu">
           <span>
-            <a href="#changethis" title="Reply" onClick="toggledisplay('changethis');">Reply</a>
+            <a href="#" title="Reply" onClick="toggledisplay('changethis');">Reply</a>
           </span>
           <div id="changethis" style="display:none">
             <form action = "{{ thread.shortid }}/reply" method = "post" name = "makereply">
               <div class="post-message">
               Message:
               </div>
-              <textarea id="replybox" name="message" rows="10" cols="60" dir="ltr"></textarea>
+              <textarea name="message" rows="10" cols="60" required></textarea>
               <div>
                   <input id="post-btn" class="button" value="POST" type="submit"/>
               </div>
@@ -187,15 +44,5 @@
         </nav>
       </div>
     </div>
-    <!-- footer -->
-    <div id="footer">
-      <div class="container">
-      </div>
-    </div>
-  </body>
-</html>
-
-
-
 
 {% endblock %}

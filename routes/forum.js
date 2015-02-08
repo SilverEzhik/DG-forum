@@ -62,7 +62,7 @@ module.exports = function(app) {
       }
 
       var templateVars = {
-        title: 'Forums',
+        title: '',
         threads: doc,
         convertToDate: convertToDate
       };
@@ -120,22 +120,36 @@ module.exports = function(app) {
         code    : 400,
         message : 'You are not logged in.'
       };
+      res.send(result);
       return;
     }
 
     if (!subject) {
       result = {
         code    : 400,
-        message : 'Subject body may not be blank.'
+        message : 'Title may not be blank.'
       };
+      res.send(result);
+      return;
+    }
+
+
+    // Check to see if the title length is between 1-85 characters
+    if (!validator.isLength(subject, 1, 85)) {
+      result = {
+        code    : 400,
+        message : 'Title cannot be more than 85 characters.'
+      };
+      res.send(result);
       return;
     }
 
     if (!message) {
       result = {
         code    : 400,
-        message : 'Message field may not be blank.'
+        message : 'Message body may not be blank.'
       };
+      res.send(result);
       return;
     }
 
@@ -169,6 +183,7 @@ module.exports = function(app) {
         code    : 400,
         message : 'You are not logged in.'
       };
+      res.send(result);
       return;
     }
 
@@ -177,6 +192,7 @@ module.exports = function(app) {
         code    : 400,
         message : 'Thread not found.'
       };
+      res.send(result);
       return;
     }
 
@@ -185,6 +201,7 @@ module.exports = function(app) {
         code    : 400,
         message : 'Message body cannot be empty.'
       };
+      res.send(result);
       return;
     }
 

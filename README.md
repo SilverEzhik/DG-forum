@@ -3,23 +3,23 @@
 **How to Install**
 
 1. If you don't have Node.js, download it at [http://nodejs.org/](http://nodejs.org/) and install it.
-2. If you don't have MongoDB, download it at [https://www.mongodb.org/](https://www.mongodb.org/) and unzip the folder anywhere.
-3. Clone the repo.
-4. Navigate to the 'DG-forum' folder in terminal/cmd/bash.
-5. Run *npm install*. This will install all the packages used in the site.
-6. If you have Windows, run *export MONGO_ADDRESS=(addressintheskypechat)* to set the environment variable to connect to the DB in the code.
-7. If you have Mac, run *MONGO_ADDRESS=(addressintheskypechat)* to set the environment variable to connect to the DB in the code.
-8. Go back to your first terminal/cmd/bash and run *node index.js* to start up the server.
-9. Open [http://localhost:3000/](http://localhost:3000/) and you should be at the site.
+2. Clone the repo.
+3. Navigate to the 'DG-forum' folder in terminal/cmd/bash.
+4. Run *npm install*. This will install all the packages used in the site.
+5. If you have Windows, run *export MONGO_ADDRESS=(addressintheskypechat)* to set the environment variable to connect to the DB in the code.
+6. If you have Mac, run *MONGO_ADDRESS=(addressintheskypechat)* to set the environment variable to connect to the DB in the code.
+7. Go back to your first terminal/cmd/bash and run *node index.js* to start up the server.
+8. Open [http://localhost:3000/](http://localhost:3000/) and you should be at the site.
 
 **Other Info**
+
 - HTML templates go in the "views" folder
 - Untemplated HTML files go in the "frontend-views" folder
 - CSS, Non-Node JS, and IMG files go in the "public" folder in their respective folders
-- Starting up the MongoDB might be a bit complicated, so refer to the "Dead Simple Guide to Node.js, Express, and MongoDB" link below.
-- If we can host the DB on a server, like DG's website, then we can cut out a huge chunk of the requirement for getting the server to run, plus we'd all be working with the same data instead of having to create makeshift data.
+- Do not push directly to master. Work on a branch (or fork), and make Pull Requests.
 
 **Node Packages Used**
+
 - Express
 - Mongoose
 - Nunjucks
@@ -33,15 +33,18 @@
 - Async
 
 **Coding Style**
+
 We'll be using [Airbnb's Javascript Style Guide](https://github.com/airbnb/javascript)
 
 **Good Links to Check Out**
+
 - [Express' Website](http://expressjs.com/)
 - [npm's Website](https://www.npmjs.com/)
 - [Dead Simple Guide to Node.js, Express, and MongoDB](http://cwbuecheler.com/web/tutorials/2013/node-express-mongo/)
 - [Javascript Style Guide](https://github.com/airbnb/javascript)
 
 **Group Members**
+
 - Alex - Project Lead, Frontend Developer
 - Brandon - Frontend Developer
 - Chris - Backend Developer
