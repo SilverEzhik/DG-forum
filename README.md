@@ -8,15 +8,16 @@
 4. Run *npm install*. This will install all the packages used in the site.
 5. If you have Windows, run *export MONGO_ADDRESS=(addressintheskypechat)* to set the environment variable to connect to the DB in the code.
 6. If you have Mac, run *MONGO_ADDRESS=(addressintheskypechat)* to set the environment variable to connect to the DB in the code.
-7. Go back to your first terminal/cmd/bash and run *node index.js* to start up the server.
-8. Open [http://localhost:3000/](http://localhost:3000/) and you should be at the site.
+7. If you have Linux, run *MONGO_ADDRESS='(addressintheskypechat)'* node index.js. This is similar to the Mac method, but with single quotes.
+8. Go back to your first terminal/cmd/bash and run *node index.js* to start up the server.
+9. Open [http://localhost:3000/](http://localhost:3000/) and you should be at the site.
 
 **Other Info**
 
 - HTML templates go in the "views" folder
 - Untemplated HTML files go in the "frontend-views" folder
 - CSS, Non-Node JS, and IMG files go in the "public" folder in their respective folders
-- Do not push directly to master. Work on a branch (or fork), and make Pull Requests.
+- Do not push directly to master. Work on a branch (or fork), and make Pull Requests. Any commits pushed directly onto master will be reverted.
 
 **Node Packages Used**
 
