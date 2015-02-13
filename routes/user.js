@@ -2,14 +2,19 @@
 module.exports = function(app) {
 
   'use strict';
-
-  var moment    = require('moment');
   var validator = require('validator');
 
   var User = require('.././models/user');
 
+  // Username can only contain letters, numbers, underscores, and dashes
   var isUsername = function (str) {
     var regex = /^[a-zA-Z0-9-_]+$/;
+    return regex.test(str);
+  };
+
+  // Full Name can only contain letters and spaces.
+  var isFullName = function (str) {
+    var regex = /^[a-zA-Z ]+$/;
     return regex.test(str);
   };
 
@@ -19,6 +24,15 @@ module.exports = function(app) {
     var password  = validator.toString(req.body.password);
 
     var result;
+
+    if (req.session.user) {
+      result = {
+        code    : 400,
+        message : 'You are already logged in.'
+      };
+      res.send(result);
+      return;
+    }
     if (!usernameEmail) {
       result = {
         code    : 400,
@@ -42,7 +56,16 @@ module.exports = function(app) {
         res.send(err);
         return;
       }
-      res.send('you logged in!');
+
+      req.session.user = doc;
+
+      //         ms      s    m    h    d
+      var week = 1000 * 60 * 60 * 24 * 7;
+
+      // Set the session to expire in a week
+      req.session.cookie.expires = new Date(Date.now() + week);
+
+      res.send('You logged in!');
 
     });
   };
@@ -53,9 +76,17 @@ module.exports = function(app) {
     var email     = validator.toString(req.body.email);
     var password  = validator.toString(req.body.password);
     var fName     = validator.toString(req.body.fName);
-    var lName     = validator.toString(req.body.lName);
 
     var result;
+
+    if (req.session.user) {
+      result = {
+        code    : 400,
+        message : 'You already have an account.'
+      };
+      res.send(result);
+      return;
+    }
 
     // Check to see if the user input a username that's between 4-20 characters
     if (!validator.isLength(username, 4, 20)) {
@@ -104,34 +135,16 @@ module.exports = function(app) {
       return;
     }
 
-    if (!lName) {
+    if (!isFullName(fName)) {
       result = {
         code    : 400,
-        message : 'Last Name field cannot be empty.'
+        message : 'Full Name can only contain letters and spaces.'
       };
       res.send(result);
       return;
     }
 
-    if (!validator.isAlpha(fName)) {
-      result = {
-        code    : 400,
-        message : 'First Name can only contain letters.'
-      };
-      res.send(result);
-      return;
-    }
-
-    if (!validator.isAlpha(lName)) {
-      result = {
-        code    : 400,
-        message : 'Last Name can only contain letters.'
-      };
-      res.send(result);
-      return;
-    }
-
-    User.create(username, email, password, fName, lName, function(err, doc) {
+    User.create(username, email, password, fName, function(err, doc) {
       if (err) {
         res.send(err);
       } else {
@@ -142,8 +155,11 @@ module.exports = function(app) {
 
   var renderLoginPage = function(req, res, wrongPass) {
 
+
+
     var templateVars = {
-      title: 'Login'
+      title: 'Login',
+      sessUser: req.session.user
     };
 
     //render template

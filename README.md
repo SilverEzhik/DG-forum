@@ -28,10 +28,10 @@
 - Cookie-Parser
 - Validator
 - Bcrypt
-- ShortId
 - Express-Session
 - Connect-Mongo
 - Async
+- Multer
 
 **Coding Style**
 

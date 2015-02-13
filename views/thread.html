@@ -23,6 +23,7 @@
       </u1>
     </div>
 
+    {% if sessUser %}
     <!-- Reply -->
     <div id="subheader4">
       <div class="container">
@@ -31,7 +32,7 @@
             <a href="#" title="Reply" onClick="toggledisplay('changethis');">Reply</a>
           </span>
           <div id="changethis" style="display:none">
-            <form action = "{{ thread.shortid }}/reply" method = "post" name = "makereply">
+            <form action = "{{ thread.prettyId }}/reply" method = "post" name = "makereply">
               <div class="post-message">
               Message:
               </div>
@@ -44,5 +45,5 @@
         </nav>
       </div>
     </div>
-
+    {% endif %}
 {% endblock %}

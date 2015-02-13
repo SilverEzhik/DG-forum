@@ -2,7 +2,6 @@
 
 var async     = require('async');
 var bcrypt    = require('bcrypt');
-var moment    = require('moment');
 var mongoose  = require('mongoose');
 var validator = require('validator');
 
@@ -12,7 +11,34 @@ var db = require('./database');
 // Titles for users
 // README: The Forum Developer title exists so forum developers can have access
 // To tools required to work on the forums.
-var titles = ['Guest', 'Member', 'Officer', 'President', 'Forum Developer'];
+var TITLES = [
+  {
+    label: 'Guest',
+    color: '#ffffff'
+  }, {
+    label: 'Member',
+    color: '#0070FF'
+  }, {
+    label: 'Officer',
+    color: '#00aa00'
+  }, {
+    label: 'Forum Developer',
+    color: '#A06000'
+  }
+];
+
+var STOCKAVATARS = ['dg.png', 'github.png', 'bitbucket.png', 'deanza.png',
+                    'nodejs.png', 'swift.png', 'windows.png', 'osx.png',
+                    'linux.png', 'stackoverflow.png'];
+
+// Get a random stock avatar
+function getRandomStockAvatar() {
+    return STOCKAVATARS[
+
+      // Generate random subscript within the 0 - array length
+      Math.floor(Math.floor(Math.random() * STOCKAVATARS.length))
+    ];
+}
 
 var UserSchema = mongoose.Schema({
   username      : { type: String, required: true,  unique: true },
@@ -20,13 +46,14 @@ var UserSchema = mongoose.Schema({
   email         : { type: String, required: true,  unique: true },
   emailLower    : { type: String, required: true,  unique: true },
   password      : { type: String, required: true },
-  creationDate  : { type: Number, default: moment().unix() },
+  creationDate  : { type: Number, default: Date.now },
   title         : { type: Number, default: 0 },
   banned        : { type: Boolean, default: false },
   retired       : { type: Boolean, default: false },
+  lastActivity  : { type: Number, default: Date.now },
   profile       : {
-    firstName     : { type: String, required: true },
-    lastName      : { type: String, required: true },
+    fullName      : { type: String, required: true },
+    avatarPath    : { type: String, default: getRandomStockAvatar },
     bio           : { type: String },
     website       : { type: String },
     githubName    : { type: String }
@@ -47,7 +74,6 @@ var logInUser = function(usernameEmail, password, callback) {
             message : 'Can\'t find that email.'
           };
           callback(result);
-          console.error(err);
         } else {
           bcrypt.compare(password, doc.password, function(err, correct) {
             if (!correct) {
@@ -73,7 +99,6 @@ var logInUser = function(usernameEmail, password, callback) {
             message : 'Can\'t find that username.'
           };
           callback(result);
-          console.error(err);
         } else {
           bcrypt.compare(password, doc.password, function(err, correct) {
             if (!correct) {
@@ -92,7 +117,7 @@ var logInUser = function(usernameEmail, password, callback) {
   }
 };
 
-var createUser = function(username, email, password, fName, lName, callback) {
+var createUser = function(username, email, password, fName, callback) {
 
   // Use series to check to see if username or email already exists
   async.series([
@@ -141,8 +166,7 @@ var createUser = function(username, email, password, fName, lName, callback) {
             emailLower    : email.toLowerCase(),
             password      : hash,
             profile : {
-              firstName: fName,
-              lastName : lName
+              fullName: fName
             }
           });
 

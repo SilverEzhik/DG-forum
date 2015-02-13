@@ -9,49 +9,25 @@ module.exports = function(app) {
 
   var Thread  = require('.././models/thread');
 
+  // TODO: Move this to the client side
   // Convert unix timestamps into readable human time
   var convertToDate = function(timeStamp) {
 
-    // Get current time in Unix
-    var curTime = moment().unix();
-    var timeDifference = (curTime - timeStamp);
-    if (timeDifference < 60) {
-
-      return (timeDifference + ' seconds ago');
-
-      // else if time difference is less than an hour
-    } else if (timeDifference < (60 * 60) ) {
-
-      var minutes = Math.floor(timeDifference / 60);
-      return (minutes + ' minutes ago');
-
-      // else if time is less than a day
-    } else if (timeDifference < (60 * 60 * 24) ) {
-
-      var hours = Math.floor(timeDifference / (60 * 60) );
-      return (hours + ' hours ago');
-
-      // else if time is less than 7 days (a week)
-    } else if (timeDifference < (60 * 60 * 24 * 7) ) {
-
-      var days = Math.floor(timeDifference / (60 * 60 * 24) );
-      return (days + ' days ago');
-
-      // else if time is less than 4 weeks
-    } else if (timeDifference < (60 * 60 * 24 * 7 * 4) ) {
-
-      var weeks = Math.floor(timeDifference / (60 * 60 * 24 * 7) );
-      return (weeks + ' weeks ago');
-
-    } else {
-
-      // TODO: Make this return a proper date etc. January 21, 2015
-      return moment.unix(timeStamp).format('MMMM Do, YYYY');
-    }
-
+      return moment(timeStamp).fromNow();
   };
 
   var handleForumFetch = function(req, res) {
+
+    // Refresh the user's session expiration date if they view the forums
+    // so that active users can continuously use the forums
+    if (req.session.user) {
+
+      //         ms      s    m    h    d
+      var week = 1000 * 60 * 60 * 24 * 7;
+
+      // Set the session to expire in a week
+      req.session.cookie.expires = new Date(Date.now() + week);
+    }
 
     // Grab all threads.
     Thread.getAll(function(err, doc) {
@@ -64,7 +40,8 @@ module.exports = function(app) {
       var templateVars = {
         title: '',
         threads: doc,
-        convertToDate: convertToDate
+        convertToDate: convertToDate,
+        sessUser: req.session.user
       };
 
 
@@ -97,7 +74,8 @@ module.exports = function(app) {
       var templateVars = {
         title: doc.subject,
         thread: doc,
-        convertToDate: convertToDate
+        convertToDate: convertToDate,
+        sessUser: req.session.user
       };
 
       // Render template
@@ -110,7 +88,7 @@ module.exports = function(app) {
     var message = validator.toString(req.body.message);
 
     // TODO: Replace this with the actual name of the author
-    var author = 'Anonymous';
+    var author = req.session.user.username;
 
     //var author = req.session.author;
     var result;
@@ -133,7 +111,6 @@ module.exports = function(app) {
       return;
     }
 
-
     // Check to see if the title length is between 1-85 characters
     if (!validator.isLength(subject, 1, 85)) {
       result = {
@@ -153,15 +130,17 @@ module.exports = function(app) {
       return;
     }
 
-    Thread.create(subject, message, author, function(err, doc) {
+    Thread.create(subject, message, author, function(err, result, doc) {
 
       if (err) {
-        res.send(err);
-        return;
+
+        res.send(result);
+
+        return console.error(err);
       } else {
 
         console.log('New thread created');
-        res.redirect('/thread/'+ doc.shortid);
+        res.redirect('/thread/'+ doc.prettyId);
       }
 
     });
@@ -173,8 +152,7 @@ module.exports = function(app) {
 
     var message = validator.toString(req.body.message);
 
-    // TODO: Change this to the actually author
-    var author = 'Anonymous';
+    var author = req.session.user.username;
 
     var result;
 
