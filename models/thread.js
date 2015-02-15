@@ -17,14 +17,19 @@ var ThreadSchema = mongoose.Schema({
   views       : { type: Number, required: true, default: 0 },
   creationDate: { type: Number, default: Date.now },
   lastupdate  : { type: Number, default: Date.now },
+  edited      : { type: Boolean, default: false},
+  locked      : { type: Boolean, default: false},
+  pinned      : { type: Boolean, default: false},
+  deleted     : { type: Boolean, default: false},
   replies     : [{
     author      : { type: String, required: true },
     message     : { type: String, required: true },
-    creationDate: { type: Number, default: Date.now }
+    creationDate: { type: Number, default: Date.now },
+    edited   : { type: Boolean, default: false}
   }]
 });
 
-var ThreadMongoModel = db.model('threads', ThreadSchema);
+var ThreadMongoModel = db.model('gdThreads', ThreadSchema);
 
 
 var generatePrettyId = function(callback, counter) {

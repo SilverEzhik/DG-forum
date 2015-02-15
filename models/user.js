@@ -52,10 +52,11 @@ var UserSchema = mongoose.Schema({
   lastActivity  : { type: Number, default: Date.now },
   profile       : {
     fullName      : { type: String, required: true },
-    avatarPath    : { type: String, default: getRandomStockAvatar },
+    avatar        : { type: String, default: getRandomStockAvatar },
     bio           : { type: String },
     website       : { type: String },
-    githubName    : { type: String }
+    githubName    : { type: String },
+    signature     : { type: String }
   }
 });
 
