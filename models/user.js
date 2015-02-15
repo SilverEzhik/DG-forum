@@ -11,6 +11,7 @@ var db = require('./database');
 // Titles for users
 // README: The Forum Developer title exists so forum developers can have access
 // To tools required to work on the forums.
+// Guest: White, Member: Blue, Officer: Green
 var TITLES = [
   {
     label: 'Guest',
@@ -21,9 +22,6 @@ var TITLES = [
   }, {
     label: 'Officer',
     color: '#00aa00'
-  }, {
-    label: 'Forum Developer',
-    color: '#A06000'
   }
 ];
 
@@ -49,6 +47,7 @@ var UserSchema = mongoose.Schema({
   creationDate  : { type: Number, default: Date.now },
   title         : { type: Number, default: 0 },
   banned        : { type: Boolean, default: false },
+  forumDev      : { type: Boolean, default: false},
   retired       : { type: Boolean, default: false },
   lastActivity  : { type: Number, default: Date.now },
   profile       : {

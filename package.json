@@ -2,7 +2,7 @@
   "name": "dg-forum",
   "version": "0.1.0",
   "description": "This is the forum for the De Anza Developers' Guild",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
