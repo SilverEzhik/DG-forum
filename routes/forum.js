@@ -22,7 +22,7 @@ module.exports = function(app) {
     // so that active users can continuously use the forums
     if (req.session.user) {
 
-      //         ms      s    m    h    d
+      // 1 week
       var week = 1000 * 60 * 60 * 24 * 7;
 
       // Set the session to expire in a week

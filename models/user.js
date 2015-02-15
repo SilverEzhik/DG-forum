@@ -179,15 +179,9 @@ var createUser = function(username, email, password, fName, callback) {
                 code    : 500,
                 message : 'Something went wrong in the database. Try again.'
               };
-            } else {
-              result = {
-                code    : 200,
-                message : 'User successfully added to the database.'
-
-              };
             }
 
-            callback(result);
+            callback(result, doc);
 
           });
         });

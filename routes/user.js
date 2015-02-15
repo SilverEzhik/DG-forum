@@ -65,7 +65,10 @@ module.exports = function(app) {
       // Set the session to expire in a week
       req.session.cookie.expires = new Date(Date.now() + week);
 
-      res.send('You logged in!');
+      res.send({
+        code    : 200,
+        message : 'You have logged in.'
+      });
 
     });
   };
@@ -148,14 +151,25 @@ module.exports = function(app) {
       if (err) {
         res.send(err);
       } else {
-        //doc
+
+        req.session.user = doc;
+
+        // 1 week
+        var week = 1000 * 60 * 60 * 24 * 7;
+
+        // Set the session to expire in a week
+        req.session.cookie.expires = new Date(Date.now() + week);
+
+        res.send({
+          code    : 200,
+          message : 'Account successfully created.'
+        });
       }
+
     });
   };
 
   var renderLoginPage = function(req, res, wrongPass) {
-
-
 
     var templateVars = {
       title: 'Login',
@@ -166,7 +180,36 @@ module.exports = function(app) {
     res.render('login.html', templateVars);
   };
 
+  var handleLogoutRequest = function(req, res) {
+
+    if (!req.session.user) {
+      var result = {
+        code    : 400,
+        message : 'You are not logged in.'
+      };
+      res.send(result);
+      return;
+    }
+
+    req.session.destroy(function(err) {
+      var result;
+      if (err) {
+        result = {
+          code: 500,
+          message: 'Something went wrong in the database.'
+        };
+      } else {
+        result = {
+          code: 200,
+          message: 'You have successfully logged out. Good bye!'
+        };
+      }
+      res.send(result);
+    });
+  };
+
   app.get('/login'  , renderLoginPage);
   app.post('/login' , handleLoginRequest);
+  app.get('/logout' , handleLogoutRequest);
   app.post('/signup', handleSignupRequest);
 };

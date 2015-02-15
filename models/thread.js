@@ -25,7 +25,7 @@ var ThreadSchema = mongoose.Schema({
     author      : { type: String, required: true },
     message     : { type: String, required: true },
     creationDate: { type: Number, default: Date.now },
-    edited   : { type: Boolean, default: false}
+    edited      : { type: Boolean, default: false}
   }]
 });
 
