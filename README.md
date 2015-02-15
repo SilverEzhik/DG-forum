@@ -14,6 +14,7 @@
 
 **Other Info**
 
+- [Use Trello to track updates.](https://trello.com/b/fBh5sEFF/developers-guild-forum)
 - HTML templates go in the "views" folder
 - Untemplated HTML files go in the "frontend-views" folder
 - CSS, Non-Node JS, and IMG files go in the "public" folder in their respective folders
