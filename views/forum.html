@@ -7,11 +7,11 @@
       <!-- thread list -->
       {% for thread in threads %}
       <u1 class="threadlist">
-        <li id="post-1" class="thread">
+        <li class="thread" class="thread">
           <a href="thread/{{ thread.prettyId }}" id="posttitle">{{ thread.subject }}</a>
-          <span id="author">{{ thread.author }}</span>
-          <span id="timestamp"> {{ convertToDate(thread.creationDate) }}</span>
-          <span id="views">({{ thread.views }} views)</span>
+          <span class="author">{{ thread.author }}</span>
+          <span class="timestamp"> {{ convertToDate(thread.creationDate) }}</span>
+          <span class="views">({{ thread.views }} views)</span>
         </li>
         </br>
       </u1>

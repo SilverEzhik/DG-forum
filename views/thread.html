@@ -6,17 +6,17 @@
       <!-- thread list -->
       <h1 id="threadtitle">{{ thread.subject }}</h1>
       <u1 class="threadlist">
-        <li id="post-1" class="thread">
-          <span id="posttitle">{{ thread.message }}</span>
-          <span id="author">{{ thread.author }}</span>
-          <span id="timestamp">{{ convertToDate(thread.creationDate) }}</span>
+        <li class="post" class="thread">
+          <span class="posttitle">{{ thread.message }}</span>
+          <span class="author">{{ thread.author }}</span>
+          <span class="timestamp">{{ convertToDate(thread.creationDate) }}</span>
         </li>
         </br>
           {% for reply in thread.replies %}
-          <li id="post-1" class="thread">
-            <span id="posttitle">{{ reply.message }}</span>
-            <span id="author">{{ reply.author }}</span>
-            <span id="timestamp">{{ convertToDate(reply.creationDate) }}</span>
+          <li class="post" class="thread">
+            <span class="posttitle">{{ reply.message }}</span>
+            <span class="author">{{ reply.author }}</span>
+            <span class="timestamp">{{ convertToDate(reply.creationDate) }}</span>
           </li>
           </br>
           {% endfor %}

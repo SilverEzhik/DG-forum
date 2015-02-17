@@ -9,8 +9,7 @@ module.exports = function(app) {
 
   var Thread  = require('.././models/thread');
 
-  // TODO: Move this to the client side
-  // Convert unix timestamps into readable human time
+  // Conver timestamps into readable human time
   var convertToDate = function(timeStamp) {
 
       return moment(timeStamp).fromNow();

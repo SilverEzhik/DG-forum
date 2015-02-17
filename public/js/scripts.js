@@ -1,4 +1,5 @@
 'use strict';
+/* jshint undef: false*/
 
 var toggledisplay = function(elementID) {
   (function(style) {
