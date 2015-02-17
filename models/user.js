@@ -194,15 +194,74 @@ var getUser = function() {
 
 };
 
-var getAllUsers = function() {
+var getAllMembers = function() {
 
 };
 
+var changeUserTitle = function(username, titleNum, callback) {
+  UserMongoModel.findOneAndUpdate({ usernameLower: username.toLowerCase() },
+    { title: titleNum }, function(err, doc) {
+      var result;
+      if (err) {
+        result = {
+          code    : 500,
+          message : 'Something went wrong in the database. Try again.'
+        };
+      } else if (!doc) {
+        result = {
+          code    : 400,
+          message : 'Couldn\'t find that user.'
+        };
+      } else {
+        result = {
+          code: 200,
+          message: doc.username + ' is now a ' + TITLES[doc.title].label + '.'
+        };
+      }
+      callback(result);
+    }
+  );
+};
+
+var makeUserForumDev = function(username, bool, callback) {
+  UserMongoModel.findOneAndUpdate({ usernameLower: username.toLowerCase() },
+    { forumDev: bool }, function(err, doc) {
+      var result;
+      if (err) {
+        result = {
+          code    : 500,
+          message : 'Something went wrong in the database. Try again.'
+        };
+      } else if (!doc) {
+        result = {
+          code    : 400,
+          message : 'Couldn\'t find that user.'
+        };
+      } else {
+        var message;
+        if (doc.forumDev) {
+          message = doc.username + ' is now a forum developer.';
+
+        } else {
+          message = doc.username + ' is no longer a forum developer.';
+        }
+        result = {
+          code: 200,
+          message: message
+        };
+      }
+      callback(result);
+    }
+  );
+};
+
 var UserModel = {
-  login : logInUser,
+  login: logInUser,
   create: createUser,
-  get   : getUser,
-  getAll: getAllUsers
+  get: getUser,
+  getMembers: getAllMembers,
+  changeTitle: changeUserTitle,
+  makeForumDev: makeUserForumDev
 };
 
 module.exports = UserModel;

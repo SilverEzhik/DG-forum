@@ -33,6 +33,7 @@
 - Connect-Mongo
 - Async
 - Multer
+- Minimist
 
 **Coding Style**
 
