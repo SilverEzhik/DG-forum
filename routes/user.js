@@ -239,14 +239,21 @@ module.exports = function(app) {
 
   var handleProfileRequest = function(req, res){
 
-    //use the User model and get the User
-    User.get(req.params.userid, function(result, doc){
+    //sanitize username
+    var username = validator.toString(req.params.userid);
+
+    //use the User model and get the User 
+    User.get(username, function(errResult, doc){
 
       //not sure if this is clean
       if(!doc)
-        res.send(result);
+        res.send(errResult);
       else
-        res.send(doc.profile);
+        res.send({
+          code: 200,
+          message: 'User found',
+          user: doc
+        });
 
     });
 

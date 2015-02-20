@@ -192,29 +192,24 @@ var createUser = function(username, email, password, fName, callback) {
 
 var getUser = function(username, callback) {
 
-  var result;
+  var errorResult;
 
   UserMongoModel.findOne({usernameLower: username.toLowerCase()},
     function(err, doc) {
 
       
       if(err)
-        result = {
+        errorResult = {
           code    : 500,
           message : 'Something went wrong in the database.'
         };
       else if(!doc)
-        result = {
+        errorResult = {
           code    : 400,
-          message : 'User ' + username + ' could not be found.'
-        };
-      else
-        result = {
-          code    : 200,
-          message : 'Successfully found user ' + username
+          message : 'User could not be found.'
         };
 
-      callback(result, doc);
+      callback(errorResult, doc);
 
     }
 
