@@ -4,6 +4,7 @@
     <div class ="modal-content">
       <div class ="modal-header">
         <span>Login</span>
+        <a href="#" style="float:right;" data-dismiss="modal">X</a>
       </div>
 		<div class="modal-body">
 		  <form id="login_form" action="/login" method="post">
@@ -21,10 +22,35 @@
 		      <label id="error_login" style="display:none"></label>
 		    </div>
 		  </form>
+		  <div><a href="#forgot" data-toggle="modal">Forgot Password</a></div>
 		</div>
 	</div>
   </div>
 </div>
-
-
 <!-- END LOGIN MODAL -->
+
+<!-- FORGOT PWORD MODAL -->
+<div class="modal fade" id="forgot" role="dialog">
+	<div class ="modal-dialog">
+		<div class ="modal-content">
+			<div class ="modal-header">
+				<span>Forgot Password</span>
+				<a href="#" style="float:right;" data-dismiss="modal">X</a>
+			</div>
+			<div class="modal-body">
+				<form id="" action="" method="">
+					<img src="../img/loading.gif" id="loadingIcon_login" height="32px" width="32px" style="display:none">
+					<div class="fieldset">
+						<div class="field">
+							<label for="email">Email address</label>
+							<input autocapitalize="off" required autocomplete="off" id="email" placeholder="Email address">
+						</div>
+						<input class="btn" value="Recover password" type="submit">
+						<label id="error_login" style="display:none"></label>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- END FORGOT PWORD MODAL -->

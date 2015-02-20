@@ -54,7 +54,7 @@
     </div>
     <!-- END GENERAL DISCUSSION -->
 
-    <!-- FEED -->
+    <!-- FEED -
     <div class="feed-title"><span>Feed</span></div>
     <div class="feed-container">
       <ul class="feed">
@@ -92,14 +92,13 @@
         <div class ="modal-content">
           <div class ="modal-header">
             <span>Post New Thread</span>
+            <a href="#" style="float:right;" data-dismiss="modal">X</a>
           </div>
           <div class="modal-body">
             <form id="createThread_form"action="makethread" method="post" name="makethread">
               <img src="../img/loading.gif" id="loadingIcon_createThread" height="32px" width="32px" style="display:none">
-              <div class="post-thread">Title:</div>
-              <textarea name="subject" id="titlebox" rows="1" dir="ltr" maxlength="50" required></textarea>
-              <div class="post-message">Message:</div>
-              <textarea name="message" id="replybox" name="reply" rows="10" dir="ltr" required></textarea>
+              <textarea name="subject" id="titlebox" rows="1" dir="ltr" maxlength="50" required placeholder="Title"></textarea>
+              <textarea name="message" id="replybox" name="reply" rows="10" dir="ltr" required placeholder="Message"></textarea>
               <div>
                   <input class="btn" class="button" value="POST" type="submit"/>
                   <label id="error_createThread" style="display:none"></label>

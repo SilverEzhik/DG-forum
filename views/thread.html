@@ -6,7 +6,7 @@
 			<div class="thread-menubar">
 				<span id="discussion-title"><a href="../">General Discussion</a></span>
 				<span class="divider">|</span> 
-				<span class="thread-title-menu">Sample thread</span>
+				<span class="thread-title-menu">{{ thread.subject }}</span>
 				<span id="pages">
 					<a href="#">Prev</a>
 					<span>1</span>
@@ -21,7 +21,7 @@
 				</span>
 				{% endif %}
 			</div>
-			<!-- END THREAD MENU BAR -->
+			<!-- END THREAD MENU BAR --> 
 
 			<div>
 				<!-- THREAD -->
@@ -30,17 +30,15 @@
 						<div class="avatar"></div>
 						<div class="thread-row1">
 							<span class="thread-title">{{ thread.subject }}</span>
-						</div>
-						<div class="thread-row2">
-							<span><a href="#" class="author">{{ thread.author }}</a>{{ convertToDate(thread.creationDate) }}</span>
+							<div><a href="#" class="author">{{ thread.author }}</a> {{ convertToDate(thread.creationDate) }}</div>
 						</div>
 						<div class="thread-body">{{ thread.message }}</div>
 					</li>
 
 					<!-- REPLIES -->
-					{{% for reply in thread.replies %}}
+					{% for reply in thread.replies %}
 
-					{% if loop.index % 2 == 0}
+					{% if loop.index % 2 == 0 %}
 					<li class="thread-border">
 					{% else %}
 					<li class="thread-no-border">
@@ -84,7 +82,4 @@
 			</div>
 		</div>
 		<!-- END POST REPLY MODAL -->
-	</body>
-</html>
-
 {% endblock %}

@@ -97,7 +97,7 @@ body{
 
 .discussion-container{
 	float: left;
-	width: 75%;
+	width: 97.5%;
 	overflow: auto;
 	padding-left: 2.5%;
 
@@ -148,7 +148,7 @@ body{
 }
 
 .feed-item-white{
-	background-color: #FFFFFF;
+	background-color: #FFF;
 	padding: 1em;
 	border-bottom: 1px solid #d4d4d4;
 }
@@ -241,6 +241,10 @@ figcaption p{
   
 }
 
+.g-recaptcha{
+	margin: 0 auto;
+}
+
 .header{
 	height: 60px;
 	padding: 0 1em;
@@ -271,6 +275,10 @@ input{
 	color: #777;
 	height: 56px;
 	vertical-align: middle;
+}
+
+.field input:-webkit-autofill{
+	background-color: white;
 }
 
 label{
@@ -584,7 +592,7 @@ textarea{
 
 .thread-title{
 	font-size: 1.2em;
-	background-color: #777;
+	background-color: #FFF;
 	overflow: hidden;
 }
 
