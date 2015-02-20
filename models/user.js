@@ -190,9 +190,33 @@ var createUser = function(username, email, password, fName, callback) {
 
 };
 
-var getUser = function() {
+var getUser = function(username, callback) {
+
+  var errorResult;
+
+  UserMongoModel.findOne({usernameLower: username.toLowerCase()},
+    function(err, doc) {
+
+      
+      if(err)
+        errorResult = {
+          code    : 500,
+          message : 'Something went wrong in the database.'
+        };
+      else if(!doc)
+        errorResult = {
+          code    : 400,
+          message : 'User could not be found.'
+        };
+
+      callback(errorResult, doc);
+
+    }
+
+  );
 
 };
+
 
 var getAllMembers = function() {
 
