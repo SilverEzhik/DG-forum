@@ -1,197 +1,181 @@
 <!DOCTYPE html>
-<html>
 	<head>
 		<meta charset="utf-8">
-		<title>Official DG Forum Project Thread</title>
+		<title>DG Forum - Sample thread</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link rel="stylesheet" href="bootstrap.min.css" >
 		<link rel="stylesheet" href="style.css" type="text/css" media="screen, projection">
-		<link href='http://fonts.googleapis.com/css?family=Economica' rel='stylesheet' type='text/css'>
-		<link href='http://fonts.googleapis.com/css?family=Oswald:300' rel='stylesheet' type='text/css'>
 	</head>
 	<body>
-	    <script>
-		    function toggledisplay(elementID)
-		    {
-		        (function(style) {
-		            style.display = style.display === 'none' ? '' : 'none';
-		        })(document.getElementById(elementID).style);
-		    }
-    	</script>
-		<!-- header -->
-		<div id="header">
-			<div class="container">
-				<!-- logo -->
-				<div id="logo">
-					<img src="img/dglogo.png" alt="DGLOGO" height="25px" width="25px">
-				</div>
-				<!-- main menu -->
-				<nav id="mainmenu" class="menu">
-					<a href="#openModal">Register</a>
-					<div id="openModal" class="modalDialog">
-    					<div id="registerForm">   
-    						<a href="#close" title="Close" class="close">X</a>
-    						<h2>Register New Account</h2>
-							<form action="/" method="post">
-								<div class="field-wrap">
-							        <label>
-							            First Name<span class="req">*</span>
-							        </label>
-							        <input type="text" required autocomplete="off" />
-							    </div>
-							    <div class="field-wrap">
-					                <label>
-					                	Last Name<span class="req">*</span>
-					              	</label>
-					              	<input type="text"required autocomplete="off"/>
-					            </div>
-					   			<div class="field-wrap">
-					                <label>
-					                	Email Adress<span class="req">*</span>
-					              	</label>
-					              	<input type="email"required autocomplete="off"/>
-					            </div>
-					            <div class="field-wrap">
-					                <label>
-					                	Password<span class="req">*</span>
-					              	</label>
-					              	<input type="password"required autocomplete="off"/>
-					            </div>
-					            <input id="register-btn" class="button" value="Register" type="submit">
-					        </form>
-    					</div>
-					</div>
-					<a href="profile.html">Profile</a>
-					<a href="about.html">About</a>
-				</nav>
-				<!-- page title -->
-				<div id="title">
-					<a href="index.html">DEVELOPER'S GUILD FORUM</a>
-				</div>
+		<!-- HEADER -->
+		<div class="header">
+			<div class="logo">
+				<img src="img/dglogo.png" alt="DGLOGO" height="60px" width="60px">
 			</div>
+				<ul class="title">
+					<li><a href="index.html">Developer's Guild Forum</a></li>
+				</ul>
+				<!-- MENU -->
+				<ul class="menu">
+					<li><a href="profile.html">Profile</a></li>
+					<li><a href="#register" data-toggle="modal">Register</a></li>
+					<li><a href="members.html">Members</a></li>
+				</ul>
+				<!-- ENG MENU -->
 		</div>
-		<!-- sub headers -->
-		<div id="subheader1">
-			<div class="container">
-				<!-- login -->
-				<nav id="loginbar" class="menu">
-					<form id="login" action="/login" method="post" class="menu">
-						<input id="user" placeholder="username" type="text" maxlength="20">
-						<input id="password" placeholder="password" type="password">
-						<input id="login-btn" class="button" value="Login" type="submit">
-					</form>
-				</nav>
-			</div>
-			<div class="container">
-				<div id="loginhelp" class="menu">
-					<a href="#forgot-pword">Forgot Password?</a>
-					<div id="forgot-pword" class="modalDialog">
-    					<div class="form">   
-    						<a href="#close" title="Close" class="close">X</a>
-    						<h2>Retrieve Password</h2>
-							<form action="/" method="post">
-					   			<div class="field-wrap">
-					                <label>
-					                	Email Adress<span class="req">*</span>
-					              	</label>
-					              	<input type="email"required autocomplete="off"/>
-					            </div>
-					            <input id="submit-btn" class="button" value="Submit" type="submit">
-					        </form>
-    					</div>
-					</div>
-				</div>
-			</div>
-		</div>
-		<div id="subheader2">
-			<div class="container">	
-				<nav id="threadmenu" class="menu">
-					<span>
-						<a href="index.html">Return to Forum</a>
-					</span>
-				</nav>
-			</div>
-		</div>
-		<div id="subheader3">
-			<div class="container">
-				<!-- searchbar -->
-				<nav id="searchbar" class="menu">
-					<form id="search" action="/search" method="get" class="menu">
-						<input id="search-box" name="q" size="40" type="text" placeholder="SEARCH FORUM"/>
-						<input id="search-btn" class="button" value="Search" type="submit"/>
-					</form>
-				</nav> 
-			</div>
-			<!-- pagemenu -->
-			<nav id="pagemenu" class="menu">
-				<span id="prev">
-					<a href="#">&laquo Prev Page</a>
-				</span>
-				<span id="page">
-					<a href="#">1</a>
-				</span>
-				<span id="page">
+		<!-- END HEADER -->
+
+		<!-- GENERAL DISCUSSION -->
+		<div class="thread-container">
+			<div class="thread-menubar">
+				<span id="discussion-title"><a href="index.html">General Discussion</a></span>
+				<span class="divider">|</span> 
+				<span class="thread-title-menu">Sample thread</span>
+				<span id="pages">
+					<a href="#">Prev</a>
+					<span>1</span>
 					<a href="#">2</a>
-				</span>
-				<span id="page">
 					<a href="#">3</a>
+					<a href="#">Next</a>
 				</span>
-				<span id="next">
-					<a href="#">Next Page &raquo</a>
+				<span class="post-reply">
+					<a href="#reply" data-toggle="modal">Reply</a>
 				</span>
-			</nav>
-		</div>
-		<!-- main section-->
-		<div id="mainsection">
-			<!-- thread list -->
-			<h1 id="threadtitle">Official DG Forum Project Thread</h1>
-			<u1 class="threadlist">
-				<li id="post-1" class="thread">
-					<span id="posttitle">Official DG Forum Project ThreadOfficial DG Forum Project ThreadOfficial DG Forum Project ThreadOfficial DG Forum Project ThreadOfficial DG Forum Project ThreadOfficial DG Forum Project ThreadOfficial DG Forum Project ThreadOfficial DG Forum Project ThreadOfficial DG Forum Project ThreadOfficial DG Forum Project ThreadOfficial DG Forum Project ThreadOfficial DG Forum Project ThreadOfficial DG Forum Project ThreadOfficial DG Forum Project ThreadOfficial DG Forum Project ThreadOfficial DG Forum Project ThreadOfficial DG Forum Project ThreadOfficial DG Forum Project ThreadOfficial DG Forum Project Thread</span>
-					<span id="author">brandonchai</span>
-					<span id="timestamp">01-27-2015 23:26:39</span>
-				</li>
-				</br>
-				<li id="post-1" class="thread">
-					<span id="posttitle">Official DG Forum Project ThreadOfficial DG Forum Project ThreadOfficial DG Forum Project ThreadOfficial DG Forum Project ThreadOfficial DG Forum Project ThreadOfficial DG Forum Project ThreadOfficial DG Forum Project </span>
-					<span id="author">brandonchai</span>
-					<span id="timestamp">01-27-2015 23:26:39</span>
-				</li>
-				</br>
-				<li id="post-1" class="thread">
-					<span id="posttitle">Official DG Forum Project ThreadOfficial DG Forum Project ThreadOfficial DG Forum Project ThreadOfficial DG Forum Project ThreadOfficial DG Forum Project ThreadOfficial DG Forum Project ThreadOfficial DG Forum Project </span>
-					</br>
-					<img src="http://upload.wikimedia.org/wikipedia/commons/e/ed/UML_diagrams_overview.svg">
-					</br>
-					<span id="author">brandonchai</span>
-					<span id="timestamp">01-27-2015 23:26:39</span>
-				</li>
-			</u1>
-		</div>
-		<!-- Reply -->
-		<div id="subheader4">
-			<div class="container">	
-				<nav id="threadmenu" class="menu">
-					<span>
-						<a href="#changethis" title="Reply" onClick="toggledisplay('changethis');">Reply</a>
-					</span>
-					<div id="changethis" style="display:none">
-						<div class="post-message">
-						Message:
+			</div>
+			<div>
+				<ul class="threadlist">
+					<li class="thread-grey">
+						<div class="avatar"></div>
+						<div class="thread-row1">
+							<span class="thread-title">Sample thread</span>
 						</div>
-						<textarea id="replybox" name="reply" rows="10" cols="60" dir="ltr"></textarea>
+						<div class="thread-row2">
+							<span><a href="#" class="author">brandonchai</a> 3 days ago</span>
+						</div>
+						<div class="thread-body">
+							TheislandisbigTheislandisbigTheislandisbigTheislandisbigTheislandisbigTheislandisbigTheislandisbigTheislandisbigTheislandisbigTheislandisbigTheislandisbigTheislandisbigTheislandisbigTheislandisbigTheislandisbigTheislandisbigTheislandisbigTheislandisbigTheislandisbigTheislandisbigTheislandisbigTheislandisbigTheislandisbigTheislandisbigTheislandisbigTheislandisbigTheislandisbigTheislandisbigTheislandisbigTheislandisbigTheislandisbigTheislandisbigTheislandisbigTheislandisbigTheislandisbigTheislandisbigTheislandisbigTheislandisbigTheislandisbigTheislandisbigTheislandisbigTheislandisbigTheislandisbigTheislandisbigTheislandisbigTheislandisbigTheislandisbig
+						</div>
+					</li>
+					<li class="thread-white">
+						<div class="avatar"></div>
+						<div class="thread-row2">
+							<span><a href="#" class="author">brandonchai</a></span>
+							<div>3 days ago</div>
+						</div>
+						<div class="thread-body">
+							O really O reallyO reallyO reallyO reallyO reallyO reallyO reallyO reallyO reallyO reallyO reallyO reallyO reallyO reallyO reallyO reallyO reallyO reallyO reallyO reallyO reallyO reallyO reallyO reallyO reallyO reallyO reallyO reallyO reallyO reallyO reallyO reallyO reallyO reallyO reallyO reallyO reallyO reallyO reallyO reallyO really
+						</div>
+					</li>					
+					<li class="thread-grey">
+						<div class="avatar"></div>
+						<div class="thread-row2">
+							<span><a href="#" class="author">brandonchai</a></span>
+							<div>3 days ago</div>
+						<div class="thread-body">
+							yes really yes really yes really yes really yes really yes really yes really yes really yes really yes really yes really yes really yes really yes really yes really yes really yes really yes really yes really yes really yes really yes really yes really yes really yes really yes really yes really yes really yes really yes really yes really yes really yes really yes really yes really yes really yes really yes really yes really yes really yes really yes really yes really yes really yes really yes really yes really yes really yes really yes really 
+						</div>
+					</li>
+				</ul>
+			</div>
+		</div>
+		<!-- END GENERAL DISCUSSION -->
+
+
+		<!-- FOOTER -->
+		<div class="footer">
+			<span>©Devleoper's Guild 2015</span>
+		</div>
+		<!-- END FOOTER -->
+
+		<!-- POST REPLY MODAL -->
+		<div class="modal fade" id="reply" role="dialog">
+			<div class ="modal-dialog">
+				<div class ="modal-content">
+					<div class ="modal-header">
+						<span>Post Reply</span>
+					</div>
+					<div class="modal-body">
+						<div class="post-message">Message:</div>
+						<textarea id="replybox" name="reply" rows="10" cols="50" dir="ltr"></textarea>
 						<div>
 							<form action="" method="post" name="" onsubmit="" id="">
-								<input id="post-btn" class="button" value="POST" type="submit"/>
+								<input class="btn" class="button" value="POST" type="submit"/>
 							</form>
 						</div>
 					</div>
-				</nav>
+				</div>
 			</div>
 		</div>
-		<!-- footer -->
-		<div id="footer">
-			<div class="container">
+		<!-- END POST REPLY MODAL -->
+
+		<div class="modal fade" id="register" role="dialog">
+			<div class ="modal-dialog">
+				<div class ="modal-content">
+					<div class ="modal-header">
+						<span>Register</span>
+					</div>
+					<div class="modal-body">
+						<form action="/register" method="post">
+							<div class="fieldset">
+								<div class="field">
+									<label for="username">Username</label>
+									<input autocapitalize="off" required autocomplete="off" id="username" placeholder="Username">
+								</div>
+								<div class="field">
+									<label for="first-name">Password</label>
+									<input type="password" autocapitalize="off" autocomplete="password" id="password" placeholder="Password">
+								</div>
+								<div class="field">
+									<label for="first-name">First name</label>
+									<input autocapitalize="off" autocomplete="first-name" id="first-name" placeholder="First name">
+								</div>
+								<div class="field">
+									<label for="first-name">Last name</label>
+									<input autocapitalize="off" autocomplete="last-name" id="last-name" placeholder="Last name">
+								</div>
+								<div class="field">
+									<label for="first-name">Email address</label>
+									<input autocapitalize="off" autocomplete="email-address" id="email-address" placeholder="Email address">
+								</div>
+								<input id="register-btn" class="btn" value="Create account" type="submit">
+							</div>
+						</form>
+					</div>
+				</div>
 			</div>
 		</div>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+		<script src="bootstrap.min.js"></script>	
+		<script src="sly.min.js"></script>
+		<script>
+		jQuery(function ($) {
+		  
+		  $('#frame').sly({
+		    horizontal: 1,
+		    
+
+		    itemNav: 'centered',
+		    smart: 1,
+		    activateOn: 'click',
+		    
+		    scrollBy: 1,
+		    
+		    mouseDragging: 1,
+		    swingSpeed: 1,
+		    scrollTrap: 1,
+
+		    cycleInterval: 1000,
+
+		    scrollBar: $('.scrollbar'),
+		    dragHandle: 1,
+		    
+		    speed: 200,
+		    startAt: 0
+
+
+		  });
+		  
+		});
+		</script>
 	</body>
 </html>
-
