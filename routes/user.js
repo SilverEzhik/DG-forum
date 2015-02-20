@@ -209,17 +209,6 @@ module.exports = function(app) {
     });
   };
 
-  var renderLoginPage = function(req, res, wrongPass) {
-
-    var templateVars = {
-      title: 'Login',
-      sessUser: req.session.user
-    };
-
-    //render template
-    res.render('login.html', templateVars);
-  };
-
   var handleLogoutRequest = function(req, res) {
 
     if (!req.session.user) {
@@ -248,8 +237,24 @@ module.exports = function(app) {
     });
   };
 
-  app.get('/login'  , renderLoginPage);
-  app.post('/login' , handleLoginRequest);
-  app.get('/logout' , handleLogoutRequest);
-  app.post('/signup', handleSignupRequest);
+  var handleProfileRequest = function(req, res){
+
+    //use the User model and get the User
+    User.get(req.params.userid, function(result, doc){
+
+      //not sure if this is clean
+      if(!doc)
+        res.send(result);
+      else
+        res.send(doc.profile);
+
+    });
+
+  }
+
+  app.post('/login'       , handleLoginRequest);
+  app.get('/logout'       , handleLogoutRequest);
+  app.post('/signup'      , handleSignupRequest);
+  app.get('/user/:userid' , handleProfileRequest);
+
 };
