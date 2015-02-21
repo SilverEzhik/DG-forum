@@ -12,6 +12,7 @@
           <span class="timestamp">{{ convertToDate(thread.creationDate) }}</span>
         </li>
         </br>
+
           {% for reply in thread.replies %}
           <li class="post" class="thread">
             <span class="posttitle">{{ reply.message }}</span>
@@ -29,17 +30,18 @@
       <div class="container">
         <nav id="threadmenu" class="menu">
           <span>
-            <a href="#" title="Reply" onClick="toggledisplay('changethis');">Reply</a>
+            <a title="Reply" onClick="toggleDisplay('createReply_modal');">Reply</a>
           </span>
-          <div id="changethis" style="display:none">
-            <form action = "{{ thread.prettyId }}/reply" method = "post" name = "makereply">
+          <div id="createReply_modal" style="display:none">
+            <form id="createReply_form" action = "{{ thread.prettyId }}/reply" method = "post" name = "makereply">
+            <img src="../img/loading.gif" id="loadingIcon_createReply" height="32px" width="32px" style="display:none">
               <div class="post-message">
               Message:
               </div>
               <textarea name="message" rows="10" cols="60" required></textarea>
-              <div>
-                  <input id="post-btn" class="button" value="POST" type="submit"/>
-              </div>
+
+              <button type="submit">Submit</button>
+              <label id="error_createReply" style="display:none"></label>
             </form>
           </div>
         </nav>

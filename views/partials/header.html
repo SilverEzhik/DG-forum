@@ -21,22 +21,23 @@
       <a href="../logout">Logout</a>
       <a href="#">Settings</a>
 
-
       {% else %}
 
-      <a href="#openModal1">Login</a>
-      <div id="openModal1" class="modalDialog">
+      <a onClick="toggleDisplay('loginModal');">Login</a>
+
+      <div id="loginModal" class="modalDialog" style="display:none">
         <div id="loginForm">
-          <a href="#close" title="Close" class="close">X</a>
+          <a title="Close" class="close" onClick="toggleDisplay('loginModal');">X</a>
           <h2>Log in to account</h2>
 
-          <form action="/login" method="post">
-
+          <form id="login_form" action="/login" method="post">
+          <!-- Have the loading icon be off by default -->
+          <img src="../img/loading.gif" id="loadingIcon_login" height="32px" width="32px" style="display:none">
             <div class="field-wrap">
               <label>
                 Username/Email<span class="req">*</span>
               </label>
-              <input id="user" name="usernameEmail" type="text" maxlength="20" required>
+              <input id="usernameEmail" name="usernameEmail" type="text" maxlength="20" required>
             </div>
 
             <div class="field-wrap">
@@ -46,25 +47,28 @@
               <input id="password" name="password" type="password" required>
             </div>
 
-            <input id="login-btn" class="button" value="Login" type="submit">
-          </form>
+            <button type="submit">Login</button>
+
+            <!-- Don't let the error message show by default -->
+            <label id="error_login" style="display:none"></label>
+            </form>
         </div>
       </div>
 
 
-      <a href="#openModal2">Register</a>
-      <div id="openModal2" class="modalDialog">
+      <a onClick="toggleDisplay('registerModal');">Sign Up</a>
+      <div id="registerModal" class="modalDialog" style="display:none">
         <div id="registerForm">
-          <a href="#close" title="Close" class="close">X</a>
+          <a onClick="toggleDisplay('registerModal');" title="Close" class="close">X</a>
           <h2>Sign Up for a New Account</h2>
 
-          <form action="/signup" method="post">
-
+          <form id="signup_form" action="/signup" method="post">
+          <img src="../img/loading.gif" id="loadingIcon_signup" height="32px" width="32px" style="display:none">
             <div class="field-wrap">
               <label>
                 Username<span class="req">*</span>
               </label>
-              <input type="text" name = "username" required autocomplete="off" />
+              <input type="text" name = "username" required autocomplete="off" maxlength="20" />
             </div>
 
 
@@ -91,7 +95,10 @@
 
             <div class="g-recaptcha" data-sitekey="6Lc4KAETAAAAANqjmmrIuQm1iojbfFetPmk2TJ-Q"></div>
 
-            <input id="register-btn" class="button" value="Register" type="submit">
+            <button type="submit">Create Account</button>
+
+            <!-- Don't let the error message show by default -->
+            <label id="error_signup" style="display:none"></label>
           </form>
         </div>
       </div>

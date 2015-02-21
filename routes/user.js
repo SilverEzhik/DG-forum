@@ -42,7 +42,6 @@ module.exports = function(app) {
   }
 
   var handleLoginRequest = function(req, res) {
-
     var usernameEmail  = validator.toString(req.body.usernameEmail);
     var password  = validator.toString(req.body.password);
 
@@ -221,47 +220,66 @@ module.exports = function(app) {
     }
 
     req.session.destroy(function(err) {
-      var result;
-      if (err) {
-        result = {
-          code: 500,
-          message: 'Something went wrong in the database.'
-        };
-      } else {
-        result = {
-          code: 200,
-          message: 'You have successfully logged out. Good bye!'
-        };
-      }
-      res.send(result);
+      res.redirect('back');
     });
   };
 
-  var handleProfileRequest = function(req, res){
+  var handleProfileRequest = function(req, res) {
 
     //sanitize username
     var username = validator.toString(req.params.userid);
 
-    //use the User model and get the User 
-    User.get(username, function(errResult, doc){
+    //use the User model and get the User
+    User.get(username, function(errResult, doc) {
 
       //not sure if this is clean
-      if(!doc)
+      if (!doc) {
         res.send(errResult);
-      else
+      } else {
         res.send({
           code: 200,
           message: 'User found',
           user: doc
         });
-
+      }
     });
 
-  }
+  };
+
+   var handleUserAvatarChange = function(req, res) {
+
+    var avatar = validator.toString(req.body.avatar);
+    var user = req.session.user;
+
+    var result;
+
+    if (!user) {
+      result = {
+        code    : 400,
+        message : 'You are not logged in.'
+      };
+      res.send(result);
+      return;
+    }
+
+    if (!avatar) {
+      result = {
+        code    : 400,
+        message : 'Invalid avatar.'
+      };
+      res.send(result);
+      return;
+    }
+
+    User.changeAvatar(user.username, avatar, function(result) {
+      res.send(result);
+    });
+  };
 
   app.post('/login'       , handleLoginRequest);
   app.get('/logout'       , handleLogoutRequest);
   app.post('/signup'      , handleSignupRequest);
   app.get('/user/:userid' , handleProfileRequest);
+  app.post('/changeavatar', handleUserAvatarChange);
 
 };

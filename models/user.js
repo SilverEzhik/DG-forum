@@ -197,7 +197,7 @@ var getUser = function(username, callback) {
   UserMongoModel.findOne({usernameLower: username.toLowerCase()},
     function(err, doc) {
 
-      
+
       if(err)
         errorResult = {
           code    : 500,
@@ -279,13 +279,40 @@ var makeUserForumDev = function(username, bool, callback) {
   );
 };
 
+var changeUserAvatar = function(username, avatarStr, callback) {
+  UserMongoModel.findOneAndUpdate({ usernameLower: username.toLowerCase() },
+    { profile: {avatar: avatarStr } }, function(err, doc) {
+      var result;
+      if (err) {
+        result = {
+          code    : 500,
+          message : 'Something went wrong in the database. Try again.'
+        };
+      } else if (!doc) {
+        result = {
+          code    : 400,
+          message : 'Couldn\'t find that user.'
+        };
+      } else {
+        result = {
+          code: 200,
+          message: 'Avatar successfully changed.'
+        };
+      }
+      callback(result);
+    }
+  );
+};
+
+
 var UserModel = {
   login: logInUser,
   create: createUser,
   get: getUser,
   getMembers: getAllMembers,
   changeTitle: changeUserTitle,
-  makeForumDev: makeUserForumDev
+  makeForumDev: makeUserForumDev,
+  changeAvatar: changeUserAvatar
 };
 
 module.exports = UserModel;

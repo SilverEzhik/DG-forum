@@ -24,16 +24,17 @@
       <div class="container">
         <nav id="threadmenu" class="menu">
           <span>
-            <a href="#" title="Reply" onClick="toggledisplay('changethis');">Post New Thread</a>
+            <a title="Reply" onClick="toggleDisplay('createThread_modal');">Post New Thread</a>
           </span>
-          <div id="changethis" style="display:none">
-              <form action="makethread" method="post" name="makethread">
-
-                <textarea name="subject" rows="1" cols="52" placeholder="title" required></textarea>
+          <div id="createThread_modal" style="display:none">
+              <form id="createThread_form"action="makethread" method="post" name="makethread">
+                <img src="../img/loading.gif" id="loadingIcon_createThread" height="32px" width="32px" style="display:none">
+                <textarea name="subject" rows="1" cols="52" maxlength="85" placeholder="title" required></textarea>
                 <br>
                 <textarea name="message" rows="10" cols="52" placeholder="message" required></textarea>
                 <br>
                 <button type="submit">Submit</button>
+                <label id="error_createThread" style="display:none"></label>
               </form>
             </div>
           </div>

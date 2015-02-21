@@ -2,6 +2,13 @@ textarea {
     resize: none;
 }
 
+button {
+  cursor: pointer;
+}
+
+a {
+  cursor: pointer;
+}
 .container {
 	height: 1.813em;
 	margin: 0px, 0.188em;
@@ -181,11 +188,9 @@ li{
     left: 0;
     background: rgba(0, 0, 0, 0.8);
     z-index: 99999;
-    opacity:0;
     -webkit-transition: opacity 400ms ease-in;
     -moz-transition: opacity 400ms ease-in;
     transition: opacity 400ms ease-in;
-    pointer-events: none;
 }
 .modalDialog:target {
     opacity:1;
