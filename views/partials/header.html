@@ -1,114 +1,110 @@
-<div id="header">
-  <div class="container">
+<!-- HEADER -->
+<div class="header">
+  <a href="../">
+    <div class="logo">
+      <img src="../img/dglogo.png" alt="DGLOGO" height="60px" width="60px">
+    </div>
+    <ul class="title">
+      <li>Developer's Guild Forum</li>
+    </ul>
+  </a>
 
-    <a href="../">
-      <!-- logo -->
-      <div id="logo">
-        <img src="../img/dglogo.png" height="25px" width="25px">
+  {% if sessUser %}
+  <!-- AVATAR -->
+  <div class="avatar-small"></div>
+  <!-- END AVATAR -->
+
+  <!-- MENU -->
+  <ul class="menu">
+    <li>{{ sessUser.username }}</li>
+    <li><a href="../profile.html">Profile</a></li>
+    <li><a href="../logout">Logout</a>
+    <li><a href="#register" data-toggle="modal">Register</a></li>
+    <li><a href="../members.html">Members</a></li>
+  </ul>
+  <!-- ENG MENU -->
+
+  {% else %}
+  <!-- MENU -->
+  <ul class="menu">
+    <li><a href="#login">Login</a>
+    <li><a href="#register" data-toggle="modal">Register</a></li>
+    <li><a href="../members.html">Members</a></li>
+  </ul>
+  <!-- ENG MENU -->
+
+  {% endif %}
+<!-- END HEADER -->
+
+<!-- REGISTER MODAL -->
+<div class="modal fade" id="register" role="dialog">
+  <div class ="modal-dialog">
+    <div class ="modal-content">
+      <div class ="modal-header">
+        <span>Register</span>
       </div>
-      <!--Title-->
-      <div id="title">
-        DEVELOPER'S GUILD FORUM
-      </div>
-    </a>
-    <!-- main menu -->
-    <nav id="mainmenu" class="menu">
-
-      {% if sessUser %}
-
-      <!-- TODO: Properly link these -->
-      <a href="#">{{ sessUser.username }}</a>
-      <a href="../logout">Logout</a>
-      <a href="#">Settings</a>
-
-      {% else %}
-
-      <a onClick="toggleDisplay('loginModal');">Login</a>
-
-      <div id="loginModal" class="modalDialog" style="display:none">
-        <div id="loginForm">
-          <a title="Close" class="close" onClick="toggleDisplay('loginModal');">X</a>
-          <h2>Log in to account</h2>
-
-          <form id="login_form" action="/login" method="post">
-          <!-- Have the loading icon be off by default -->
-          <img src="../img/loading.gif" id="loadingIcon_login" height="32px" width="32px" style="display:none">
-            <div class="field-wrap">
-              <label>
-                Username/Email<span class="req">*</span>
-              </label>
-              <input id="usernameEmail" name="usernameEmail" type="text" maxlength="20" required>
-            </div>
-
-            <div class="field-wrap">
-              <label>
-                Password<span class="req">*</span>
-              </label>
-              <input id="password" name="password" type="password" required>
-            </div>
-
-            <button type="submit">Login</button>
-
-            <!-- Don't let the error message show by default -->
-            <label id="error_login" style="display:none"></label>
-            </form>
-        </div>
-      </div>
-
-
-      <a onClick="toggleDisplay('registerModal');">Sign Up</a>
-      <div id="registerModal" class="modalDialog" style="display:none">
-        <div id="registerForm">
-          <a onClick="toggleDisplay('registerModal');" title="Close" class="close">X</a>
-          <h2>Sign Up for a New Account</h2>
-
-          <form id="signup_form" action="/signup" method="post">
+      <div class="modal-body">
+        <form id="signup_form" action="/signup" method="post">
           <img src="../img/loading.gif" id="loadingIcon_signup" height="32px" width="32px" style="display:none">
-            <div class="field-wrap">
-              <label>
-                Username<span class="req">*</span>
-              </label>
-              <input type="text" name = "username" required autocomplete="off" maxlength="20" />
+          <div class="fieldset">
+
+            <div class="field">
+              <label for="username">Username</label>
+              <input name="username" autocapitalize="off" required autocomplete="off" id="username" placeholder="Username">
             </div>
 
-
-            <div class="field-wrap">
-              <label>
-                Full Name<span class="req">*</span>
-              </label>
-              <input type="text" name = "fName"required autocomplete="off" />
+            <div class="field">
+              <label for="first-name">Password</label>
+              <input name="password" type="password" autocapitalize="off" required autocomplete="password" id="password" placeholder="Password">
             </div>
 
-            <div class="field-wrap">
-              <label>
-                Email Address<span class="req">*</span>
-              </label>
-              <input type="email" name="email"required autocomplete="off"/>
+            <div class="field">
+              <label for="first-name">Full name</label>
+              <input name="fllname" autocapitalize="off" required autocomplete="full-name" id="full-name" placeholder="Full name">
             </div>
 
-            <div class="field-wrap">
-              <label>
-                Password<span class="req">*</span>
-              </label>
-              <input type="password" name="password" required autocomplete="off"/>
+            <div class="field">
+              <label for="first-name">Email address</label>
+              <input name="email" autocapitalize="off" required autocomplete="email-address" id="email-address" placeholder="Email address">
             </div>
 
             <div class="g-recaptcha" data-sitekey="6Lc4KAETAAAAANqjmmrIuQm1iojbfFetPmk2TJ-Q"></div>
 
-            <button type="submit">Create Account</button>
+            <input id="register-btn" class="btn" value="Create account" type="submit">
 
-            <!-- Don't let the error message show by default -->
             <label id="error_signup" style="display:none"></label>
-          </form>
-        </div>
+          </div>
+        </form>
       </div>
-      {% endif %}
-
-      <!-- TODO: Properly link this -->
-      <a href="#">About</a>
-    </nav>
-
+    </div>
   </div>
 </div>
+<!-- END REGISTER MODAL -->
 
-{% include "partials/subheaders.html" %}
+<!-- LOGIN MODAL -->
+<div class="modal fade" id="login" role="dialog">
+  <div class ="modal-dialog">
+    <div class ="modal-content">
+      <div class ="modal-header">
+        <span>Login</span>
+      </div>
+    <div class="modal-body">
+      <form id="login_form" action="/login" method="post">
+        <img src="../img/loading.gif" id="loadingIcon_login" height="32px" width="32px" style="display:none">
+        <div class="fieldset">
+          <div class="field">
+            <label for="username">Username/Email</label>
+            <input name="usernameEmail" autocapitalize="off" required autocomplete="off" id="username" placeholder="Username">
+          </div>
+          <div class="field">
+            <label for="first-name">Password</label>
+            <input name="password" type="password" autocapitalize="off" required autocomplete="password" id="password" placeholder="Password">
+          </div>
+          <input id="register-btn" class="btn" value="Login" type="submit">
+          <label id="error_login" style="display:none"></label>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<!-- END LOGIN MODAL -->

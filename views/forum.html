@@ -2,45 +2,100 @@
 
 {% block page %}
 
-    <!-- main section-->
-    <div id="mainsection">
-      <!-- thread list -->
-      {% for thread in threads %}
-      <u1 class="threadlist">
-        <li class="thread" class="thread">
-          <a href="thread/{{ thread.prettyId }}" id="posttitle">{{ thread.subject }}</a>
-          <span class="author">{{ thread.author }}</span>
-          <span class="timestamp"> {{ convertToDate(thread.creationDate) }}</span>
-          <span class="views">({{ thread.views }} views)</span>
-        </li>
-        </br>
-      </u1>
-      {% endfor %}
-    </div>
+    {% include "partials/projects.html" %}
 
-    {% if sessUser %}
-    <!-- Post New Thread -->
-    <div id="subheader4">
-      <div class="container">
-        <nav id="threadmenu" class="menu">
-          <span>
-            <a title="Reply" onClick="toggleDisplay('createThread_modal');">Post New Thread</a>
-          </span>
-          <div id="createThread_modal" style="display:none">
-              <form id="createThread_form"action="makethread" method="post" name="makethread">
-                <img src="../img/loading.gif" id="loadingIcon_createThread" height="32px" width="32px" style="display:none">
-                <textarea name="subject" rows="1" cols="52" maxlength="85" placeholder="title" required></textarea>
-                <br>
-                <textarea name="message" rows="10" cols="52" placeholder="message" required></textarea>
-                <br>
-                <button type="submit">Submit</button>
-                <label id="error_createThread" style="display:none"></label>
-              </form>
+    <!-- GENERAL DISCUSSION -->
+    <div class="discussion-container">
+      <div class="thread-menubar">
+        <span id="discussion-title">General Discussion</span>
+        <span id="pages">
+          <a href="#">Prev</a>
+          <span>1</span>
+          <a href="#">2</a>
+          <a href="#">3</a>
+          <a href="#">Next</a>
+        </span>
+        {% if sessUser %}
+        <span class="post-thread">
+          <a href="#post" data-toggle="modal">Post New Thread</a>
+        </span>
+        {% endif %}
+      </div>
+      <div>
+        {% for thread in threads %}
+        <ul class="threadlist">
+          {% if loop.index % 2 == 0 %}
+          <li class="thread-no-border">
+          {% else %}
+          <li class="thread-border">
+          {% endif %}
+            <div class="avatar-small"></div>
+            <div class="thread-row1">
+              <span><a href="thread/{{ thread.prettyId }}" class="thread-title">{{ thread.subject }}</a> ({{ thread.views }} views)</span>
+
+              <!-- TODO: templating for last reply, author and date-->
+              <span class="reply"><a href="#" class="last-post">last post</a> by <a href="#" class="last-poster">kobe</a></span>
             </div>
-          </div>
-        </nav>
+            <div class="thread-row2">
+              <span>submitted by <a href="#" class="author">{{ thread.author }}</a>{{ convertToDate(thread.creationDate) }}</span>
+              <span class="timestamp">3 days ago</span>
+            </div>
+          </li>
+        </ul>
+        {% endfor %}
       </div>
     </div>
-    {% endif %}
+    <!-- END GENERAL DISCUSSION -->
+
+    <!-- FEED -->
+    <div class="feed-container">
+      <ul class="feed">
+        <li class="feed-item-grey">
+          <div><a href="#">you reach i teach</a></div>
+          <span>submitted by <a href="#" class="author">kobe</a> 1 second ago</span>
+        </li>
+        <li class="feed-item-white">
+          <div><a href="#">you reach i teach</a></div>
+          <span class="feed-bottom"> submitted by <a href="#" class="author">kobe</a> 1 second ago in <a href="thread.html">Sample thread</a>
+          </span>
+        </li>
+        <li class="feed-item-grey">
+          <div><a href="#">you reach i teach</a></div>
+          <span>submitted by <a href="#" class="author">kobe</a>  1 second ago</span>
+        </li>
+        <li class="feed-item-white">
+          <div><a href="#">you reach i teach</a></div>
+          <span>submitted by <a href="#" class="author">kobe</a> 1 second ago</span>
+        </li>
+      </ul>
+    </div>
+    <!-- END FEED -->
+
+    <!-- POST THREAD MODAL -->
+    <div class="modal fade" id="post" role="dialog">
+      <div class ="modal-dialog">
+        <div class ="modal-content">
+          <div class ="modal-header">
+            <span>Post New Thread</span>
+          </div>
+          <div class="modal-body">
+            <form id="createThread_form"action="makethread" method="post" name="makethread">
+              <img src="../img/loading.gif" id="loadingIcon_createThread" height="32px" width="32px" style="display:none">
+              <div class="post-thread">Title:</div>
+              <textarea name="subject" id="titlebox" rows="1" dir="ltr" maxlength="50" required></textarea>
+              <div class="post-message">Message:</div>
+              <textarea name="message" id="replybox" name="reply" rows="10" dir="ltr" required></textarea>
+              <div>
+                  <input class="btn" class="button" value="POST" type="submit"/>
+                  <label id="error_createThread" style="display:none"></label>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- END POST THREAD MODAL -->
+
+
 
 {% endblock %}

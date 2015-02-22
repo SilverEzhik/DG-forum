@@ -151,3 +151,34 @@ $('#createReply_form').submit(function() {
   // Return false so we don't submit twice
   return false;
 });
+
+
+//sly 
+jQuery(function ($) {
+  
+  $('#frame').sly({
+    horizontal: 1,
+    
+
+    itemNav: 'centered',
+    smart: 1,
+    activateOn: 'click',
+    
+    scrollBy: 1,
+    
+    mouseDragging: 1,
+    swingSpeed: 1,
+    scrollTrap: 1,
+
+    cycleInterval: 1000,
+
+    scrollBar: $('.scrollbar'),
+    dragHandle: 1,
+    
+    speed: 200,
+    startAt: 0
+
+
+  });
+  
+});

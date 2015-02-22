@@ -1,51 +1,90 @@
 {% extends "base.html" %}
 
 {% block page %}
-    <!-- main section-->
-    <div id="mainsection">
-      <!-- thread list -->
-      <h1 id="threadtitle">{{ thread.subject }}</h1>
-      <u1 class="threadlist">
-        <li class="post" class="thread">
-          <span class="posttitle">{{ thread.message }}</span>
-          <span class="author">{{ thread.author }}</span>
-          <span class="timestamp">{{ convertToDate(thread.creationDate) }}</span>
-        </li>
-        </br>
+		<div class="thread-container">
+			<!-- THREAD MENU BAR -->
+			<div class="thread-menubar">
+				<span id="discussion-title"><a href="../">General Discussion</a></span>
+				<span class="divider">|</span> 
+				<span class="thread-title-menu">Sample thread</span>
+				<span id="pages">
+					<a href="#">Prev</a>
+					<span>1</span>
+					<a href="#">2</a>
+					<a href="#">3</a>
+					<a href="#">Next</a>
+				</span>
 
-          {% for reply in thread.replies %}
-          <li class="post" class="thread">
-            <span class="posttitle">{{ reply.message }}</span>
-            <span class="author">{{ reply.author }}</span>
-            <span class="timestamp">{{ convertToDate(reply.creationDate) }}</span>
-          </li>
-          </br>
-          {% endfor %}
-      </u1>
-    </div>
+				{% if sessUser %}
+				<span class="post-reply">
+					<a href="#reply" data-toggle="modal">Reply</a>
+				</span>
+				{% endif %}
+			</div>
+			<!-- END THREAD MENU BAR -->
 
-    {% if sessUser %}
-    <!-- Reply -->
-    <div id="subheader4">
-      <div class="container">
-        <nav id="threadmenu" class="menu">
-          <span>
-            <a title="Reply" onClick="toggleDisplay('createReply_modal');">Reply</a>
-          </span>
-          <div id="createReply_modal" style="display:none">
-            <form id="createReply_form" action = "{{ thread.prettyId }}/reply" method = "post" name = "makereply">
-            <img src="../img/loading.gif" id="loadingIcon_createReply" height="32px" width="32px" style="display:none">
-              <div class="post-message">
-              Message:
-              </div>
-              <textarea name="message" rows="10" cols="60" required></textarea>
+			<div>
+				<!-- THREAD -->
+				<ul class="threadlist">
+					<li class="thread-border">
+						<div class="avatar"></div>
+						<div class="thread-row1">
+							<span class="thread-title">{{ thread.subject }}</span>
+						</div>
+						<div class="thread-row2">
+							<span><a href="#" class="author">{{ thread.author }}</a>{{ convertToDate(thread.creationDate) }}</span>
+						</div>
+						<div class="thread-body">{{ thread.message }}</div>
+					</li>
 
-              <button type="submit">Submit</button>
-              <label id="error_createReply" style="display:none"></label>
-            </form>
-          </div>
-        </nav>
-      </div>
-    </div>
-    {% endif %}
+					<!-- REPLIES -->
+					{{% for reply in thread.replies %}}
+
+					{% if loop.index % 2 == 0}
+					<li class="thread-border">
+					{% else %}
+					<li class="thread-no-border">
+					{% endif %}
+						<div class="avatar"></div>
+						<div class="thread-row2">
+							<span><a href="#" class="author">{{ reply.author }}</a></span>
+							<div>{{ convertToDate(reply.creationDate) }}</div>
+						</div>
+						<div class="thread-body">{{ reply.message }}</div>
+					</li>
+
+					{% endfor %}	
+					<!-- END REPLIES -->				
+				</ul>
+				<!-- END THREAD -->
+			</div>
+		</div>
+		<!-- END GENERAL DISCUSSION -->
+
+
+		<!-- POST REPLY MODAL -->
+		<div class="modal fade" id="reply" role="dialog">
+			<div class ="modal-dialog">
+				<div class ="modal-content">
+					<div class ="modal-header">
+						<span>Post Reply</span>
+					</div>
+					<div class="modal-body">
+						<form id="createReply_form" action = "{{ thread.prettyId }}/reply" method = "post" name = "makereply">
+            			<img src="../img/loading.gif" id="loadingIcon_createReply" height="32px" width="32px" style="display:none">
+							<div class="post-message">Message:</div>
+							<textarea name="message" id="replybox" rows="10" cols="50" dir="ltr" required></textarea>
+							<div>
+								<input class="btn" class="button" value="POST" type="submit"/>
+								<label id="error_createReply" style="display:none"></label>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- END POST REPLY MODAL -->
+	</body>
+</html>
+
 {% endblock %}
