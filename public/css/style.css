@@ -17,13 +17,29 @@ a:hover{
 }
 
 .avatar-small{
+	display: block;
+	float: left;
 	width: 40px;
 	height: 40px;
 	border: 1px solid #dfdfdf;
-	float: left;	
 	border-radius: 50%;
-	margin-right: 13px;
-	overflow: hidden;
+	background-position: center;
+	background-repeat: no-repeat;
+	background-color:white;
+}
+
+.avatar-small:hover{
+	border-color: #337ab7;
+}
+
+.avatar-stock{
+	height: 50px;
+	width: 70px;
+	border: 1px solid #dfdfdf;
+	margin: 10px 0;
+	background-position: center;
+	background-repeat: no-repeat;
+	background-color:white;
 }
 
 .header .avatar-small{
@@ -81,10 +97,13 @@ body{
 
 .discussion-container{
 	float: left;
-	width: 72.5%;
-	min-width: 400px;
+	width: 75%;
 	overflow: auto;
 	padding-left: 2.5%;
+
+	//beta
+	//padding-right: 2.5%;
+	//width:97.5%;
 }
 
 .divider{
@@ -102,13 +121,23 @@ body{
 	line-height: 80px;
 }
 
+.feed-title{
+	float: right;
+	width: 20%;
+	margin-top: 2em;//28px;
+	margin-bottom: .5em; //7px;
+	margin-right: 2.5%;
+	padding-left: 1em;
+	line-height: 16px;
+}
+
 .feed-container{
 	float: right;
 	width: 20%;
 	background-color: #FFF;
 	margin-right: 2.5%;
 	overflow: hidden;
-	margin-top: 37px;
+	//margin-top: 37px;
 	border: 1px solid #d4d4d4;
 }
 
@@ -148,16 +177,31 @@ body{
 	padding: 0px 17.5px;
 }
 
+.field-avatar{
+	border: 1px solid #dfdfdf;
+	border-top:none;
+	height: 73px;
+	width: 100%;
+	line-height: 56px;
+	padding: 0px 17.5px;
+}
+
+.field-avatar .btn{
+	width: 20%;
+}
+
 .fieldset{
 	overflow: hidden;
 }
 
-.fieldset>.field:first-child{
-	border-top: 1px solid #dfdfdf;
+
+.profile .fieldset{
+	width: 493px;
+	height: 373px;
 }
 
-.file{
-
+.fieldset>.field:first-child{
+	border-top: 1px solid #dfdfdf;
 }
 
 
@@ -268,12 +312,20 @@ label{
 	overflow: hidden;
 }
 
-@media (max-width: 600px) {
+
+@media (max-width: 700px) {
 	.feed-container{
 		display: none;
 	}
+
+	.feed-title{
+		display: none;
+	}
 	.discussion-container{
-		width: 95%;
+		width: 97.5%;
+		text-overflow: ellipsis;
+    	overflow: hidden;
+    	white-space: nowrap;
 	}
 }
 
@@ -289,30 +341,52 @@ label{
 }
 
 .modal-dialog{
-	width: 50%;
-	height: 70%;
+	//width: 50%;
+	//height: 70%;
+	width: 500px; 
+	height: 500px;
 }
 
 .online{
-	float: right;
-	width: 20%;
-	height: 125px;
-	background-color: #FFF;
+	display: inline-block;
+	clear: both;
+	width: 95%;
+	height: 70px;
+	margin-left: 2.5%;
 	margin-right: 2.5%;
+	margin-top: 0;
 	overflow: hidden;
-	margin-top: 37px;
 	border: 1px solid #dfdfdf;
-	padding: 1em;
 }
 
 .online .avatar-small{
-	margin-right: 4%;//15px;
-	margin-bottom: 4%;//15px;
-	overflow: hidden;
+	margin: 1em;
+	margin-right: 0;
 }
 
-.online .avatar-small:last-child{
-	margin-right: 0;
+.username{
+	display: none;
+}
+
+.online .avatar-small:hover {
+	border-color: #337ab7;
+}
+
+.online .avatar-small:hover .username{
+	display: block;
+}
+
+
+.online-title{
+	display: inline-block;
+	overflow: hidden;
+	clear: both;
+	width: 100%;
+	margin-left: 2.5%;
+}
+
+.online-title span{
+	margin-left: 1em;
 }
 
 #pages{
@@ -334,6 +408,7 @@ label{
 
 .profile .fieldset{
 	margin-left: 0 auto;
+	min-width: 463px;
 }
 
 .project-container{
@@ -441,6 +516,7 @@ textarea{
 .title{
 	float: left;
 	vertical-align: middle;
+	font-size: 1.2em;
 }
 
 .title, .header ul{
@@ -452,6 +528,12 @@ textarea{
 }
 
 .threadlist li{
+}
+
+.thread-area{
+	float: left;
+	width: 100%;
+	display: table-cell;
 }
 
 .thread-container{
@@ -472,6 +554,8 @@ textarea{
 	//border: 1px solid #d4d4d4;
 	//border-top: none;
 	//border-bottom: none;
+	clear: both;
+	overflow: hidden;
 }
 
 .thread-border{
@@ -479,10 +563,20 @@ textarea{
 	list-style: none;
 	padding: 1em;
 	border: 1px solid #d4d4d4;
+    overflow: hidden;
+    clear: both;
+}
+
+.thread-content{
+	width: 100%;
+	overflow: hidden;
+	width: 100%;
+	//border: 1px solid #d4d4d4;
+	height: 40px;
 }
 
 .thread-menubar{
-	margin-top: 1em;
+	margin-top: 2em;
 	margin-bottom: .5em;
 	text-align: center;
 	overflow: hidden;
@@ -490,6 +584,8 @@ textarea{
 
 .thread-title{
 	font-size: 1.2em;
+	background-color: #777;
+	overflow: hidden;
 }
 
 .thread-title-menu{
@@ -498,8 +594,47 @@ textarea{
 }
 
 .thread-row1, .thread-row2{
+	float: left;
+	overflow: hidden;
 }
 
 .timestamp, .reply{
 	float: right;
+}
+
+
+.last-reply{
+	background-color: #663;
+	display: inline-block;
+	float: right;
+}
+
+.contain-title {
+    width: 60%;
+    float: left;
+}
+.ellipsed {
+	margin-left: 14px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+.ellipsed2 {
+	margin-left: 0;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+
+.contain-title2 {
+    width: 25%;
+    float: right;
+    text-align: right;
+}
+
+.contain-title3 {
+    width: 100%;
+    text-align: left;
 }
