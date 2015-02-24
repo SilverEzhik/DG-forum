@@ -17,12 +17,14 @@
 				</ul>
 
 				<!-- AVATAR -->
-				<div class="avatar-small"></div>
+				<a href="profile.html">
+				<div class="avatar-small" style="background-image: url(http://40.media.tumblr.com/49b96a59442b9587971c841c037b587c/tumblr_mxq7a9W0YK1qkgy0bo1_1280.jpg); background-size:100%;"></div></a>
 				<!-- END AVATAR -->
 
 				<!-- MENU -->
 				<ul class="menu">
 					<li><a href="profile.html">Profile</a></li>
+					<li><a href="#login" data-toggle="modal">Login</a></li>
 					<li><a href="#register" data-toggle="modal">Register</a></li>
 					<li><a href="members.html">Members</a></li>
 				</ul>
@@ -60,7 +62,16 @@
 						</a>	      		
 			      	</figure>	
 			      </li>
-			      <li></li>
+			      <li>
+			      	<figure class="project-img" style="background-image: url(http://www.rob-sheridan.com/tourist/tokyo/tokyo25.jpg); background-size:120%;" >
+			      		<a href="koob.html">
+						<figcaption style="margin-left:5em;">
+							<div>Chamber's Labyrinth</div>
+							<div class="project-term">Winter 2015</div>
+						</figcaption>		
+						</a>	      		
+			      	</figure>	
+			      </li>
 			      <li></li>
 			      <li></li>
 			    </ul>
@@ -83,20 +94,44 @@
 					<a href="#post" data-toggle="modal">Post New Thread</a>
 				</span>
 			</div>
+
 			<div>
 				<ul class="threadlist">
-					<li class="thread-grey">
-						<div class="avatar-small"></div>
-						<div class="thread-row1">
-							<span><a href="thread.html" class="thread-title">Sample thread</a> (26 replies)</span>
-							<span class="reply"><a href="#" class="last-post">last post</a> by <a href="#" class="last-poster">kobe</a></span>
-						</div>
-						<div class="thread-row2">
-							<span>submitted by <a href="#" class="author">brandonchai</a> 3 days ago</span>
-							<span class="timestamp">3 days ago</span>
-						</div>
+					<li class="thread-border">
+						<div class="avatar-small" style="background-image: url(http://40.media.tumblr.com/49b96a59442b9587971c841c037b587c/tumblr_mxq7a9W0YK1qkgy0bo1_1280.jpg); background-size:100%;"></div>
+						<div class="contain-title">
+						    <div class="ellipsed" style="font-size:1.2em;"><a href="#">This is the grand title of the grand daddys of them allThis is the grand title of the grand daddys of them allThis is the grand title of the grand daddys of them all</a></div>
+						    <div class="ellipsed">Posted by <a href="#">12345678912345678912</a> 12 seconds ago</div>
+						</div>	
+						<div class="contain-title2">
+						    <div class="ellipsed2">Last reply by <a href="#">12345678912345678912</a></div>
+						    <div class="ellipsed2">2 seconds ago</div>
+						</div>	
 					</li>
-					<li class="thread-white">
+					<li class="thread-no-border">
+						<div class="avatar-small"></div>
+						<div class="contain-title">
+						    <div class="ellipsed"><a href="#">This is the grand title of the grand daddys of them allThis is the grand title of the grand daddys of them allThis is the grand title of the grand daddys of them all</a></div>
+						    <div class="ellipsed">Posted by <a href="#">12345678912345678912</a> 12 seconds ago</div>
+						</div>	
+						<div class="contain-title2">
+						    <div class="ellipsed2">Last reply by <a href="#">12345678912345678912</a></div>
+						    <div class="ellipsed2">2 seconds ago</div>
+						</div>	
+					</li>
+					<li class="thread-border">
+						<div class="avatar-small"></div>
+						<div class="contain-title">
+						    <div class="ellipsed"><a href="#">This is the grand title of the grand daddys of them allThis is the grand title of the grand daddys of them allThis is the grand title of the grand daddys of them all</a></div>
+						    <div class="ellipsed">Posted by <a href="#">12345678912345678912</a> 12 seconds ago</div>
+						</div>	
+						<div class="contain-title2">
+						    <div class="ellipsed2">Last reply by <a href="#">12345678912345678912</a></div>
+						    <div class="ellipsed2">2 seconds ago</div>
+						</div>	
+					</li>
+					<!--
+					<li class="thread-no-border">
 						<div class="avatar-small"></div>					
 						<div class="thread-row1">
 							<span><a href="#" class="thread-title">Sample thread</a> (26 replies)</span>
@@ -107,7 +142,7 @@
 							<span class="timestamp">3 days ago</span>
 						</div>
 					</li>
-					<li class="thread-grey">
+					<li class="thread-border">
 						<div class="avatar-small"></div>
 						<div class="thread-row1">
 							<span><a href="#" class="thread-title">Sample thread</a> (26 replies)</span>
@@ -118,7 +153,7 @@
 							<span class="timestamp">3 days ago</span>
 						</div>
 					</li>
-					<li class="thread-white">
+					<li class="thread-no-border">
 						<div class="avatar-small"></div>
 						<div class="thread-row1">
 							<span><a href="#" class="thread-title">Sample thread</a> (26 replies)</span>
@@ -129,7 +164,7 @@
 							<span class="timestamp">3 days ago</span>
 						</div>
 					</li>
-					<li class="thread-grey">
+					<li class="thread-border">
 						<div class="avatar-small"></div>
 						<div class="thread-row1">
 							<span><a href="#" class="thread-title">Sample thread</a> (26 replies)</span>
@@ -140,7 +175,7 @@
 							<span class="timestamp">3 days ago</span>
 						</div>
 					</li>
-					<li class="thread-white">
+					<li class="thread-no-border">
 						<div class="avatar-small"></div>
 						<div class="thread-row1">
 							<span><a href="#" class="thread-title">Sample thread</a> (26 replies)</span>
@@ -151,7 +186,7 @@
 							<span class="timestamp">3 days ago</span>
 						</div>
 					</li>
-					<li class="thread-grey">
+					<li class="thread-border">
 						<div class="avatar-small"></div>
 						<div class="thread-row1">
 							<span><a href="#" class="thread-title">Sample thread</a> (26 replies)</span>
@@ -161,18 +196,22 @@
 							<span>submitted by <a href="#" class="author">brandonchai</a> 3 days ago</span>
 							<span class="timestamp">3 days ago</span>
 						</div>
-					</li>
+					</li>-->
 				</ul>
 			</div>
 		</div>
 		<!-- END GENERAL DISCUSSION -->
 
+
 		<!-- FEED -->
+		<div class="feed-title"><span>Feed</span></div>
 		<div class="feed-container">
 			<ul class="feed">
 				<li class="feed-item-grey">
-					<div><a href="#">you reach i teach</a></div>
-					<span>submitted by <a href="#" class="author">kobe</a> 1 second ago</span>
+					<div class="contain-title3">
+						<div class="ellipsed2">This is the grand title of the grand daddys of them allThis is the grand title of the grand daddys of them allThis is the grand title of the grand daddys of them all</div>	
+						<div class="ellipsed2">submitted by kobe 3 seconds ago</div>    
+					</div>	
 				</li>
 				<li class="feed-item-white">
 					<div><a href="#">you reach i teach</a></div>
@@ -192,16 +231,12 @@
 		<!-- END FEED -->
 
 		<!-- ONLINE -->
+		<div class="online-title"><span>Online users</span></div>
 		<div class="online">
-			<span class="avatar-small"></span>
-			<span class="avatar-small"></span>
-			<span class="avatar-small"></span>
-			<span class="avatar-small"></span>
-			<span class="avatar-small"></span>
-			<span class="avatar-small"></span>
-			<span class="avatar-small"></span>
-			<span class="avatar-small"></span>			
+			<span title="test" class="avatar-small"></span>	
 		</div>
+
+
 		<!-- END ONLINE-->
 
 
@@ -218,12 +253,11 @@
 				<div class ="modal-content">
 					<div class ="modal-header">
 						<span>Post New Thread</span>
+						<a href="#" style="float:right;" data-dismiss="modal">X</a>
 					</div>
 					<div class="modal-body">
-						<div class="post-thread">Title:</div>
-						<textarea id="titlebox" name="title" rows="1" dir="ltr" maxlength="50"></textarea>
-						<div class="post-message">Message:</div>
-						<textarea id="replybox" name="reply" rows="10" dir="ltr"></textarea>
+						<textarea id="titlebox" name="title" rows="1" dir="ltr" maxlength="50" placeholder="Title"></textarea>
+						<textarea id="replybox" name="reply" rows="10" dir="ltr" placeholder="Message"></textarea>
 						<div>
 							<form action="" method="post" name="" onsubmit="" id="">
 								<input class="btn" class="button" value="POST" type="submit"/>
@@ -235,15 +269,17 @@
 		</div>
 		<!-- END POST THREAD MODAL -->
 
-		<!-- REGISTER MODAL -->
-		<div class="modal fade" id="register" role="dialog">
+		<!-- LOGIN MODAL -->
+		<div class="modal fade" id="login" role="dialog">
 			<div class ="modal-dialog">
 				<div class ="modal-content">
 					<div class ="modal-header">
-						<span>Register</span>
+						<span>Login</span>
+						<a href="#" style="float:right;" data-dismiss="modal">X</a>
 					</div>
 					<div class="modal-body">
-						<form action="/register" method="post">
+						<form id="login_form" action="/login" method="post">
+							<img src="../img/loading.gif" id="loadingIcon_login" height="32px" width="32px" style="display:none">
 							<div class="fieldset">
 								<div class="field">
 									<label for="username">Username</label>
@@ -253,24 +289,91 @@
 									<label for="first-name">Password</label>
 									<input type="password" autocapitalize="off" required autocomplete="password" id="password" placeholder="Password">
 								</div>
+								<input id="register-btn" class="btn" value="Login" type="submit">
+								<label id="error_login" style="display:none"></label>
+							</div>
+						</form>
+						<div><a href="#forgot" data-toggle="modal">Forgot Password</a></div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- END LOGIN MODAL -->
+
+		<!-- FORGOT PWORD MODAL -->
+		<div class="modal fade" id="forgot" role="dialog">
+			<div class ="modal-dialog">
+				<div class ="modal-content">
+					<div class ="modal-header">
+						<span>Forgot Password</span>
+						<a href="#" style="float:right;" data-dismiss="modal">X</a>
+					</div>
+					<div class="modal-body">
+						<form id="" action="" method="">
+							<img src="../img/loading.gif" id="loadingIcon_login" height="32px" width="32px" style="display:none">
+							<div class="fieldset">
 								<div class="field">
-									<label for="first-name">First name</label>
-									<input autocapitalize="off" required autocomplete="first-name" id="first-name" placeholder="First name">
+									<label for="email">Email address</label>
+									<input autocapitalize="off" required autocomplete="off" id="email" placeholder="Email address">
 								</div>
-								<div class="field">
-									<label for="first-name">Last name</label>
-									<input autocapitalize="off" required autocomplete="last-name" id="last-name" placeholder="Last name">
-								</div>
-								<div class="field">
-									<label for="first-name">Email address</label>
-									<input autocapitalize="off" required autocomplete="email-address" id="email-address" placeholder="Email address">
-								</div>
-								<input id="register-btn" class="btn" value="Create account" type="submit">
+								<input class="btn" value="Recover password" type="submit">
+								<label id="error_login" style="display:none"></label>
 							</div>
 						</form>
 					</div>
 				</div>
 			</div>
+		</div>
+		<!-- END FORGOT PWORD MODAL -->
+
+		<!-- REGISTER MODAL -->
+		<div class="modal fade" id="register" role="dialog">
+		  <div class ="modal-dialog">
+		    <div class ="modal-content">
+		      <div class ="modal-header">
+		        <span>Register</span>
+		        <a href="#" style="float:right;" data-dismiss="modal">X</a>
+		      </div>
+		      <div class="modal-body">
+		        <form id="signup_form" action="/signup" method="post">
+		          <img src="../img/loading.gif" id="loadingIcon_signup" height="32px" width="32px" style="display:none">
+		          <div class="fieldset">
+
+		            <div class="field">
+		              <label for="username">Username</label>
+		              <input autocapitalize="off" required autocomplete="off" id="username" placeholder="Username">
+		            </div>
+
+		            <div class="field">
+		              <label for="first-name">Password</label>
+		              <input type="password" autocapitalize="off" required autocomplete="password" id="password" placeholder="Password">
+		            </div>
+
+		            <div class="field">
+		              <label for="first-name">First name</label>
+		              <input autocapitalize="off" required autocomplete="first-name" id="first-name" placeholder="First name">
+		            </div>
+
+		            <div class="field">
+		              <label for="first-name">Last name</label>
+		              <input autocapitalize="off" required autocomplete="last-name" id="last-name" placeholder="Last name">
+		            </div>
+
+		            <div class="field">
+		              <label for="first-name">Email address</label>
+		              <input autocapitalize="off" required autocomplete="email-address" id="email-address" placeholder="Email address">
+		            </div>
+
+		            <div class="g-recaptcha" data-sitekey="6Lc4KAETAAAAANqjmmrIuQm1iojbfFetPmk2TJ-Q"></div>
+
+		            <input id="register-btn" class="btn" value="Create account" type="submit">
+
+		            <label id="error_signup" style="display:none"></label>
+		          </div>
+		        </form>
+		      </div>
+		    </div>
+		  </div>
 		</div>
 		<!-- END REGISTER MODAL -->
 

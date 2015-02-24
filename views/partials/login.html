@@ -1,0 +1,30 @@
+<!-- LOGIN MODAL -->
+<div class="modal fade" id="login" role="dialog">
+  <div class ="modal-dialog">
+    <div class ="modal-content">
+      <div class ="modal-header">
+        <span>Login</span>
+      </div>
+		<div class="modal-body">
+		  <form id="login_form" action="/login" method="post">
+		    <img src="../img/loading.gif" id="loadingIcon_login" height="32px" width="32px" style="display:none">
+		    <div class="fieldset">
+		      <div class="field">
+		        <label for="username">Username/Email</label>
+		        <input name="usernameEmail" autocapitalize="off" required autocomplete="off" id="username" placeholder="Username">
+		      </div>
+		      <div class="field">
+		        <label for="first-name">Password</label>
+		        <input name="password" type="password" autocapitalize="off" required autocomplete="password" id="password" placeholder="Password">
+		      </div>
+		      <input id="register-btn" class="btn" value="Login" type="submit">
+		      <label id="error_login" style="display:none"></label>
+		    </div>
+		  </form>
+		</div>
+	</div>
+  </div>
+</div>
+
+
+<!-- END LOGIN MODAL -->

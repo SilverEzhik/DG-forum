@@ -165,7 +165,10 @@ module.exports = function(app) {
       } else {
 
         console.log('New thread created');
-        res.redirect('/thread/'+ doc.prettyId);
+        res.send({
+          code: 200,
+          message: 'Thread successfully created.'
+        });
       }
 
     });
@@ -215,7 +218,10 @@ module.exports = function(app) {
           res.send(err);
           return;
         }
-        res.redirect('/thread/' + threadID);
+        res.send({
+          code: 200,
+          message: 'Reply successfully created.'
+        });
       }
     );
   };
