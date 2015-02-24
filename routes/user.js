@@ -239,6 +239,9 @@ module.exports = function(app) {
 
   var handleProfileRequest = function(req, res){
 
+    if(req.session.user)
+      User.updateActivity(req.session.user);
+
     //sanitize username
     var username = validator.toString(req.params.userid);
 
@@ -259,6 +262,7 @@ module.exports = function(app) {
 
   }
 
+  
   app.post('/login'       , handleLoginRequest);
   app.get('/logout'       , handleLogoutRequest);
   app.post('/signup'      , handleSignupRequest);

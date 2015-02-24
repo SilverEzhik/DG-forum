@@ -279,13 +279,45 @@ var makeUserForumDev = function(username, bool, callback) {
   );
 };
 
+//curently updates on these routes:
+// /user/:userid, and all routes in forum.js
+var updateLastActivity = function(user, callback){
+
+  UserMongoModel.update({ usernameLower: user.username.toLowerCase() },
+    { lastActivity: Date.now() }, function(err, numAffected, raw) {
+
+      if(err) callback(err);
+
+    });
+
+};
+
+//gets all members active within 30 minutes
+var getActiveMembers = function(callback){
+
+  //30 mins * 60 sec * 1000 millisec
+  var timeout = 30 * 60 * 1000;
+
+  //timeout >= Date.now() - lastActivity ---> lastActivity >= Date.now() - timeout
+  UserMongoModel.find({ lastActivity: {$gte : Date.now() - timeout} }, function (err, docs) {
+    
+    if(docs)
+      callback(docs);
+    
+  });
+
+};
+
+
 var UserModel = {
   login: logInUser,
   create: createUser,
   get: getUser,
   getMembers: getAllMembers,
   changeTitle: changeUserTitle,
-  makeForumDev: makeUserForumDev
+  makeForumDev: makeUserForumDev,
+  updateActivity: updateLastActivity,
+  getActiveMembers: getActiveMembers
 };
 
 module.exports = UserModel;
