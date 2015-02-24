@@ -56,7 +56,6 @@ module.exports = function(app) {
         onlineUsers: onlineUsers
       };
 
-
       // Render template
       res.render('forum.html', templateVars);
     });
