@@ -30,15 +30,22 @@
           <li class="thread-border">
           {% endif %}
             <div class="avatar-small"></div>
-            <div class="thread-row1">
-              <span><a href="thread/{{ thread.prettyId }}" class="thread-title">{{ thread.subject }}</a> ({{ thread.views }} views)</span>
 
-              <!-- TODO: templating for last reply, author and date-->
-              <span class="reply"><a href="#" class="last-post">last post</a> by <a href="#" class="last-poster">kobe</a></span>
+            <div class="contain-title">
+              <div class="ellipsed">
+                <a href="thread/{{ thread.prettyId }}" style="font-size:1.2em;">{{ thread.subject }}</a> 
+                <span style="font-size:1em;">({{ thread.views }} views)</span>
+              </div>
+              <div class="ellipsed">
+                <div class="ellipsed2">submitted by <a href="#" class="author">{{ thread.author }}</a> {{ convertToDate(thread.creationDate) }}</div>
+              </div>
             </div>
-            <div class="thread-row2">
-              <span>submitted by <a href="#" class="author">{{ thread.author }}</a>{{ convertToDate(thread.creationDate) }}</span>
-              <span class="timestamp">3 days ago</span>
+
+            <!-- TODO: templating for last reply, author and date-->
+
+            <div class="contain-title2">
+              <div class="ellipsed2"><a>Last post</a> by <a href="#" class="last-poster">last poster</a></div>
+              <div class="ellipsed2">n seconds ago</div>
             </div>
           </li>
         </ul>
@@ -48,6 +55,7 @@
     <!-- END GENERAL DISCUSSION -->
 
     <!-- FEED -->
+    <div class="feed-title"><span>Feed</span></div>
     <div class="feed-container">
       <ul class="feed">
         <li class="feed-item-grey">
@@ -70,6 +78,13 @@
       </ul>
     </div>
     <!-- END FEED -->
+
+    <!-- ONLINE -->
+    <div class="online-title"><span>Online users</span></div>
+    <div class="online">
+      <span class="avatar-small"></span>
+    </div>
+    <!-- END ONLINE -->
 
     <!-- POST THREAD MODAL -->
     <div class="modal fade" id="post" role="dialog">
