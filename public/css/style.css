@@ -575,6 +575,10 @@ textarea{
     clear: both;
 }
 
+.thread-body{
+	white-space: pre-wrap;
+}
+
 .thread-content{
 	width: 100%;
 	overflow: hidden;
