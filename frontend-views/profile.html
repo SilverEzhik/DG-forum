@@ -3,8 +3,8 @@
 		<meta charset="utf-8">
 		<title>DG Forum - Profile</title>
 		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<link rel="stylesheet" href="bootstrap.min.css" >
-		<link rel="stylesheet" href="style.css" type="text/css" media="screen, projection">
+		<link rel="stylesheet" href="css/bootstrap.min.css" >
+		<link rel="stylesheet" href="css/style.css" type="text/css" media="screen, projection">
 	</head>
 	<body>
 		<!-- HEADER -->
@@ -32,27 +32,43 @@
 				<div class="fieldset">
 					<div class="field">
 						<label for="first-name">Password</label>
-						<input type="password" autocapitalize="off" autocomplete="password" id="password" placeholder="Password">
+						<input type="password" autocapitalize="off" autocomplete="password" id="password" placeholder="Password" size="40">
 					</div>
 					<div class="field">
 						<label for="first-name">First name</label>
-						<input autocapitalize="off" autocomplete="first-name" id="first-name" placeholder="Brandon">
+						<input autocapitalize="off" autocomplete="first-name" id="first-name" placeholder="Brandon" size="40">
 					</div>
 					<div class="field">
 						<label for="first-name">Last name</label>
-						<input autocapitalize="off" autocomplete="last-name" id="last-name" placeholder="Chai">
+						<input autocapitalize="off" autocomplete="last-name" id="last-name" placeholder="Chai" size="40">
 					</div>
 					<div class="field">
 						<label for="first-name">Email address</label>
-						<input autocapitalize="off" autocomplete="email-address" id="email-address" placeholder="brandonlchai@gmail.com">
+						<input autocapitalize="off" autocomplete="email-address" id="email-address" placeholder="brandonlchai@gmail.com" size="40">
 					</div>
-					<div class="field">
+					<div class="field-avatar">
 						<label for="Avatar">Avatar</label>
-						<input type="file" name="pic" accept="image/*">
+						<!--<input type="file" name="pic" accept="image/*">-->
+						<select id="mySelect" class="avatar-select" style="display:none;">
+						    <option value="0">0</option>
+						    <option value="1">1</option>
+						    <option value="2">2</option>
+						    <option value="3">3</option>
+						</select>
+
+						<button type="button" class="avatar-stock" onclick="myFunction(0)" style="background-image: url(http://media.tumblr.com/tumblr_mepc8jxOtX1qlfmci.jpg); background-size:100%; background-position:50% 0%;"></button>
+
+						<button type="button" class="avatar-stock" onclick="myFunction(1)" style="background-image: url(http://4.bp.blogspot.com/-oFoOIFU8BXY/UIbq92Cy2DI/AAAAAAAABiY/BSNl98KgNew/s1600/turkeysandwich.jpg); background-size:90%;"></button>
+
+						<button type="button" class="avatar-stock" onclick="myFunction(2)" style="background-image: url(http://40.media.tumblr.com/49b96a59442b9587971c841c037b587c/tumblr_mxq7a9W0YK1qkgy0bo1_1280.jpg); background-size:110%; background-position:50% -20%;"></button>
+
+						<button type="button" class="avatar-stock" onclick="myFunction(3)" style="background-image: url(http://36.media.tumblr.com/tumblr_ma7vfzarNI1rq0954o1_500.jpg); background-size:75%;"></button>
+						
 					</div>
 					<input id="register-btn" class="btn" value="Save changes" type="submit">
 				</div>
 			</form>
+		
 		</div>
 		<!-- END PROFILE -->
 
@@ -100,9 +116,8 @@
 				</div>
 			</div>
 		</div>
-		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
-		<script src="bootstrap.min.js"></script>	
-
+		<script src="js/https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+		<script src="js/bootstrap.min.js"></script>	
 
 	</body>
 </html>

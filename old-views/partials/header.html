@@ -1,0 +1,114 @@
+<div id="header">
+  <div class="container">
+
+    <a href="../">
+      <!-- logo -->
+      <div id="logo">
+        <img src="../img/dglogo.png" height="25px" width="25px">
+      </div>
+      <!--Title-->
+      <div id="title">
+        DEVELOPER'S GUILD FORUM
+      </div>
+    </a>
+    <!-- main menu -->
+    <nav id="mainmenu" class="menu">
+
+      {% if sessUser %}
+
+      <!-- TODO: Properly link these -->
+      <a href="#">{{ sessUser.username }}</a>
+      <a href="../logout">Logout</a>
+      <a href="#">Settings</a>
+
+      {% else %}
+
+      <a onClick="toggleDisplay('loginModal');">Login</a>
+
+      <div id="loginModal" class="modalDialog" style="display:none">
+        <div id="loginForm">
+          <a title="Close" class="close" onClick="toggleDisplay('loginModal');">X</a>
+          <h2>Log in to account</h2>
+
+          <form id="login_form" action="/login" method="post">
+          <!-- Have the loading icon be off by default -->
+          <img src="../img/loading.gif" id="loadingIcon_login" height="32px" width="32px" style="display:none">
+            <div class="field-wrap">
+              <label>
+                Username/Email<span class="req">*</span>
+              </label>
+              <input id="usernameEmail" name="usernameEmail" type="text" maxlength="20" required>
+            </div>
+
+            <div class="field-wrap">
+              <label>
+                Password<span class="req">*</span>
+              </label>
+              <input id="password" name="password" type="password" required>
+            </div>
+
+            <button type="submit">Login</button>
+
+            <!-- Don't let the error message show by default -->
+            <label id="error_login" style="display:none"></label>
+            </form>
+        </div>
+      </div>
+
+
+      <a onClick="toggleDisplay('registerModal');">Sign Up</a>
+      <div id="registerModal" class="modalDialog" style="display:none">
+        <div id="registerForm">
+          <a onClick="toggleDisplay('registerModal');" title="Close" class="close">X</a>
+          <h2>Sign Up for a New Account</h2>
+
+          <form id="signup_form" action="/signup" method="post">
+          <img src="../img/loading.gif" id="loadingIcon_signup" height="32px" width="32px" style="display:none">
+            <div class="field-wrap">
+              <label>
+                Username<span class="req">*</span>
+              </label>
+              <input type="text" name = "username" required autocomplete="off" maxlength="20" />
+            </div>
+
+
+            <div class="field-wrap">
+              <label>
+                Full Name<span class="req">*</span>
+              </label>
+              <input type="text" name = "fName"required autocomplete="off" />
+            </div>
+
+            <div class="field-wrap">
+              <label>
+                Email Address<span class="req">*</span>
+              </label>
+              <input type="email" name="email"required autocomplete="off"/>
+            </div>
+
+            <div class="field-wrap">
+              <label>
+                Password<span class="req">*</span>
+              </label>
+              <input type="password" name="password" required autocomplete="off"/>
+            </div>
+
+            <div class="g-recaptcha" data-sitekey="6Lc4KAETAAAAANqjmmrIuQm1iojbfFetPmk2TJ-Q"></div>
+
+            <button type="submit">Create Account</button>
+
+            <!-- Don't let the error message show by default -->
+            <label id="error_signup" style="display:none"></label>
+          </form>
+        </div>
+      </div>
+      {% endif %}
+
+      <!-- TODO: Properly link this -->
+      <a href="#">About</a>
+    </nav>
+
+  </div>
+</div>
+
+{% include "partials/subheaders.html" %}

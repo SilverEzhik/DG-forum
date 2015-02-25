@@ -192,23 +192,22 @@ var createUser = function(username, email, password, fName, callback) {
 
 var getUser = function(username, callback) {
 
-  var errorResult;
-
   UserMongoModel.findOne({usernameLower: username.toLowerCase()},
     function(err, doc) {
 
-      
-      if(err)
+       var errorResult;
+
+      if (err) {
         errorResult = {
           code    : 500,
           message : 'Something went wrong in the database.'
         };
-      else if(!doc)
+      } else if(!doc) {
         errorResult = {
           code    : 400,
           message : 'User could not be found.'
         };
-
+      }
       callback(errorResult, doc);
 
     }
@@ -290,12 +289,16 @@ var updateLastActivity = function(user, callback){
         callback(err);
       }
       
+      if (err) {
+        callback(err);
+      }
+
     });
 
 };
 
 //gets all members active within 30 minutes
-var getActiveMembers = function(callback){
+var getActiveMembers = function(callback) {
 
   //30 mins * 60 sec * 1000 millisec
   var timeout = 30 * 60 * 1000;
@@ -304,11 +307,37 @@ var getActiveMembers = function(callback){
   UserMongoModel.find({ lastActivity: {$gte : Date.now() - timeout} }, function (err, docs) {
     
     if(docs){
+
+    if (docs) {
       callback(docs);
     }
 
   });
+};
 
+var changeUserAvatar = function(username, avatarStr, callback) {
+  UserMongoModel.findOneAndUpdate({ usernameLower: username.toLowerCase() },
+    { profile: {avatar: avatarStr } }, function(err, doc) {
+      var result;
+      if (err) {
+        result = {
+          code    : 500,
+          message : 'Something went wrong in the database. Try again.'
+        };
+      } else if (!doc) {
+        result = {
+          code    : 400,
+          message : 'Couldn\'t find that user.'
+        };
+      } else {
+        result = {
+          code: 200,
+          message: 'Avatar successfully changed.'
+        };
+      }
+      callback(result);
+    }
+  );
 };
 
 
@@ -320,7 +349,8 @@ var UserModel = {
   changeTitle: changeUserTitle,
   makeForumDev: makeUserForumDev,
   updateActivity: updateLastActivity,
-  getActiveMembers: getActiveMembers
+  getActiveMembers: getActiveMembers,
+  changeAvatar: changeUserAvatar
 };
 
 module.exports = UserModel;

@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block page %}
+
+		<!-- PROFILE -->
+		<div class="profile">
+			<div class="edit-profile">Edit Profile</div>
+			<form action="/register" method="post">
+				<div class="fieldset">
+					<div class="field">
+						<label for="first-name">Password</label>
+						<input type="password" autocapitalize="off" autocomplete="password" id="password" placeholder="Password">
+					</div>
+					<div class="field">
+						<label for="first-name">Full name</label>
+						<input autocapitalize="off" autocomplete="first-name" id="first-name" placeholder="{{ sessUser.fllname }}">
+					</div>
+					<div class="field">
+						<label for="first-name">Email address</label>
+						<input autocapitalize="off" autocomplete="email-address" id="email-address" placeholder="{{ sessUser.email }}">
+					</div>
+					<div class="field">
+						<label for="Avatar">Avatar</label>
+						<input type="file" name="pic" accept="image/*">
+					</div>
+					<input id="register-btn" class="btn" value="Save changes" type="submit">
+				</div>
+			</form>
+		</div>
+		<!-- END PROFILE -->
+
+{% endblock %}

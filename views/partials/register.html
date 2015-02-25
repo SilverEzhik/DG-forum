@@ -1,0 +1,43 @@
+<!-- REGISTER MODAL -->
+<div class="modal fade" id="register" role="dialog">
+  <div class ="modal-dialog">
+    <div class ="modal-content">
+      <div class ="modal-header">
+        <span>Register</span>
+      </div>
+        <div class="modal-body">
+	        <form id="signup_form" action="/signup" method="post">
+	          <img src="../img/loading.gif" id="loadingIcon_signup" height="32px" width="32px" style="display:none">
+	            <div class="fieldset">
+		            <div class="field">
+		              <label for="username">Username</label>
+		              <input name="username" autocapitalize="off" required autocomplete="off" id="username" placeholder="Username">
+		            </div>
+
+		            <div class="field">
+		              <label for="first-name">Password</label>
+		              <input name="password" type="password" autocapitalize="off" required autocomplete="password" id="password" placeholder="Password">
+		            </div>
+
+		            <div class="field">
+		              <label for="first-name">Full name</label>
+		              <input name="fllname" autocapitalize="off" required autocomplete="full-name" id="full-name" placeholder="Full name">
+		            </div>
+
+		            <div class="field">
+		              <label for="first-name">Email address</label>
+		              <input name="email" autocapitalize="off" required autocomplete="email-address" id="email-address" placeholder="Email address">
+		            </div>
+
+		            <div class="g-recaptcha" data-sitekey="6Lc4KAETAAAAANqjmmrIuQm1iojbfFetPmk2TJ-Q"></div>
+
+		            <input id="register-btn" class="btn" value="Create account" type="submit">
+
+		            <label id="error_signup" style="display:none"></label>
+	            </div>
+	        </form>
+        </div>
+    </div>
+  </div>
+</div>
+<!-- END REGISTER MODAL -->
