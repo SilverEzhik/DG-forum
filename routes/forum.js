@@ -69,8 +69,9 @@ module.exports = function(app) {
       onlineUsers = docs;
     });
 
-    if(req.session.user)
+    if(req.session.user){
       User.updateActivity(req.session.user);
+    }
 
     // Find the thread
     var threadID = validator.toString(req.params.id);
@@ -106,8 +107,9 @@ module.exports = function(app) {
 
   var handleThreadCreate = function(req, res) {
 
-    if(req.session.user)
+    if(req.session.user){
       User.updateActivity(req.session.user);
+    }
 
     var subject = validator.toString(req.body.subject);
     var message = validator.toString(req.body.message);
@@ -173,8 +175,9 @@ module.exports = function(app) {
 
   var handleThreadReply = function(req, res) {
 
-    if(req.session.user)
+    if(req.session.user){
       User.updateActivity(req.session.user);
+    }
 
     var threadID = validator.toString(req.params.id);
     var message = validator.toString(req.body.message);
