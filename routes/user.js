@@ -276,6 +276,7 @@ module.exports = function(app) {
     });
   };
 
+
   app.post('/login'       , handleLoginRequest);
   app.get('/logout'       , handleLogoutRequest);
   app.post('/signup'      , handleSignupRequest);

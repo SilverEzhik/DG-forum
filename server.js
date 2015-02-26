@@ -66,8 +66,11 @@ nunjucks.configure('views', {
 // Tell Express to serve static objects from the /public/ directory
 app.use(express.static(path.join(__dirname, 'public')));
 
-require('./routes/user')(app);
+//put the forum require before the user because the app.all('*')
+//is chained to all other requests
 require('./routes/forum')(app);
+require('./routes/user')(app);
+
 
 var server = app.listen(3000, function () {
 

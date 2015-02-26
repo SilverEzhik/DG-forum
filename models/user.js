@@ -192,23 +192,22 @@ var createUser = function(username, email, password, fName, callback) {
 
 var getUser = function(username, callback) {
 
-  var errorResult;
-
   UserMongoModel.findOne({usernameLower: username.toLowerCase()},
     function(err, doc) {
 
+       var errorResult;
 
-      if(err)
+      if (err) {
         errorResult = {
           code    : 500,
           message : 'Something went wrong in the database.'
         };
-      else if(!doc)
+      } else if(!doc) {
         errorResult = {
           code    : 400,
           message : 'User could not be found.'
         };
-
+      }
       callback(errorResult, doc);
 
     }
@@ -279,6 +278,37 @@ var makeUserForumDev = function(username, bool, callback) {
   );
 };
 
+//curently updates on these routes:
+// /user/:userid, and all routes in forum.js
+var updateLastActivity = function(user, callback){
+
+  UserMongoModel.update({ usernameLower: user.username.toLowerCase() },
+    { lastActivity: Date.now() }, function(err, numAffected, raw) {
+
+      if(err){ 
+        callback(err);
+      }
+
+    });
+
+};
+
+//gets all members active within 30 minutes
+var getActiveMembers = function(callback) {
+
+  //30 mins * 60 sec * 1000 millisec
+  var timeout = 30 * 60 * 1000;
+
+  //timeout >= Date.now() - lastActivity ---> lastActivity >= Date.now() - timeout
+  UserMongoModel.find({ lastActivity: {$gte : Date.now() - timeout} }, function (err, docs) {
+
+    if (docs) {
+      callback(docs);
+    }
+
+  });
+};
+
 var changeUserAvatar = function(username, avatarStr, callback) {
   UserMongoModel.findOneAndUpdate({ usernameLower: username.toLowerCase() },
     { profile: {avatar: avatarStr } }, function(err, doc) {
@@ -312,6 +342,8 @@ var UserModel = {
   getMembers: getAllMembers,
   changeTitle: changeUserTitle,
   makeForumDev: makeUserForumDev,
+  updateActivity: updateLastActivity,
+  getActiveMembers: getActiveMembers,
   changeAvatar: changeUserAvatar
 };
 

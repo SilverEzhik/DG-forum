@@ -6,7 +6,7 @@ module.exports = function(app) {
 
   var moment    = require('moment');
   var validator = require('validator');
-
+  var User = require('.././models/user');
   var Thread  = require('.././models/thread');
 
   // Conver timestamps into readable human time
@@ -16,6 +16,15 @@ module.exports = function(app) {
   };
 
   var handleForumFetch = function(req, res) {
+
+    //should i do this every method request?
+    //or should i just save it in req.onlineusers
+    //so other methods can use it
+    var onlineUsers;
+
+    User.getActiveMembers(function(docs){
+      onlineUsers = docs;
+    });
 
     // Refresh the user's session expiration date if they view the forums
     // so that active users can continuously use the forums
@@ -40,9 +49,9 @@ module.exports = function(app) {
         title: '',
         threads: doc,
         convertToDate: convertToDate,
-        sessUser: req.session.user
+        sessUser: req.session.user,
+        onlineUsers: onlineUsers
       };
-
 
       // Render template
       res.render('forum.html', templateVars);
@@ -50,6 +59,12 @@ module.exports = function(app) {
   };
 
   var handleThreadFetch = function(req, res) {
+
+    var onlineUsers;
+
+    User.getActiveMembers(function(docs){
+      onlineUsers = docs;
+    });
 
     // Find the thread
     var threadID = validator.toString(req.params.id);
@@ -74,7 +89,8 @@ module.exports = function(app) {
         title: doc.subject,
         thread: doc,
         convertToDate: convertToDate,
-        sessUser: req.session.user
+        sessUser: req.session.user,
+        onlineUsers: onlineUsers
       };
 
       // Render template
@@ -83,6 +99,7 @@ module.exports = function(app) {
   };
 
   var handleThreadCreate = function(req, res) {
+
     var subject = validator.toString(req.body.subject);
     var message = validator.toString(req.body.message);
 
@@ -151,9 +168,7 @@ module.exports = function(app) {
   var handleThreadReply = function(req, res) {
 
     var threadID = validator.toString(req.params.id);
-
     var message = validator.toString(req.body.message);
-
     var author = req.session.user.username;
 
     var result;
@@ -199,6 +214,16 @@ module.exports = function(app) {
     );
   };
 
+  var handleAllGets = function(req, res, next){
+    
+    if(req.session.user){
+      User.updateActivity(req.session.user);
+    }
+
+    next();
+  }
+
+  app.all('*'                 , handleAllGets);
   app.get('/'                 , handleForumFetch);
   app.post('/makethread'      , handleThreadCreate);
   app.get('/thread/:id'       , handleThreadFetch);
