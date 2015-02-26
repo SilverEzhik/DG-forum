@@ -60,12 +60,6 @@ module.exports = function(app) {
 
   var handleThreadFetch = function(req, res) {
 
-    var onlineUsers;
-
-    User.getActiveMembers(function(docs){
-      onlineUsers = docs;
-    });
-
     // Find the thread
     var threadID = validator.toString(req.params.id);
 
@@ -89,8 +83,7 @@ module.exports = function(app) {
         title: doc.subject,
         thread: doc,
         convertToDate: convertToDate,
-        sessUser: req.session.user,
-        onlineUsers: onlineUsers
+        sessUser: req.session.user
       };
 
       // Render template
@@ -214,16 +207,16 @@ module.exports = function(app) {
     );
   };
 
-  var handleAllGets = function(req, res, next){
-    
-    if(req.session.user){
+  var handleOnEveryRequest = function(req, res, next) {
+
+    if (req.session.user) {
       User.updateActivity(req.session.user);
     }
 
     next();
-  }
+  };
 
-  app.all('*'                 , handleAllGets);
+  app.all('*'                 , handleOnEveryRequest);
   app.get('/'                 , handleForumFetch);
   app.post('/makethread'      , handleThreadCreate);
   app.get('/thread/:id'       , handleThreadFetch);

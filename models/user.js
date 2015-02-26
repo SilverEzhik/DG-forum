@@ -285,7 +285,7 @@ var updateLastActivity = function(user, callback){
   UserMongoModel.update({ usernameLower: user.username.toLowerCase() },
     { lastActivity: Date.now() }, function(err, numAffected, raw) {
 
-      if(err){ 
+      if (err) {
         callback(err);
       }
 
@@ -300,13 +300,15 @@ var getActiveMembers = function(callback) {
   var timeout = 30 * 60 * 1000;
 
   //timeout >= Date.now() - lastActivity ---> lastActivity >= Date.now() - timeout
-  UserMongoModel.find({ lastActivity: {$gte : Date.now() - timeout} }, function (err, docs) {
+  UserMongoModel.find({ lastActivity: {$gte : Date.now() - timeout} },
+    function (err, docs) {
 
-    if (docs) {
-      callback(docs);
+      if (docs) {
+        callback(docs);
+      }
+
     }
-
-  });
+  );
 };
 
 var changeUserAvatar = function(username, avatarStr, callback) {
