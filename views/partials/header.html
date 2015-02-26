@@ -11,13 +11,12 @@
 
   {% if sessUser %}
   <!-- AVATAR -->
-  <div class="avatar-small"></div>
+  <a href="../user/{{ sessUser.usernameLower}}"><div class="avatar-small"></div></a>
   <!-- END AVATAR -->
 
   <!-- MENU -->
   <ul class="menu">
-    <li>{{ sessUser.username }}</li>
-    <li><a href="../user/{{ sessUser.usernameLower}}">Profile</a></li>
+    <li><a href="../user/{{ sessUser.usernameLower}}">{{ sessUser.username }}</a></li>
     <li><a href="../logout">Logout</a></li>
     <li><a href="#">Members</a></li>
     <li><a href="#">About</a></li>

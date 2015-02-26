@@ -61,10 +61,15 @@ var generatePrettyId = function(callback, counter) {
   */
 };
 
-var getAllThreads = function(callback) {
+var getAllThreads = function(page, callback) {
+
+  // Constant amount of threads to show on page at once
+  var LIMIT = 15;
+
+  var skip = ( LIMIT * (page - 1) );
 
   // Grab all threads and sort by last update
-  ThreadMongoModel.find({}, null, {sort: {lastupdate: -1}},
+  ThreadMongoModel.find({}, null, {sort: {lastupdate: -1}, limit: LIMIT, skip: skip},
     function (err, doc) {
       var result;
       if (err) {

@@ -9,7 +9,7 @@ module.exports = function(app) {
   var User = require('.././models/user');
   var Thread  = require('.././models/thread');
 
-  // Conver timestamps into readable human time
+  // Convert timestamps into readable human time
   var convertToDate = function(timeStamp) {
 
       return moment(timeStamp).fromNow();
@@ -17,9 +17,13 @@ module.exports = function(app) {
 
   var handleForumFetch = function(req, res) {
 
-    //should i do this every method request?
-    //or should i just save it in req.onlineusers
-    //so other methods can use it
+    var page = validator.toInt(req.query.page) || 1;
+
+    // validation for page
+    if ( (page < 1) || (page % 1 !== 0) ) {
+      page = 1;
+    }
+
     var onlineUsers;
 
     User.getActiveMembers(function(docs){
@@ -38,7 +42,7 @@ module.exports = function(app) {
     }
 
     // Grab all threads.
-    Thread.getAll(function(err, doc) {
+    Thread.getAll(page, function(err, doc) {
 
       if (err) {
         res.send(err);
@@ -48,6 +52,7 @@ module.exports = function(app) {
       var templateVars = {
         title: '',
         threads: doc,
+        page: page,
         convertToDate: convertToDate,
         sessUser: req.session.user,
         onlineUsers: onlineUsers

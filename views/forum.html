@@ -10,11 +10,13 @@
       <div class="thread-menubar">
         <span id="discussion-title">General Discussion</span>
         <span id="pages">
-          <a href="#">Prev</a>
-          <span>1</span>
-          <a href="#">2</a>
-          <a href="#">3</a>
-          <a href="#">Next</a>
+          {% if page != 1 %}
+            <a href="../?page={{ page - 1 }}">Prev</a>
+            <a href="../?page={{ page - 1 }}">{{ page - 1 }}</a>
+          {% endif %}
+          <span>{{ page }}</span>
+          <a href="../?page={{ page + 1 }}">{{ page + 1 }}</a>
+          <a href="../?page={{ page + 1 }}">Next</a>
         </span>
         {% if sessUser %}
         <span class="post-thread">
@@ -35,7 +37,7 @@
 
             <div class="contain-title">
               <div class="ellipsed">
-                <a href="thread/{{ thread.prettyId }}" style="font-size:1.2em;">{{ thread.subject }}</a> 
+                <a href="thread/{{ thread.prettyId }}" style="font-size:1.2em;">{{ thread.subject }}</a>
                 <span style="font-size:1em;">({{ thread.views }} views)</span>
               </div>
               <div class="ellipsed">
@@ -53,7 +55,7 @@
         </ul>
         {% endfor %}
       </div>
-      
+
     </div>
     <!-- END GENERAL DISCUSSION -->
 
