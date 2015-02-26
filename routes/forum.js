@@ -157,6 +157,7 @@ module.exports = function(app) {
     var message = validator.toString(req.body.message);
     var author = req.session.user.username;
 
+
     var result;
 
     if (!author) {

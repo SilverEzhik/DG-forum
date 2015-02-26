@@ -2,7 +2,7 @@
 
 {% block page %}
 
-    {% include "partials/projects.html" %}
+{% include "partials/projects.html" %}
 
     <!-- GENERAL DISCUSSION -->
     <div class="discussion-container">
@@ -33,7 +33,7 @@
           {% else %}
           <li class="thread-border">
           {% endif %}
-            <div class="avatar-small"></div>
+            <div class="avatar-small" title="{{ thread.author }}" style="background-image: url(../avatars/{{ thread.authorUser.profile.avatar }}); background-size: 75%;"></div>
 
             <div class="contain-title">
               <div class="ellipsed">
@@ -87,7 +87,13 @@
     <!-- ONLINE -->
     <div class="online-title"><span>Online users</span></div>
     <div class="online">
-      <span class="avatar-small"></span>
+
+    	{% for user in onlineUsers %}
+  
+      	<span class="avatar-small" title="{{ user.username }}" style="background-image: url(../avatars/{{ user.profile.avatar }}); background-size: 75%;"></span>
+      	
+    	{% endfor %}
+
     </div>
     <!-- END ONLINE -->
 
@@ -114,7 +120,5 @@
       </div>
     </div>
     <!-- END POST THREAD MODAL -->
-
-
 
 {% endblock %}
