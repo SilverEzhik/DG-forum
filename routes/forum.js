@@ -24,43 +24,31 @@ module.exports = function(app) {
       page = 1;
     }
 
-    var onlineUsers;
+    User.getActiveMembers(function(docs) {
+      var onlineUsers = docs;
 
-    User.getActiveMembers(function(docs){
-      onlineUsers = docs;
+      // Grab all threads.
+      Thread.getAll(page, function(err, doc) {
+
+        if (err) {
+          res.send(err);
+          return;
+        }
+
+        var templateVars = {
+          title: '',
+          threads: doc,
+          page: page,
+          convertToDate: convertToDate,
+          sessUser: req.session.user,
+          onlineUsers: onlineUsers
+        };
+
+        // Render template
+        res.render('forum.html', templateVars);
+      });
     });
 
-    // Refresh the user's session expiration date if they view the forums
-    // so that active users can continuously use the forums
-    if (req.session.user) {
-
-      // 1 week
-      var week = 1000 * 60 * 60 * 24 * 7;
-
-      // Set the session to expire in a week
-      req.session.cookie.expires = new Date(Date.now() + week);
-    }
-
-    // Grab all threads.
-    Thread.getAll(page, function(err, doc) {
-
-      if (err) {
-        res.send(err);
-        return;
-      }
-
-      var templateVars = {
-        title: '',
-        threads: doc,
-        page: page,
-        convertToDate: convertToDate,
-        sessUser: req.session.user,
-        onlineUsers: onlineUsers
-      };
-
-      // Render template
-      res.render('forum.html', templateVars);
-    });
   };
 
   var handleThreadFetch = function(req, res) {
@@ -216,6 +204,15 @@ module.exports = function(app) {
 
     if (req.session.user) {
       User.updateActivity(req.session.user);
+
+
+      // Refresh the user's session expiration date if they view the forums
+      // so that active users can continuously use the forums
+      // 1 week
+      var week = 1000 * 60 * 60 * 24 * 7;
+
+      // Set the session to expire in a week
+      req.session.cookie.expires = new Date(Date.now() + week);
     }
 
     next();
