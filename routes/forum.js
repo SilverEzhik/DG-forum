@@ -229,6 +229,18 @@ module.exports = function(app) {
     );
   };
 
+  var handleAllGets = function(req, res, next){
+    
+    if(req.session.user){
+      User.updateActivity(req.session.user);
+    }
+
+    console.log(req.originalUrl);
+
+    next();
+  }
+
+  app.all('*'                 , handleAllGets);
   app.get('/'                 , handleForumFetch);
   app.post('/makethread'      , handleThreadCreate);
   app.get('/thread/:id'       , handleThreadFetch);

@@ -288,10 +288,6 @@ var updateLastActivity = function(user, callback){
       if(err){ 
         callback(err);
       }
-      
-      if (err) {
-        callback(err);
-      }
 
     });
 
@@ -305,8 +301,6 @@ var getActiveMembers = function(callback) {
 
   //timeout >= Date.now() - lastActivity ---> lastActivity >= Date.now() - timeout
   UserMongoModel.find({ lastActivity: {$gte : Date.now() - timeout} }, function (err, docs) {
-    
-    if(docs){
 
     if (docs) {
       callback(docs);
