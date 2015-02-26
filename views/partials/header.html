@@ -11,7 +11,9 @@
 
   {% if sessUser %}
   <!-- AVATAR -->
-  <a href="../user/{{ sessUser.usernameLower}}"><div class="avatar-small"></div></a>
+  <a href="../user/{{ sessUser.usernameLower}}">
+    <span class="avatar-small" title="{{ sessUser.username }}" style="background-image: url(../avatars/{{ sessUser.profile.avatar }}); background-size: 75%;"></span>
+  </a>
   <!-- END AVATAR -->
 
   <!-- MENU -->
