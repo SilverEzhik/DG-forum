@@ -26,9 +26,6 @@ module.exports = function(app) {
       onlineUsers = docs;
     });
 
-    if(req.session.user)
-      User.updateActivity(req.session.user);
-
     // Refresh the user's session expiration date if they view the forums
     // so that active users can continuously use the forums
     if (req.session.user) {
@@ -69,10 +66,6 @@ module.exports = function(app) {
       onlineUsers = docs;
     });
 
-    if(req.session.user){
-      User.updateActivity(req.session.user);
-    }
-
     // Find the thread
     var threadID = validator.toString(req.params.id);
 
@@ -106,10 +99,6 @@ module.exports = function(app) {
   };
 
   var handleThreadCreate = function(req, res) {
-
-    if(req.session.user){
-      User.updateActivity(req.session.user);
-    }
 
     var subject = validator.toString(req.body.subject);
     var message = validator.toString(req.body.message);
@@ -178,10 +167,6 @@ module.exports = function(app) {
 
   var handleThreadReply = function(req, res) {
 
-    if(req.session.user){
-      User.updateActivity(req.session.user);
-    }
-
     var threadID = validator.toString(req.params.id);
     var message = validator.toString(req.body.message);
     var author = req.session.user.username;
@@ -234,8 +219,6 @@ module.exports = function(app) {
     if(req.session.user){
       User.updateActivity(req.session.user);
     }
-
-    console.log(req.originalUrl);
 
     next();
   }
