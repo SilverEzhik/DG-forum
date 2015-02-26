@@ -28,7 +28,7 @@ module.exports = function(app) {
       var onlineUsers = docs;
 
       // Grab all threads.
-      Thread.getAll(page, function(err, doc) {
+      Thread.getAll(page, function(err, doc, lastPage) {
 
         if (err) {
           res.send(err);
@@ -39,6 +39,7 @@ module.exports = function(app) {
           title: '',
           threads: doc,
           page: page,
+          lastPage: lastPage,
           convertToDate: convertToDate,
           sessUser: req.session.user,
           onlineUsers: onlineUsers

@@ -14,9 +14,14 @@
             <a href="../?page={{ page - 1 }}">Prev</a>
             <a href="../?page={{ page - 1 }}">{{ page - 1 }}</a>
           {% endif %}
+
           <span>{{ page }}</span>
+
+          {% if page != lastPage %}
           <a href="../?page={{ page + 1 }}">{{ page + 1 }}</a>
           <a href="../?page={{ page + 1 }}">Next</a>
+          {% endif %}
+
         </span>
         {% if sessUser %}
         <span class="post-thread">

@@ -68,7 +68,28 @@ var getAllThreads = function(page, callback) {
 
   var skip = ( LIMIT * (page - 1) );
 
+  ThreadMongoModel.count(function(err, count) {
+    var lastPage = Math.ceil(count / LIMIT);
+
+    ThreadMongoModel.find({}, null, {sort: {lastupdate: -1}, limit: LIMIT, skip: skip},
+      function (err, doc) {
+        var result;
+        if (err) {
+          result = {
+            code    : 500,
+            message : 'Something went wrong in the database.'
+          };
+          console.error(err);
+        }
+
+
+        callback(result, doc, lastPage);
+    });
+  });
+
+  /*
   // Grab all threads and sort by last update
+
   ThreadMongoModel.find({}, null, {sort: {lastupdate: -1}, limit: LIMIT, skip: skip},
     function (err, doc) {
       var result;
@@ -79,10 +100,18 @@ var getAllThreads = function(page, callback) {
         };
         console.error(err);
       }
-      callback(result, doc);
+
+      var isLastPage = false;
+
+      if (doc.length % LIMIT !== 0) {
+        isLastPage = true;
+      }
+
+      callback(result, doc, isLastPage);
 
     }
   );
+*/
 };
 
 var getThread = function(id, callback) {
