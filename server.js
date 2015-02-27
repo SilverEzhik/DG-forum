@@ -63,7 +63,11 @@ var env = new nunjucks.Environment(new nunjucks.FileSystemLoader('views'),
 env.express(app);
 
 env.addFilter('getUserAvatar', function(username, callback) {
-  User.getAvatar(username, callback);
+
+  //got an error on the 'multi line' thread because username returns undefined
+  if(username){
+    User.getAvatar(username, callback);
+  }
 }, true);
 
 // Tell Express to serve static objects from the /public/ directory

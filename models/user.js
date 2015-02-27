@@ -220,7 +220,22 @@ var getUser = function(username, callback) {
 };
 
 
-var getAllMembers = function() {
+var getAllMembers = function(callback) {
+
+  var memberNum = 1; 
+  var officerNum = 2;
+
+  //.find({}) returns a query object, which can do more specific queries like
+  //the or function, looking for either memberNum or officerNum
+  UserMongoModel.find({}).or([ {title: memberNum}, { title: officerNum}])
+    .exec(function(err, docs){
+
+      if(docs){
+        callback(docs);
+      }
+
+    });
+
 
 };
 
@@ -365,7 +380,7 @@ var UserModel = {
   login: logInUser,
   create: createUser,
   get: getUser,
-  getMembers: getAllMembers,
+  getAllMembers: getAllMembers,
   changeTitle: changeUserTitle,
   makeForumDev: makeUserForumDev,
   updateActivity: updateLastActivity,

@@ -276,11 +276,24 @@ module.exports = function(app) {
     });
   };
 
+  var handleGetMembers = function(req, res){
+
+    User.getAllMembers(function(docs){
+
+      if(docs){
+        res.send(docs);
+      }
+      
+    });
+
+  };
+
 
   app.post('/login'       , handleLoginRequest);
   app.get('/logout'       , handleLogoutRequest);
   app.post('/signup'      , handleSignupRequest);
   app.get('/user/:userid' , handleProfileRequest);
   app.post('/changeavatar', handleUserAvatarChange);
+  app.get('/members'      , handleGetMembers);
 
 };
