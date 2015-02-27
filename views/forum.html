@@ -23,9 +23,9 @@
         {% for thread in threads %}
         <ul class="threadlist">
           {% if loop.index % 2 == 0 %}
-          <li class="thread-no-border">
+          <li class="root-thread-no-border">
           {% else %}
-          <li class="thread-border">
+          <li class="root-thread-border">
           {% endif %}
             <a href="user/{{ thread.author }}"><div class="avatar-small" title="{{ thread.author }}" style="background-image: url(../avatars/{{ thread.author|getUserAvatar  }}); "></div></a>
             <div class="contain-title">
@@ -52,8 +52,13 @@
         </ul>
         {% endfor %}
       </div>
-
+      
+    <div class="change-page">
+    {% include "partials/pagination.html" %}
     </div>
+    </div>
+
+
     <!-- END GENERAL DISCUSSION -->
 
     <!-- FEED -
