@@ -24,16 +24,24 @@ module.exports = function(app) {
       page = 1;
     }
 
-    User.getActiveMembers(function(docs) {
-      var onlineUsers = docs;
 
-      // Grab all threads.
-      Thread.getAll(page, function(err, doc, lastPage) {
 
-        if (err) {
-          res.send(err);
-          return;
-        }
+    // Grab all threads.
+    Thread.getAll(page, function(err, doc, lastPage) {
+
+      if (err) {
+        res.send(err);
+        return;
+      }
+
+      // If user is on a page with no threads, redirect them to index
+      if (page > lastPage) {
+        res.redirect('/');
+        return;
+      }
+
+      User.getActiveMembers(function(docs) {
+        var onlineUsers = docs;
 
         var templateVars = {
           title: '',

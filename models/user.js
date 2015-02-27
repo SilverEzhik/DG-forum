@@ -11,6 +11,9 @@ var db = require('./database');
 // Titles for users
 // README: The Forum Developer title exists so forum developers can have access
 // To tools required to work on the forums.
+//
+var TITLES = ['Guest', 'Member', 'Officer'];
+/*
 // Guest: White, Member: Blue, Officer: Green
 var TITLES = [
   {
@@ -24,7 +27,7 @@ var TITLES = [
     color: '#00aa00'
   }
 ];
-
+*/
 var STOCKAVATARS = ['dg.png', 'github.png', 'bitbucket.png', 'deanza.png',
                     'nodejs.png', 'swift.png', 'windows.png', 'osx.png',
                     'linux.png', 'stackoverflow.png'];

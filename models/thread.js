@@ -66,10 +66,10 @@ var getAllThreads = function(page, callback) {
   // Constant amount of threads to show on page at once
   var LIMIT = 15;
 
-  var skip = ( LIMIT * (page - 1) );
-
   ThreadMongoModel.count(function(err, count) {
     var lastPage = Math.ceil(count / LIMIT);
+
+    var skip = ( LIMIT * (page - 1) );
 
     ThreadMongoModel.find({}, null, {sort: {lastupdate: -1}, limit: LIMIT, skip: skip},
       function (err, doc) {
