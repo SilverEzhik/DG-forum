@@ -14,6 +14,7 @@ a:hover{
 	margin-right: 13px;
 	margin-bottom: 13px;
 	border-radius: 50%;
+  background-size: 50px 50px;
 }
 
 .avatar-small{
@@ -26,6 +27,7 @@ a:hover{
 	background-position: center;
 	background-repeat: no-repeat;
 	background-color:white;
+  background-size: 40px 40px;
 }
 
 .avatar-small:hover{
@@ -66,7 +68,7 @@ body{
 	display: inline-block;
 	text-align: center;
 	color: #000;
-	margin: 10px 0px; 
+	margin: 10px 0px;
 	padding: 10px;
 	line-height: 1px;
 }
@@ -236,9 +238,9 @@ figcaption p{
 	width: 100%;
 	height: 190px;
     margin: 0 auto;
-    padding: 0; 
+    padding: 0;
     //border: 1px solid #dfdfdf;
-  
+
 }
 
 .g-recaptcha{
@@ -351,7 +353,7 @@ label{
 .modal-dialog{
 	//width: 50%;
 	//height: 70%;
-	width: 500px; 
+	width: 500px;
 	height: 500px;
 }
 

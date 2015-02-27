@@ -1,7 +1,6 @@
 'use strict';
 
 var bodyParser    = require('body-parser');
-var cookieParser  = require('cookie-parser');
 var express       = require('express');
 // var multer        = require('multer');
 var nunjucks      = require('nunjucks');
@@ -14,10 +13,11 @@ var MongoStore = require('connect-mongo')(session);
 var app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(cookieParser());
 
 // Include database model
 var db = require('./models/database');
+
+var User = require('./models/user');
 
 var sess = {
   secret: process.env.SESS_SECRET || 'http://youtu.be/BwBK2xkjaSU',
@@ -58,10 +58,13 @@ app.use(function(req, res, next) {
 */
 
 // Tell Nunjucks where the templates are stored.
-nunjucks.configure('views', {
-  autoescape: true,
-  express: app
-});
+var env = new nunjucks.Environment(new nunjucks.FileSystemLoader('views'),
+                                    { autoescape: false });
+env.express(app);
+
+env.addFilter('getUserAvatar', function(username, callback) {
+  User.getAvatar(username, callback);
+}, true);
 
 // Tell Express to serve static objects from the /public/ directory
 app.use(express.static(path.join(__dirname, 'public')));

@@ -27,7 +27,15 @@ var ThreadSchema = mongoose.Schema({
     creationDate: { type: Number, default: Date.now },
     edited      : { type: Boolean, default: false},
     deleted     : { type: Boolean, default: false}
-  }]
+  }],
+  numOfPosts: { type: Number, default: 0},
+});
+
+ThreadSchema.pre('save', function (next) {
+  var curTime = Date.now();
+  this.lastupdate = curTime;
+  this.numOfPosts = this.replies.length;
+  next();
 });
 
 var ThreadMongoModel = db.model('gdThreads', ThreadSchema);
@@ -71,7 +79,9 @@ var getAllThreads = function(page, callback) {
 
     var skip = ( LIMIT * (page - 1) );
 
-    ThreadMongoModel.find({}, null, {sort: {lastupdate: -1}, limit: LIMIT, skip: skip},
+
+    ThreadMongoModel.find({}, {replies: {$slice: -1}, subject: 1, author: 1, prettyId: 1, deleted: 1, pinned: 1, locked: 1, lastupdate: 1, numOfPosts: 1},
+      {sort: {lastupdate: -1}, limit: LIMIT, skip: skip},
       function (err, doc) {
         var result;
         if (err) {
@@ -82,9 +92,9 @@ var getAllThreads = function(page, callback) {
           console.error(err);
         }
 
-
         callback(result, doc, lastPage);
-    });
+      }
+    );
   });
 
   /*
@@ -114,28 +124,37 @@ var getAllThreads = function(page, callback) {
 */
 };
 
-var getThread = function(id, callback) {
+var getThread = function(id, page, callback) {
+
+  var LIMIT = 15;
+
+  var skip = ( LIMIT * (page - 1) );
 
   // Find the thread and increment its views by 1
-  ThreadMongoModel.findOneAndUpdate({ prettyId: id },{$inc: {views: 1} },
-    function (err, doc) {
-      var result;
-      if (err) {
-        result = {
-          code    : 500,
-          message : 'Something went wrong in the database.'
-        };
-        console.error(err);
-      } else if (!doc) {
-        result = {
-          code    : 400,
-          message : 'Thread not found.'
-        };
-      }
-      callback(result, doc);
+  // {replies: {$slice: [skip, LIMIT]} }
+  var query = ThreadMongoModel.findOneAndUpdate({ prettyId: id }, {$inc: {views: 1} });
 
+  query.slice('replies', [skip, LIMIT]);
+
+  query.exec(function (err, doc) {
+    var result;
+    if (err) {
+      result = {
+        code    : 500,
+        message : 'Something went wrong in the database.'
+      };
+      console.error(err);
+    } else if (!doc) {
+      result = {
+        code    : 400,
+        message : 'Thread not found.'
+      };
     }
-  );
+
+    var lastPage = Math.ceil(doc.numOfPosts / LIMIT);
+    callback(result, doc, lastPage);
+
+  });
 };
 
 var createThread = function(subject, message, author, callback) {
@@ -177,17 +196,15 @@ var createThread = function(subject, message, author, callback) {
 
 var makeReply = function(threadId, message, author, callback) {
 
-  // Get current time in unix
-  var curTime = Date.now();
-
   var reply = {
     author: author,
     message: message
   };
 
-  ThreadMongoModel.findOneAndUpdate({ prettyId: threadId },
-  {$push: {replies: reply},lastupdate: curTime}, {safe: true, upsert: true},
+  ThreadMongoModel.findOne({ prettyId: threadId },
     function(err, doc) {
+
+      doc.replies.push(reply);
       var result;
       if (err) {
         result = {
@@ -195,9 +212,19 @@ var makeReply = function(threadId, message, author, callback) {
           message: 'Something went wrong in the database.'
         };
         console.error(err);
-
+        callback(result);
+      } else {
+        doc.save(function(err, doc) {
+          if (err) {
+            result = {
+              code: 500,
+              message: 'Something went wrong in the database.'
+            };
+            console.error(err);
+          }
+          callback(result, doc);
+        });
       }
-      callback(result, doc);
     }
   );
 };

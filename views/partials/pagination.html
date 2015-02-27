@@ -1,0 +1,21 @@
+
+<!-- Don't show page stuff if lastPage == 1-->
+{% if lastPage != 1 %}
+<span id="pages">
+
+    {% if page != 1 %}
+      <a href="?page=1">First</a>
+      <a href="?page={{ page - 1 }}">Prev</a>
+      <a href="?page={{ page - 1 }}">{{ page - 1 }}</a>
+    {% endif %}
+
+    <span>{{ page }}</span>
+
+    {% if page != lastPage %}
+    <a href="?page={{ page + 1 }}">{{ page + 1 }}</a>
+    <a href="?page={{ page + 1 }}">Next</a>
+    <a href="?page=lastPage">Last</a>
+    {% endif %}
+
+</span>
+{% endif %}

@@ -5,15 +5,9 @@
 		<!-- THREAD MENU BAR -->
 		<div class="thread-menubar">
 			<span id="discussion-title"><a href="../">General Discussion</a></span>
-			<span class="divider">|</span> 
+			<span class="divider">|</span>
 			<span class="thread-title-menu">{{ thread.subject }}</span>
-			<span id="pages">
-				<a href="#">Prev</a>
-				<span>1</span>
-				<a href="#">2</a>
-				<a href="#">3</a>
-				<a href="#">Next</a>
-			</span>
+      {% include "partials/pagination.html" %}
 
 			{% if sessUser %}
 			<span class="post-reply">
@@ -21,13 +15,13 @@
 			</span>
 			{% endif %}
 		</div>
-		<!-- END THREAD MENU BAR --> 
+		<!-- END THREAD MENU BAR -->
 
 		<div>
 			<!-- THREAD -->
 			<ul class="threadlist">
 				<li class="thread-border">
-					<div class="avatar"></div>
+					<div class="avatar" style="background-image: url(../avatars/{{ thread.author|getUserAvatar  }});"></div>
 					<div class="thread-row1">
 						<span class="thread-title">{{ thread.subject }}</span>
 						<div><a href="#" class="author">{{ thread.author }}</a> {{ convertToDate(thread.creationDate) }}</div>
@@ -43,7 +37,7 @@
 				{% else %}
 				<li class="thread-no-border">
 				{% endif %}
-					<div class="avatar"></div>
+					<div class="avatar" style="background-image: url(../avatars/{{ reply.author|getUserAvatar  }});"></div>
 					<div class="thread-row2">
 						<span><a href="#" class="author">{{ reply.author }}</a></span>
 						<div>{{ convertToDate(reply.creationDate) }}</div>
@@ -51,8 +45,8 @@
 					<div class="thread-body">{{ reply.message }}</div>
 				</li>
 
-				{% endfor %}	
-				<!-- END REPLIES -->				
+				{% endfor %}
+				<!-- END REPLIES -->
 			</ul>
 			<!-- END THREAD -->
 		</div>

@@ -339,6 +339,27 @@ var changeUserAvatar = function(username, avatarStr, callback) {
   );
 };
 
+var getUserAvatar = function(username, callback) {
+  UserMongoModel.findOne({ usernameLower: username.toLowerCase() },
+    function(err, doc) {
+      var result;
+      if (err) {
+        result = {
+          code    : 500,
+          message : 'Something went wrong in the database. Try again.'
+        };
+      } else if (!doc) {
+        result = {
+          code    : 400,
+          message : 'Couldn\'t find that user.'
+        };
+      }
+
+      var avatarStr = doc.profile.avatar || undefined;
+      callback(result, avatarStr);
+    }
+  );
+};
 
 var UserModel = {
   login: logInUser,
@@ -349,7 +370,8 @@ var UserModel = {
   makeForumDev: makeUserForumDev,
   updateActivity: updateLastActivity,
   getActiveMembers: getActiveMembers,
-  changeAvatar: changeUserAvatar
+  changeAvatar: changeUserAvatar,
+  getAvatar: getUserAvatar
 };
 
 module.exports = UserModel;

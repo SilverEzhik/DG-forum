@@ -169,7 +169,7 @@ module.exports = function(app) {
         if (!fName) {
           result = {
             code    : 400,
-            message : 'First Name field cannot be empty.'
+            message : 'Full Name field cannot be empty.'
           };
           res.send(result);
           return;

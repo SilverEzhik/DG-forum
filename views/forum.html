@@ -9,20 +9,9 @@
 
       <div class="thread-menubar">
         <span id="discussion-title">General Discussion</span>
-        <span id="pages">
-          {% if page != 1 %}
-            <a href="../?page={{ page - 1 }}">Prev</a>
-            <a href="../?page={{ page - 1 }}">{{ page - 1 }}</a>
-          {% endif %}
 
-          <span>{{ page }}</span>
+        {% include "partials/pagination.html" %}
 
-          {% if page != lastPage %}
-          <a href="../?page={{ page + 1 }}">{{ page + 1 }}</a>
-          <a href="../?page={{ page + 1 }}">Next</a>
-          {% endif %}
-
-        </span>
         {% if sessUser %}
         <span class="post-thread">
           <a href="#post" data-toggle="modal">Post New Thread</a>
@@ -38,23 +27,26 @@
           {% else %}
           <li class="thread-border">
           {% endif %}
-            <div class="avatar-small" title="{{ thread.author }}" style="background-image: url(../avatars/{{ thread.authorUser.profile.avatar }}); background-size: 75%;"></div>
-
+            <a href="user/{{ thread.author }}"><div class="avatar-small" title="{{ thread.author }}" style="background-image: url(../avatars/{{ thread.author|getUserAvatar  }}); "></div></a>
             <div class="contain-title">
               <div class="ellipsed">
                 <a href="thread/{{ thread.prettyId }}" style="font-size:1.2em;">{{ thread.subject }}</a>
-                <span style="font-size:1em;">({{ thread.views }} views)</span>
+                <span style="font-size:1em;">({{ thread.numOfPosts }} replies)</span>
               </div>
               <div class="ellipsed">
-                <div class="ellipsed2">submitted by <a href="#" class="author">{{ thread.author }}</a> {{ convertToDate(thread.creationDate) }}</div>
+                <div class="ellipsed2">submitted by <a href="user/{{ thread.author }}" class="author">{{ thread.author }}</a></div>
               </div>
             </div>
 
             <!-- TODO: templating for last reply, author and date-->
 
             <div class="contain-title2">
-              <div class="ellipsed2"><a>Last post</a> by <a href="#" class="last-poster">last poster</a></div>
-              <div class="ellipsed2">n seconds ago</div>
+              {% if thread.replies[0] %}
+              <div class="ellipsed2"><a href="#">Last Post</a> by <a href="user/{{ thread.replies[0].author }}" class="last-poster">{{ thread.replies[0].author }}</a></div>
+              <div class="ellipsed2">{{ convertToDate(thread.replies[0].creationDate) }}</div>
+              {% else %}
+              <div class="ellipsed2">No Replies Yet</div>
+              {% endif %}
             </div>
           </li>
         </ul>
@@ -94,9 +86,9 @@
     <div class="online">
 
     	{% for user in onlineUsers %}
-  
-      	<span class="avatar-small" title="{{ user.username }}" style="background-image: url(../avatars/{{ user.profile.avatar }}); background-size: 75%;"></span>
-      	
+
+      	<a href="user/{{ user.username }}"><span class="avatar-small" title="{{ user.username }}" style="background-image: url(../avatars/{{ user.profile.avatar }});"></span></a>
+
     	{% endfor %}
 
     </div>

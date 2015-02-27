@@ -54,13 +54,24 @@ module.exports = function(app) {
         };
 
         // Render template
+
         res.render('forum.html', templateVars);
+
+
+
       });
     });
 
   };
 
   var handleThreadFetch = function(req, res) {
+
+    var page = validator.toInt(req.query.page) || 1;
+
+    // validation for page
+    if ( (page < 1) || (page % 1 !== 0) ) {
+      page = 1;
+    }
 
     // Find the thread
     var threadID = validator.toString(req.params.id);
@@ -75,7 +86,7 @@ module.exports = function(app) {
       return;
     }
 
-    Thread.get(threadID, function(err, doc) {
+    Thread.get(threadID, page, function(err, doc, lastPage) {
       if (err) {
         res.send(err);
         return;
@@ -84,6 +95,8 @@ module.exports = function(app) {
       var templateVars = {
         title: doc.subject,
         thread: doc,
+        page: page,
+        lastPage: lastPage,
         convertToDate: convertToDate,
         sessUser: req.session.user
       };
