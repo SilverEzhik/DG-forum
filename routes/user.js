@@ -3,6 +3,7 @@ module.exports = function(app) {
 
   'use strict';
   var https = require('https');
+  var moment    = require('moment');
   var validator = require('validator');
 
   var User = require('.././models/user');
@@ -17,6 +18,12 @@ module.exports = function(app) {
   var isFullName = function (str) {
     var regex = /^[a-zA-Z ]+$/;
     return regex.test(str);
+  };
+
+  // Convert timestamps into readable human time
+  var convertToDate = function(timeStamp) {
+
+      return moment(timeStamp).fromNow();
   };
 
   var SECRET = process.env.CAPTCHA_SECRET ||
@@ -236,11 +243,15 @@ module.exports = function(app) {
       if (!doc) {
         res.send(errResult);
       } else {
-        res.send({
-          code: 200,
-          message: 'User found',
-          user: doc
-        });
+        var templateVars = {
+          title: doc.Username + '\'s Profile',
+          user: doc,
+          convertToDate: convertToDate,
+          sessUser: req.session.user
+        };
+
+        // Render template
+        res.render('profile.html', templateVars);
       }
     });
 
