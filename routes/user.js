@@ -244,7 +244,7 @@ module.exports = function(app) {
         res.send(errResult);
       } else {
         var templateVars = {
-          title: doc.Username + '\'s Profile',
+          title: doc.username + '\'s Profile',
           user: doc,
           convertToDate: convertToDate,
           sessUser: req.session.user,
