@@ -249,7 +249,7 @@ figcaption p{
 
 .header{
 	height: 60px;
-	padding: 0 1em;
+  padding-right: 1em;
 	overflow: hidden;
 }
 
@@ -298,6 +298,15 @@ label{
 	float: left;
 }
 
+.betaflag {
+  z-index:2;
+  position: absolute;
+}
+
+.DGLOGO {
+  z-index:1;
+  margin-left: 1em;
+}
 .menu{
 	float: right;
 }
@@ -678,9 +687,4 @@ textarea{
 .contain-title3 {
     width: 100%;
     text-align: left;
-}
-
-.pagination{
-	margin-top: 1em;
-	margin-bottom: 1em;
 }
