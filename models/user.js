@@ -340,7 +340,7 @@ var changeUserAvatar = function(username, avatarStr, callback) {
 
 var getUserAvatar = function(username, callback) {
   UserMongoModel.findOne({ usernameLower: username.toLowerCase() },
-    function(err, doc) {
+    'profile.avatar', function(err, doc) {
       var result;
       if (err) {
         result = {
@@ -359,6 +359,27 @@ var getUserAvatar = function(username, callback) {
     }
   );
 };
+var getUserTitle = function(username, callback) {
+  UserMongoModel.findOne({ usernameLower: username.toLowerCase() },
+    'title', function(err, doc) {
+      var result;
+      if (err) {
+        result = {
+          code    : 500,
+          message : 'Something went wrong in the database. Try again.'
+        };
+      } else if (!doc) {
+        result = {
+          code    : 400,
+          message : 'Couldn\'t find that user.'
+        };
+      }
+
+      var title = doc.title;
+      callback(result, title);
+    }
+  );
+};
 
 var UserModel = {
   login: logInUser,
@@ -371,6 +392,7 @@ var UserModel = {
   getActiveMembers: getActiveMembers,
   changeAvatar: changeUserAvatar,
   getAvatar: getUserAvatar,
+  getTitle: getUserTitle,
   stockAvatarsList: STOCKAVATARS
 };
 

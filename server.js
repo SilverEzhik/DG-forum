@@ -66,6 +66,10 @@ env.addFilter('getUserAvatar', function(username, callback) {
   User.getAvatar(username, callback);
 }, true);
 
+env.addFilter('getUserTitle', function(username, callback) {
+  User.getTitle(username, callback);
+}, true);
+
 // Tell Express to serve static objects from the /public/ directory
 app.use(express.static(path.join(__dirname, 'public')));
 
