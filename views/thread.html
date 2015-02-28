@@ -32,11 +32,8 @@
 				<!-- REPLIES -->
 				{% for reply in thread.replies %}
 
-				{% if loop.index % 2 == 0 %}
+				
 				<li class="thread-border">
-				{% else %}
-				<li class="thread-no-border">
-				{% endif %}
 					<div class="avatar" style="background-image: url(../avatars/{{ reply.author|getUserAvatar  }});"></div>
 					<div class="thread-row2">
 						<span><a href="#" class="author">{{ reply.author }}</a></span>
