@@ -28,7 +28,7 @@ var ThreadSchema = mongoose.Schema({
     edited      : { type: Boolean, default: false},
     deleted     : { type: Boolean, default: false}
   }],
-  numOfPosts: { type: Number, default: 0},
+  numOfPosts: { type: Number, default: 0}
 });
 
 ThreadSchema.pre('save', function (next) {

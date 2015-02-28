@@ -371,7 +371,8 @@ var UserModel = {
   updateActivity: updateLastActivity,
   getActiveMembers: getActiveMembers,
   changeAvatar: changeUserAvatar,
-  getAvatar: getUserAvatar
+  getAvatar: getUserAvatar,
+  stockAvatarsList: STOCKAVATARS
 };
 
 module.exports = UserModel;
