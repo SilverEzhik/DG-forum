@@ -219,7 +219,6 @@ var getUser = function(username, callback) {
 
 };
 
-
 var getAllMembers = function() {
 
 };
@@ -241,7 +240,7 @@ var changeUserTitle = function(username, titleNum, callback) {
       } else {
         result = {
           code: 200,
-          message: doc.username + ' is now a ' + TITLES[doc.title].label + '.'
+          message: doc.username + ' is now a ' + TITLES[doc.title] + '.'
         };
       }
       callback(result);
