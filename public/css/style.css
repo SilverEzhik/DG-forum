@@ -707,14 +707,14 @@ textarea{
     text-align: left;
 }
 
-.user-title0{
-	color: #66FF66;
+.user-title0 {
 }
 
-.user-title1{
-	color: #9966FF;
+.user-title1 {
+	font-weight: bold;
 }
 
-.user-title2{
-	color: #3366CC;
+.user-title2 {
+  font-weight: bold;
+	color: #00aa00;
 }
