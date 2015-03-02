@@ -46,20 +46,31 @@
 			<form action="/changeprofile" method="post">
 				<div class="fieldset">
 					<div class="field">
-						<label for="first-name">Password</label>
-						<input type="password" autocapitalize="off" autocomplete="password" id="password" placeholder="Password">
+						<label for="password">Password</label>
+						<input name="password" type="password" autocapitalize="off" autocomplete="password" placeholder="Password">
 					</div>
 					<div class="field">
-						<label for="first-name">Full name</label>
-						<input autocapitalize="off" autocomplete="first-name" id="first-name" placeholder="{{ sessUser.fllname }}">
+						<label for="fullname">Full name</label>
+						<input name="fullname" autocapitalize="off" placeholder="{{ sessUser.profile.fullname }}">
 					</div>
 					<div class="field">
-						<label for="first-name">Email address</label>
-						<input autocapitalize="off" autocomplete="email-address" id="email-address" placeholder="{{ sessUser.email }}">
+						<label for="email">Email address</label>
+						<input name="email" autocapitalize="off" autocomplete="email-address" placeholder="{{ sessUser.email }}">
+					</div>
+					<div class="field">
+						<label for="bio">Bio</label>
+						<input name="bio" autocapitalize="off" placeholder="{{ sessUser.profile.bio }}">
+					</div>
+					<div class="field">
+						<label for="website">Website</label>
+						<input name="website" autocapitalize="off" placeholder="{{ sessUser.profile.website }}">
+					</div>
+					<div class="field">
+						<label for="githubName">Github name</label>
+						<input name="githubName" autocapitalize="off" placeholder="{{ sessUser.profile.githubName }}">
 					</div>
 					<div class="field">
 						<label for="Avatar">Avatar</label>
-						<input type="file" name="pic" accept="image/*">
 					</div>
 					<input id="register-btn" class="btn" value="Save changes" type="submit">
 				</div>

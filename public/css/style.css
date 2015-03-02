@@ -115,6 +115,7 @@ body{
 }
 
 .edit-profile{
+	margin-top: 2em;
 	text-align: center;
 	padding-bottom: 1em;
 }
@@ -199,7 +200,7 @@ body{
 
 .profile .fieldset{
 	width: 493px;
-	height: 373px;
+	height: 500px;
 }
 
 .fieldset>.field:first-child{
@@ -230,7 +231,9 @@ figcaption p{
 .footer{
 	clear: both;
 	text-align: center;
-	margin: 4em;
+	height: 16px;
+	bottom: 0;
+	width: 100%;
 }
 
 #frame {
@@ -249,8 +252,9 @@ figcaption p{
 
 .header{
 	height: 60px;
-  padding-right: 1em;
+  	padding-right: 1em;
 	overflow: hidden;
+	border-bottom: 1px solid #dfdfdf;
 }
 
 .header a{
@@ -435,7 +439,7 @@ label{
 	height: 250px;
 	overflow: hidden;
 	min-width: 400px;
-	border: 1px solid #dfdfdf;
+	border-bottom: 1px solid #dfdfdf;
 	border-left: none;
 	border-right: none;
 }
@@ -601,20 +605,34 @@ textarea{
 	list-style: none;
 	padding: 1em;
 	border: 1px solid #d4d4d4;
-    overflow: hidden;
-    clear: both;
-}.thread-border:first-child{
-	background-color: #FFF;
-	list-style: none;
-	padding: 1em;
-	border: 1px solid #d4d4d4;
-	border-top: 2px solid #d4d4d4;
+	border-bottom: none;
     overflow: hidden;
     clear: both;
 }
 
+.thread-border:first-child{
+	background-color: #FFF;
+	list-style: none;
+	padding: 1em;
+	border: 1px solid #d4d4d4;
+	border-bottom: none;
+    overflow: hidden;
+    clear: both;
+}
+
+.thread-border:last-child{
+	background-color: #FFF;
+	list-style: none;
+	padding: 1em;
+	border: 1px solid #d4d4d4;
+    overflow: hidden;
+    clear: both;
+}
+
+
 .thread-body{
 	white-space: pre-wrap;
+	margin-left: 63px;
 }
 
 .thread-content{
@@ -687,4 +705,16 @@ textarea{
 .contain-title3 {
     width: 100%;
     text-align: left;
+}
+
+.user-title0{
+	color: #66FF66;
+}
+
+.user-title1{
+	color: #9966FF;
+}
+
+.user-title2{
+	color: #3366CC;
 }

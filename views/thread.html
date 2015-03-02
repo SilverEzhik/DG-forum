@@ -24,7 +24,7 @@
 					<div class="avatar" style="background-image: url(../avatars/{{ thread.author|getUserAvatar  }});"></div>
 					<div class="thread-row1">
 						<span class="thread-title">{{ thread.subject }}</span>
-						<div><a href="#" class="author">{{ thread.author }}</a> {{ convertToDate(thread.creationDate) }}</div>
+						<div><a href="#" class="user-title{{ thread.author|getUserTitle }}">{{ thread.author }}</a> {{ convertToDate(thread.creationDate) }}</div>
 					</div>
 					<div class="thread-body">{{ thread.message }}</div>
 				</li>
@@ -36,7 +36,7 @@
 				<li class="thread-border">
 					<div class="avatar" style="background-image: url(../avatars/{{ reply.author|getUserAvatar  }});"></div>
 					<div class="thread-row2">
-						<span><a href="#" class="author">{{ reply.author }}</a></span>
+						<span><a href="#" class="user-title{{ reply.author|getUserTitle }}">{{ reply.author }}</a></span>
 						<div>{{ convertToDate(reply.creationDate) }}</div>
 					</div>
 					<div class="thread-body">{{ reply.message }}</div>

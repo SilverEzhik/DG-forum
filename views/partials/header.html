@@ -19,7 +19,7 @@
 
   <!-- MENU -->
   <ul class="menu">
-    <li><a href="../user/{{ sessUser.usernameLower}}">{{ sessUser.username }}</a></li>
+    <li><a href="../user/{{ sessUser.usernameLower}}" class="user-title{{ sessUser.username|getUserTitle }}">{{ sessUser.username }}</a></li>
     <li><a href="../logout">Logout</a></li>
     <li><a href="#">Members</a></li>
     <li><a href="//developersguild.net">About</a></li>
