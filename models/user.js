@@ -239,7 +239,6 @@ var getAllMembers = function(callback) {
 
     });
 
-
 };
 
 var changeUserTitle = function(username, titleNum, callback) {
