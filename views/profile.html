@@ -38,20 +38,16 @@
 						<input name="githubName" autocapitalize="off" placeholder="{{ sessUser.profile.githubName }}">
 					</div>
 					<div class="field-avatar">
-						<label for="Avatar" style="width:100%;">Avatar</label>
-
-						<!-- {% if sessUser.profile.avatar == loop.index %}selected="selected"{% endif %}-->
+						<label for="Avatar" style="width:100%;">avatar-num</label>
 
 						<select id="mySelect" style="width:250px; display:none;" name="avatarSelect">
 	    					{% for avatar in STOCKAVATARS %}
-	      					<option value="{{loop.index}}">{{loop.index}}</option>
+	      					<option value="{{loop.index}}" {% if avatar==sessUser.profile.avatar%}selected="selected"{% endif %}>{{loop.index}}</option>
 	    					{% endfor %}
     					</select>
-    					
-    					<!-- {% if sessUser.profile.avatar == loop.index %}button-clicked{% endif %}-->
 
     					{% for avatar in STOCKAVATARS %}
-    					<button type="button" class="avatar clickable" onclick="selectAvatar( {{ loop.index }} )" style="background-image: url(../avatars/{{ avatar }}); background-color: white;"></button>
+    					<button type="button" class="avatar clickable {% if avatar==sessUser.profile.avatar %}button-clicked{% endif %}" onclick="selectAvatar( {{ loop.index }} )" style="background-image: url(../avatars/{{ avatar }}); background-color: white;"></button>
     					{% endfor %}
     					
 					</div>
