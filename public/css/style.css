@@ -115,6 +115,7 @@ body{
 }
 
 .edit-profile{
+	margin-top: 2em;
 	text-align: center;
 	padding-bottom: 1em;
 }
@@ -199,7 +200,7 @@ body{
 
 .profile .fieldset{
 	width: 493px;
-	height: 373px;
+	height: 500px;
 }
 
 .fieldset>.field:first-child{
@@ -230,7 +231,9 @@ figcaption p{
 .footer{
 	clear: both;
 	text-align: center;
-	margin: 4em;
+	height: 16px;
+	bottom: 0;
+	width: 100%;
 }
 
 #frame {
@@ -249,8 +252,9 @@ figcaption p{
 
 .header{
 	height: 60px;
-	padding: 0 1em;
+  	padding-right: 1em;
 	overflow: hidden;
+	border-bottom: 1px solid #dfdfdf;
 }
 
 .header a{
@@ -298,6 +302,15 @@ label{
 	float: left;
 }
 
+.betaflag {
+  z-index:2;
+  position: absolute;
+}
+
+.DGLOGO {
+  z-index:1;
+  margin-left: 1em;
+}
 .menu{
 	float: right;
 }
@@ -426,7 +439,7 @@ label{
 	height: 250px;
 	overflow: hidden;
 	min-width: 400px;
-	border: 1px solid #dfdfdf;
+	border-bottom: 1px solid #dfdfdf;
 	border-left: none;
 	border-right: none;
 }
@@ -558,6 +571,25 @@ textarea{
 	word-wrap: break-word;
 }
 
+.root-thread-no-border{
+	list-style: none;
+	padding: 1em;
+	//border: 1px solid #d4d4d4;
+	//border-top: none;
+	//border-bottom: none;
+	clear: both;
+	overflow: hidden;
+}
+
+.root-thread-border{
+	background-color: #FFF;
+	list-style: none;
+	padding: 1em;
+	border: 1px solid #d4d4d4;
+    overflow: hidden;
+    clear: both;
+}
+
 .thread-no-border{
 	list-style: none;
 	padding: 1em;
@@ -573,12 +605,34 @@ textarea{
 	list-style: none;
 	padding: 1em;
 	border: 1px solid #d4d4d4;
+	border-bottom: none;
     overflow: hidden;
     clear: both;
 }
 
+.thread-border:first-child{
+	background-color: #FFF;
+	list-style: none;
+	padding: 1em;
+	border: 1px solid #d4d4d4;
+	border-bottom: none;
+    overflow: hidden;
+    clear: both;
+}
+
+.thread-border:last-child{
+	background-color: #FFF;
+	list-style: none;
+	padding: 1em;
+	border: 1px solid #d4d4d4;
+    overflow: hidden;
+    clear: both;
+}
+
+
 .thread-body{
 	white-space: pre-wrap;
+	margin-left: 63px;
 }
 
 .thread-content{
@@ -591,7 +645,7 @@ textarea{
 
 .thread-menubar{
 	margin-top: 2em;
-	margin-bottom: .5em;
+	margin-bottom: 1em;
 	text-align: center;
 	overflow: hidden;
 }
@@ -651,4 +705,16 @@ textarea{
 .contain-title3 {
     width: 100%;
     text-align: left;
+}
+
+.user-title0 {
+}
+
+.user-title1 {
+	font-weight: bold;
+}
+
+.user-title2 {
+  font-weight: bold;
+	color: #00aa00;
 }

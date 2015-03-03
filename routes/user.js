@@ -244,10 +244,11 @@ module.exports = function(app) {
         res.send(errResult);
       } else {
         var templateVars = {
-          title: doc.Username + '\'s Profile',
+          title: doc.username + '\'s Profile',
           user: doc,
           convertToDate: convertToDate,
-          sessUser: req.session.user
+          sessUser: req.session.user,
+          STOCKAVATARS: User.stockAvatarsList
         };
 
         // Render template
@@ -257,36 +258,35 @@ module.exports = function(app) {
 
   };
 
-   var handleUserAvatarChange = function(req, res) {
+ var handleUserAvatarChange = function(req, res) {
 
-    var avatar = validator.toString(req.body.avatar);
-    var user = req.session.user;
+  var avatar = validator.toString(req.body.avatar);
+  var user = req.session.user;
 
-    var result;
+  var result;
 
-    if (!user) {
-      result = {
-        code    : 400,
-        message : 'You are not logged in.'
-      };
-      res.send(result);
-      return;
-    }
+  if (!user) {
+    result = {
+      code    : 400,
+      message : 'You are not logged in.'
+    };
+    res.send(result);
+    return;
+  }
 
-    if (!avatar) {
-      result = {
-        code    : 400,
-        message : 'Invalid avatar.'
-      };
-      res.send(result);
-      return;
-    }
+  if (!avatar) {
+    result = {
+      code    : 400,
+      message : 'Invalid avatar.'
+    };
+    res.send(result);
+    return;
+  }
 
-    User.changeAvatar(user.username, avatar, function(result) {
-      res.send(result);
-    });
-  };
-
+  User.changeAvatar(user.username, avatar, function(result) {
+    res.send(result);
+  });
+};
 
   app.post('/login'       , handleLoginRequest);
   app.get('/logout'       , handleLogoutRequest);

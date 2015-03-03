@@ -28,9 +28,12 @@ var TITLES = [
   }
 ];
 */
-var STOCKAVATARS = ['dg.png', 'github.png', 'bitbucket.png', 'deanza.png',
-                    'nodejs.png', 'swift.png', 'windows.png', 'osx.png',
-                    'linux.png', 'stackoverflow.png'];
+var STOCKAVATARS = ['github.png', 'deanza.png', 'nodejs.png', 'swift.png',
+                    'windows.png', 'osx.png','linux.png', 'anthony.png',
+                    'slice.gif', 'cubes.gif','fronting.gif', 'infinite.gif',
+                    'bouncy.gif', 'wifi.gif', 'alpaca.png', 'anthony.png',
+                    'bird.png', 'cat.png', 'chinchilla.png', 'fox.png',
+                    'hedgehog.png', 'husky.png', 'rabbit.png', 'rat.png'];
 
 // Get a random stock avatar
 function getRandomStockAvatar() {
@@ -219,7 +222,6 @@ var getUser = function(username, callback) {
 
 };
 
-
 var getAllMembers = function() {
 
 };
@@ -241,7 +243,7 @@ var changeUserTitle = function(username, titleNum, callback) {
       } else {
         result = {
           code: 200,
-          message: doc.username + ' is now a ' + TITLES[doc.title].label + '.'
+          message: doc.username + ' is now a ' + TITLES[doc.title] + '.'
         };
       }
       callback(result);
@@ -341,7 +343,7 @@ var changeUserAvatar = function(username, avatarStr, callback) {
 
 var getUserAvatar = function(username, callback) {
   UserMongoModel.findOne({ usernameLower: username.toLowerCase() },
-    function(err, doc) {
+    'profile.avatar', function(err, doc) {
       var result;
       if (err) {
         result = {
@@ -360,6 +362,27 @@ var getUserAvatar = function(username, callback) {
     }
   );
 };
+var getUserTitle = function(username, callback) {
+  UserMongoModel.findOne({ usernameLower: username.toLowerCase() },
+    'title', function(err, doc) {
+      var result;
+      if (err) {
+        result = {
+          code    : 500,
+          message : 'Something went wrong in the database. Try again.'
+        };
+      } else if (!doc) {
+        result = {
+          code    : 400,
+          message : 'Couldn\'t find that user.'
+        };
+      }
+
+      var title = doc.title;
+      callback(result, title);
+    }
+  );
+};
 
 var UserModel = {
   login: logInUser,
@@ -371,7 +394,9 @@ var UserModel = {
   updateActivity: updateLastActivity,
   getActiveMembers: getActiveMembers,
   changeAvatar: changeUserAvatar,
-  getAvatar: getUserAvatar
+  getAvatar: getUserAvatar,
+  getTitle: getUserTitle,
+  stockAvatarsList: STOCKAVATARS
 };
 
 module.exports = UserModel;

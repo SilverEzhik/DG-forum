@@ -23,9 +23,9 @@
         {% for thread in threads %}
         <ul class="threadlist">
           {% if loop.index % 2 == 0 %}
-          <li class="thread-no-border">
+          <li class="root-thread-no-border">
           {% else %}
-          <li class="thread-border">
+          <li class="root-thread-border">
           {% endif %}
             <a href="user/{{ thread.author }}"><div class="avatar-small" title="{{ thread.author }}" style="background-image: url(../avatars/{{ thread.author|getUserAvatar  }}); "></div></a>
             <div class="contain-title">
@@ -34,7 +34,7 @@
                 <span style="font-size:1em;">({{ thread.numOfPosts }} replies)</span>
               </div>
               <div class="ellipsed">
-                <div class="ellipsed2">submitted by <a href="user/{{ thread.author }}" class="author">{{ thread.author }}</a></div>
+                <div class="ellipsed2">submitted by <a href="user/{{ thread.author }}" class="user-title{{ thread.author|getUserTitle }}">{{ thread.author }}</a></div>
               </div>
             </div>
 
@@ -42,7 +42,7 @@
 
             <div class="contain-title2">
               {% if thread.replies[0] %}
-              <div class="ellipsed2"><a href="#">Last Post</a> by <a href="user/{{ thread.replies[0].author }}" class="last-poster">{{ thread.replies[0].author }}</a></div>
+              <div class="ellipsed2"><a href="#">Last Post</a> by <a href="user/{{ thread.replies[0].author }}" class="">{{ thread.replies[0].author }}</a></div>
               <div class="ellipsed2">{{ convertToDate(thread.replies[0].creationDate) }}</div>
               {% else %}
               <div class="ellipsed2">No Replies Yet</div>
@@ -53,7 +53,11 @@
         {% endfor %}
       </div>
 
+    {% include "partials/pagination.html" %}
+
     </div>
+
+
     <!-- END GENERAL DISCUSSION -->
 
     <!-- FEED -

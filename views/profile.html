@@ -5,30 +5,72 @@
     {% if user.username == sessUser.username %}
 
     then show Edit Profile stuff, else don't
+    -->
 
+
+
+
+    <!--
+
+    <select id="mySelect" style="width: 250px; "name="avatarSelect">
+    {% for avatar in STOCKAVATARS %}
+      <option value="{{loop.index}}">{{loop.index}}</option>
+    {% endfor %}
+    </select>
+
+
+    <script>
+
+      var myFunction = function(id) {
+        $('#mySelect').val(id).change();
+      };
+    </script>
+
+    {% for avatar in STOCKAVATARS %}
+    <button type="button" class="avatar" onclick="myFunction( {{ loop.index }} )" style="background-image: url(../avatars/{{ avatar }}); background-color: white;"></button>
+
+    {% endfor %}
+
+
+  -->
+
+
+<!--
     {% endif %}
     -->
 
 		<!-- PROFILE -->
 		<div class="profile">
 			<div class="edit-profile">Edit Profile</div>
-			<form action="/register" method="post">
+      <!-- NOTE: This route isn't configured yet. -->
+			<form action="/changeprofile" method="post">
 				<div class="fieldset">
 					<div class="field">
-						<label for="first-name">Password</label>
-						<input type="password" autocapitalize="off" autocomplete="password" id="password" placeholder="Password">
+						<label for="password">Password</label>
+						<input name="password" type="password" autocapitalize="off" autocomplete="password" placeholder="Password">
 					</div>
 					<div class="field">
-						<label for="first-name">Full name</label>
-						<input autocapitalize="off" autocomplete="first-name" id="first-name" placeholder="{{ sessUser.fllname }}">
+						<label for="fullname">Full name</label>
+						<input name="fullname" autocapitalize="off" placeholder="{{ sessUser.profile.fullname }}">
 					</div>
 					<div class="field">
-						<label for="first-name">Email address</label>
-						<input autocapitalize="off" autocomplete="email-address" id="email-address" placeholder="{{ sessUser.email }}">
+						<label for="email">Email address</label>
+						<input name="email" autocapitalize="off" autocomplete="email-address" placeholder="{{ sessUser.email }}">
+					</div>
+					<div class="field">
+						<label for="bio">Bio</label>
+						<input name="bio" autocapitalize="off" placeholder="{{ sessUser.profile.bio }}">
+					</div>
+					<div class="field">
+						<label for="website">Website</label>
+						<input name="website" autocapitalize="off" placeholder="{{ sessUser.profile.website }}">
+					</div>
+					<div class="field">
+						<label for="githubName">Github name</label>
+						<input name="githubName" autocapitalize="off" placeholder="{{ sessUser.profile.githubName }}">
 					</div>
 					<div class="field">
 						<label for="Avatar">Avatar</label>
-						<input type="file" name="pic" accept="image/*">
 					</div>
 					<input id="register-btn" class="btn" value="Save changes" type="submit">
 				</div>
