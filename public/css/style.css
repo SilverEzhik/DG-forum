@@ -72,7 +72,7 @@ a:hover{
 	background-color:white;
 }
 
-.header .avatar-small{
+.header .avatar-small-online{
 	margin: 10px;
 	float: right;
 }
@@ -83,8 +83,9 @@ a:hover{
 	margin-right: 0;
 }
 
-body{
+html, body{
 	word-wrap: break-word;
+	height: 100%;
 }
 
 .btn{
@@ -211,14 +212,15 @@ body{
 .field-avatar{
 	border: 1px solid #dfdfdf;
 	border-top:none;
-	height: 73px;
 	width: 100%;
+	height: 320px;
 	line-height: 56px;
 	padding: 0px 17.5px;
 }
 
-.field-avatar .btn{
-	width: 20%;
+.field-avatar .button-clicked{
+	box-shadow: 0 0 12px #337ab7;
+	border-color: #337ab7;
 }
 
 .fieldset{
@@ -228,7 +230,7 @@ body{
 
 .profile .fieldset{
 	width: 493px;
-	height: 500px;
+	height: 800px;
 }
 
 .fieldset>.field:first-child{
@@ -256,13 +258,6 @@ figcaption p{
 	line-height: 1.3;
 }
 
-.footer{
-	clear: both;
-	text-align: center;
-	height: 16px;
-	bottom: 0;
-	width: 100%;
-}
 
 #frame {
 	background-color: #FFF;
@@ -309,6 +304,10 @@ input{
 	color: #777;
 	height: 56px;
 	vertical-align: middle;
+}
+
+.profile .field input{
+	width: 250px;
 }
 
 .field input:-webkit-autofill{
@@ -410,9 +409,11 @@ label{
 	border: 1px solid #dfdfdf;
 }
 
-.online .avatar-small{
+.online .avatar-small-online{
 	margin: 1em;
 	margin-right: 0;
+	padding-right: 0;
+	box-shadow: 0 0 8px #337ab7;
 }
 
 .username{
@@ -746,3 +747,48 @@ textarea{
   font-weight: bold;
 	color: #00aa00;
 }
+
+.wrapper{
+	min-height: 100%;
+	height: auto !important;
+	height: 100%;
+	margin: 0 auto -8em;
+}
+
+.footer, .push{
+	height: 8em;
+}
+
+.footer{
+	text-align: center;
+	width: 100%;
+	line-height: 8em;
+	vertical-align: middle;
+}
+
+.banner{
+	clear:both;  
+	float:left; height:13px; 
+	width:50px; 
+	font-size:10px; 
+	text-align:center; 
+	color:white;"
+}
+
+.banner0{
+	background-color: #337ab7;
+}
+
+.banner1{
+	background-color: #7D47B1;
+}
+
+.banner2{
+	background-color: #70B870;
+}
+
+.banner3{
+	background-color: #762B50;
+}
+
+

@@ -1,45 +1,9 @@
 {% extends "base.html" %}
 
 {% block page %}
-    <!--
+
     {% if user.username == sessUser.username %}
-
-    then show Edit Profile stuff, else don't
-    -->
-
-
-
-
-    <!--
-
-    <select id="mySelect" style="width: 250px; "name="avatarSelect">
-    {% for avatar in STOCKAVATARS %}
-      <option value="{{loop.index}}">{{loop.index}}</option>
-    {% endfor %}
-    </select>
-
-
-    <script>
-
-      var myFunction = function(id) {
-        $('#mySelect').val(id).change();
-      };
-    </script>
-
-    {% for avatar in STOCKAVATARS %}
-    <button type="button" class="avatar" onclick="myFunction( {{ loop.index }} )" style="background-image: url(../avatars/{{ avatar }}); background-color: white;"></button>
-
-    {% endfor %}
-
-
-  -->
-
-
-<!--
-    {% endif %}
-    -->
-
-		<!-- PROFILE -->
+		<!-- EDITPROFILE -->
 		<div class="profile">
 			<div class="edit-profile">Edit Profile</div>
       <!-- NOTE: This route isn't configured yet. -->
@@ -50,8 +14,12 @@
 						<input name="password" type="password" autocapitalize="off" autocomplete="password" placeholder="Password">
 					</div>
 					<div class="field">
-						<label for="fullname">Full name</label>
-						<input name="fullname" autocapitalize="off" placeholder="{{ sessUser.profile.fullname }}">
+						<label for="fName">First name</label>
+						<input name="fName" autocapitalize="off" placeholder="{{ sessUser.profile.fName }}">
+					</div>
+					<div class="field">
+						<label for="lName">Last name</label>
+						<input name="lName" autocapitalize="off" placeholder="{{ sessUser.profile.lName }}">
 					</div>
 					<div class="field">
 						<label for="email">Email address</label>
@@ -69,13 +37,50 @@
 						<label for="githubName">Github name</label>
 						<input name="githubName" autocapitalize="off" placeholder="{{ sessUser.profile.githubName }}">
 					</div>
-					<div class="field">
-						<label for="Avatar">Avatar</label>
+					<div class="field-avatar">
+						<label for="Avatar" style="width:100%;">Avatar</label>
+
+						<!-- {% if sessUser.profile.avatar == loop.index %}selected="selected"{% endif %}-->
+
+						<select id="mySelect" style="width:250px; display:none;" name="avatarSelect">
+	    					{% for avatar in STOCKAVATARS %}
+	      					<option value="{{loop.index}}">{{loop.index}}</option>
+	    					{% endfor %}
+    					</select>
+    					
+    					<!-- {% if sessUser.profile.avatar == loop.index %}button-clicked{% endif %}-->
+
+    					{% for avatar in STOCKAVATARS %}
+    					<button type="button" class="avatar clickable" onclick="selectAvatar( {{ loop.index }} )" style="background-image: url(../avatars/{{ avatar }}); background-color: white;"></button>
+    					{% endfor %}
+    					
 					</div>
 					<input id="register-btn" class="btn" value="Save changes" type="submit">
 				</div>
 			</form>
 		</div>
-		<!-- END PROFILE -->
+		<!-- END EDITPROFILE -->
+
+		{% else %}
+
+		<div>
+				Page Under Construction	
+				<div class="avatar{% if user.flags.online %}-online{% endif %}" style="background-image: url(../avatars/{{ user.profile.avatar }}); margin:0 auto;"></div>
+				
+				<div style="width:100%;">
+				Name:	{{user.username}}
+				Title:	{% if user.title==0 %}Guest{% endif %}
+						{% if user.title==1 %}Member{% endif %}
+						{% if user.title==2 %}Officer{% endif %}
+						{% if user.title==3 %}Developer{% endif %}
+				{% if user.flags.online %}Online{% endif %}
+				</div>
+			
+		</div>
+
+
+		{% endif %}
+
+
 
 {% endblock %}

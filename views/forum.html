@@ -88,7 +88,7 @@
     <div class="online">
     	{% for user in onlineUsers %}
 
-      	<a href="user/{{ user.username }}"><span class="avatar-small" title="{{ user.username }}" style="background-image: url(../avatars/{{ user.profile.avatar }});"></span></a>
+      	<a href="user/{{ user.username }}"><span class="avatar-small-online" title="{{ user.username }}" style="background-image: url(../avatars/{{ user.profile.avatar }});"></span></a>
 
     	{% endfor %}
 

@@ -179,3 +179,16 @@ $(function(){
     }
   });
 });
+
+//select val for avatar
+var selectAvatar = function(id) {
+  $('#mySelect').val(id).change();
+};
+
+//glow selected avatar
+$(function(){
+  $('.clickable').on('click', function() {
+    $('.field-avatar .button-clicked').removeClass('button-clicked');
+    $(this).addClass('button-clicked');
+  });
+});
