@@ -29,11 +29,11 @@ var TITLES = [
 ];
 */
 var STOCKAVATARS = ['github.png', 'deanza.png', 'nodejs.png', 'swift.png',
-                    'windows.png', 'osx.png','linux.png', 'anthony.png',
+                    'windows.png', 'osx.png','linux.png', 'wifi.gif',
                     'slice.gif', 'cubes.gif','fronting.gif', 'infinite.gif',
-                    'bouncy.gif', 'wifi.gif', 'alpaca.png', 'anthony.png',
-                    'bird.png', 'cat.png', 'chinchilla.png', 'fox.png',
-                    'hedgehog.png', 'husky.png', 'rabbit.png', 'rat.png'];
+                    'bouncy.gif', 'alpaca.png', 'anthony.png', 'bird.png',
+                    'cat.png', 'chinchilla.png', 'fox.png', 'hedgehog.png',
+                    'polarbear.png', 'husky.png', 'rabbit.png', 'rat.png'];
 
 // Get a random stock avatar
 function getRandomStockAvatar() {
