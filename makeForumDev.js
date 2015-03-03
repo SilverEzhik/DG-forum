@@ -16,4 +16,5 @@ if (!username) {
 
 User.makeForumDev(username, title, function(result) {
   console.log(result);
+  process.exit();
 });

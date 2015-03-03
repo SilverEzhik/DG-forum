@@ -16,4 +16,5 @@ if (!username) {
 
 User.changeTitle(username, title, function(result) {
   console.log(result);
+  process.exit();
 });

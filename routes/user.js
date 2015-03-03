@@ -221,18 +221,23 @@ module.exports = function(app) {
             if (err) {
               res.send(err);
             } else {
+              User.setOnlineStatus(user.username, true, function(err) {
+                if (err) {
+                  res.send(err);
+                  return;
+                }
+                req.session.user = user;
 
-              req.session.user = user;
+                // 1 week
+                var week = 1000 * 60 * 60 * 24 * 7;
 
-              // 1 week
-              var week = 1000 * 60 * 60 * 24 * 7;
+                // Set the session to expire in a week
+                req.session.cookie.expires = new Date(Date.now() + week);
 
-              // Set the session to expire in a week
-              req.session.cookie.expires = new Date(Date.now() + week);
-
-              res.send({
-                code    : 200,
-                message : 'Account successfully created.'
+                res.send({
+                  code    : 200,
+                  message : 'Account successfully created.'
+                });
               });
             }
 
