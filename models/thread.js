@@ -3,42 +3,42 @@
 //var crypto    = require('crypto');
 var mongoose  = require('mongoose');
 
-// Include database model
-var db = require('./database');
-
-// Get the ObjectId datatype from mongo
-var ObjectId = mongoose.Schema.ObjectId;
+// Include database and reply model
+var Db = require('./database');
+var Reply = require('./reply');
 
 var ThreadSchema = mongoose.Schema({
   subject     : { type: String, required: true },
   message     : { type: String, required: true },
   author      : { type: String, required: true },
   prettyId    : { type: String, required: true, unique: true },
-  views       : { type: Number, required: true, default: 0 },
-  creationDate: { type: Number, default: Date.now },
-  lastupdate  : { type: Number, default: Date.now },
-  edited      : { type: Boolean, default: false},
-  locked      : { type: Boolean, default: false},
-  pinned      : { type: Boolean, default: false},
-  deleted     : { type: Boolean, default: false},
-  replies     : [{
-    author      : { type: String, required: true },
-    message     : { type: String, required: true },
-    creationDate: { type: Number, default: Date.now },
+  section     : { type: Number, required: true},
+  views       : { type: Number, default: 0 },
+  creationDate: { type: Date, default: Date.now },
+  flags       : {
     edited      : { type: Boolean, default: false},
+    locked      : { type: Boolean, default: false},
+    pinned      : { type: Boolean, default: false},
     deleted     : { type: Boolean, default: false}
-  }],
-  numOfPosts: { type: Number, default: 0}
+  },
+  lastEdit    : {
+    editor      : {type: String},
+    time        : {type: Date},
+    reason      : {type: String}
+  },
+  deleteInfo  : {
+    deleter     : {type: String},
+    time        : {type: Date},
+    reason      : {type: String}
+  },
+  lastPost    : {
+    author      : {type: String, required: true},
+    post        : {type: Number, default: 0 },
+    time        : {type: Date, default: Date.now}
+  }
 });
 
-ThreadSchema.pre('save', function (next) {
-  var curTime = Date.now();
-  this.lastupdate = curTime;
-  this.numOfPosts = this.replies.length;
-  next();
-});
-
-var ThreadMongoModel = db.model('gdThreads', ThreadSchema);
+var ThreadMongoModel = Db.model('threads', ThreadSchema);
 
 
 var generatePrettyId = function(callback, counter) {
@@ -62,14 +62,10 @@ var generatePrettyId = function(callback, counter) {
     }
 
   });
-  /*
-  crypto.pseudoRandomBytes(4, function(err, buf) {
 
-  });
-  */
 };
 
-var getAllThreads = function(page, callback) {
+var getAllThreads = function(section, page, callback) {
 
   // Constant amount of threads to show on page at once
   var LIMIT = 15;
@@ -79,10 +75,10 @@ var getAllThreads = function(page, callback) {
 
     var skip = ( LIMIT * (page - 1) );
 
-
-    ThreadMongoModel.find({}, {replies: {$slice: -1}, subject: 1, author: 1, prettyId: 1, deleted: 1, pinned: 1, locked: 1, lastupdate: 1, numOfPosts: 1},
-      {sort: {lastupdate: -1}, limit: LIMIT, skip: skip},
-      function (err, doc) {
+    ThreadMongoModel.find({section: section},
+      '_id subject author prettyId flags lastPost',
+      {sort: {'lastPost.time': -1} , limit: LIMIT, skip: skip},
+      function (err, thread) {
         var result;
         if (err) {
           result = {
@@ -92,36 +88,11 @@ var getAllThreads = function(page, callback) {
           console.error(err);
         }
 
-        callback(result, doc, lastPage);
+        callback(result, thread, lastPage);
       }
     );
   });
 
-  /*
-  // Grab all threads and sort by last update
-
-  ThreadMongoModel.find({}, null, {sort: {lastupdate: -1}, limit: LIMIT, skip: skip},
-    function (err, doc) {
-      var result;
-      if (err) {
-        result = {
-          code    : 500,
-          message : 'Something went wrong in the database.'
-        };
-        console.error(err);
-      }
-
-      var isLastPage = false;
-
-      if (doc.length % LIMIT !== 0) {
-        isLastPage = true;
-      }
-
-      callback(result, doc, isLastPage);
-
-    }
-  );
-*/
 };
 
 var getThread = function(id, page, callback) {
@@ -132,47 +103,8 @@ var getThread = function(id, page, callback) {
 
   // Find the thread and increment its views by 1
   // {replies: {$slice: [skip, LIMIT]} }
-  var query = ThreadMongoModel.findOneAndUpdate({ prettyId: id }, {$inc: {views: 1} });
-
-  query.slice('replies', [skip, LIMIT]);
-
-  query.exec(function (err, doc) {
-    var result;
-    if (err) {
-      result = {
-        code    : 500,
-        message : 'Something went wrong in the database.'
-      };
-      console.error(err);
-    } else if (!doc) {
-      result = {
-        code    : 400,
-        message : 'Thread not found.'
-      };
-    }
-
-    var lastPage = Math.ceil(doc.numOfPosts / LIMIT);
-    callback(result, doc, lastPage);
-
-  });
-};
-
-var createThread = function(subject, message, author, callback) {
-
-  generatePrettyId(function(err, id) {
-
-    if (err) {
-      return callback(err);
-    }
-
-    var newThread = new ThreadMongoModel({
-      subject : subject,
-      message : message,
-      author  : author,
-      prettyId: id
-    });
-
-    newThread.save(function(err, doc) {
+  ThreadMongoModel.findOneAndUpdate({ prettyId: id }, {$inc: {views: 1} },
+    function (err, thread) {
 
       var result;
       if (err) {
@@ -180,60 +112,113 @@ var createThread = function(subject, message, author, callback) {
           code    : 500,
           message : 'Something went wrong in the database.'
         };
-      } else {
+        console.error(err);
+        callback(result);
+      } else if (!thread) {
         result = {
-          code    : 200,
-          message : 'Thread created.'
+          code    : 400,
+          message : 'Thread not found.'
         };
+        callback(result);
+      } else {
+        Reply.getAll(thread.prettyId, skip, LIMIT,
+          function(err, replies) {
+            if (err) {
+              callback(err);
+            } else {
+              Reply.count(thread.prettyId, function(err, count) {
+                var lastPage = Math.ceil(count / LIMIT);
+                callback(err, thread, replies, lastPage);
+              });
+            }
+          }
+        );
       }
 
-      callback(err, result, doc);
+    }
+  );
+};
+
+var createThread = function(subject, message, author, section, callback) {
+
+  generatePrettyId(function(err, id) {
+
+    if (err) {
+      return callback(err);
+    }
+
+    ThreadMongoModel.create({
+      subject : subject,
+      message : message,
+      author  : author,
+      prettyId: id,
+      section : section,
+      lastPost: {
+        author: author
+      }
+    }, function(err, thread) {
+
+      var result;
+      if (err) {
+        result = {
+          code    : 500,
+          message : 'Something went wrong in the database.'
+        };
+        console.error(err);
+      }
+
+      callback(result, thread);
     });
 
   });
 
 };
 
-var makeReply = function(threadId, message, author, callback) {
+var updateThreadLastPost = function(threadId, author, callback) {
+  // threadId is prettyId
 
-  var reply = {
-    author: author,
-    message: message
-  };
+  Reply.count(threadId, function(err, count) {
 
-  ThreadMongoModel.findOne({ prettyId: threadId },
-    function(err, doc) {
-
-      doc.replies.push(reply);
-      var result;
-      if (err) {
-        result = {
-          code: 500,
-          message: 'Something went wrong in the database.'
-        };
-        console.error(err);
-        callback(result);
-      } else {
-        doc.save(function(err, doc) {
+    if (err) {
+      callback(err);
+    } else {
+      var curTime = Date.now();
+      ThreadMongoModel.findOneAndUpdate({prettyId: threadId},
+        {
+          $inc: {
+            'lastPost.post': count
+          },
+          $set: {
+            'lastPost.author': author,
+            'lastPost.time': curTime
+          }
+        },
+        function(err, thread) {
+          var result;
           if (err) {
             result = {
               code: 500,
               message: 'Something went wrong in the database.'
             };
             console.error(err);
+          } else if (!thread) {
+            result = {
+              code: 400,
+              message: 'Thread not found.'
+            };
           }
-          callback(result, doc);
-        });
-      }
+          callback(result, thread);
+        }
+      );
     }
-  );
+  });
 };
 
 var ThreadModel = {
-  get       : getThread,
-  getAll    : getAllThreads,
-  create    : createThread,
-  makeReply : makeReply
+  get           : getThread,
+  getAll        : getAllThreads,
+  create        : createThread,
+  updateLastPost: updateThreadLastPost
 };
 
 module.exports = ThreadModel;

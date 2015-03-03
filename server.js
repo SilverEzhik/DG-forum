@@ -62,12 +62,12 @@ var env = new nunjucks.Environment(new nunjucks.FileSystemLoader('views'),
                                     { autoescape: false });
 env.express(app);
 
-env.addFilter('getUserAvatar', function(username, callback) {
-  User.getAvatar(username, callback);
+env.addFilter('getUserAvatar', function(userId, callback) {
+  User.getAvatar(userId, callback);
 }, true);
 
-env.addFilter('getUserTitle', function(username, callback) {
-  User.getTitle(username, callback);
+env.addFilter('getUserTitle', function(userId, callback) {
+  User.getTitle(userId, callback);
 }, true);
 
 // Tell Express to serve static objects from the /public/ directory
@@ -77,6 +77,16 @@ app.use(express.static(path.join(__dirname, 'public')));
 //is chained to all other requests
 require('./routes/forum')(app);
 require('./routes/user')(app);
+
+// Handle 404 Error
+app.use(function(req, res, next) {
+  var templateVars =
+  {
+    code: 404,
+    message: 'Not Found'
+  };
+  res.render('error.html', templateVars);
+});
 
 
 var server = app.listen(3000, function () {

@@ -31,7 +31,7 @@
             <div class="contain-title">
               <div class="ellipsed">
                 <a href="thread/{{ thread.prettyId }}" style="font-size:1.2em;">{{ thread.subject }}</a>
-                <span style="font-size:1em;">({{ thread.numOfPosts }} replies)</span>
+                <span style="font-size:1em;">({{ thread.lastPost.post }} replies)</span>
               </div>
               <div class="ellipsed">
                 <div class="ellipsed2">submitted by <a href="user/{{ thread.author }}" class="user-title{{ thread.author|getUserTitle }}">{{ thread.author }}</a></div>
@@ -41,12 +41,8 @@
             <!-- TODO: templating for last reply, author and date-->
 
             <div class="contain-title2">
-              {% if thread.replies[0] %}
-              <div class="ellipsed2"><a href="#">Last Post</a> by <a href="user/{{ thread.replies[0].author }}" class="">{{ thread.replies[0].author }}</a></div>
-              <div class="ellipsed2">{{ convertToDate(thread.replies[0].creationDate) }}</div>
-              {% else %}
-              <div class="ellipsed2">No Replies Yet</div>
-              {% endif %}
+              <div class="ellipsed2"><a href="#">Last Post</a> by <a href="user/{{ thread.replies[0].author }}" class="">{{ thread.lastPost.author }}</a></div>
+              <div class="ellipsed2">{{ convertToDate(thread.lastPost.time) }}</div>
             </div>
           </li>
         </ul>
@@ -86,9 +82,10 @@
     <!-- END FEED -->
 
     <!-- ONLINE -->
+    <!-- Check to see if there are any users online -->
+    {% if onlineUsers|length > 0 %}
     <div class="online-title"><span>Online users</span></div>
     <div class="online">
-
     	{% for user in onlineUsers %}
 
       	<a href="user/{{ user.username }}"><span class="avatar-small" title="{{ user.username }}" style="background-image: url(../avatars/{{ user.profile.avatar }});"></span></a>
@@ -96,6 +93,8 @@
     	{% endfor %}
 
     </div>
+
+    {% endif %}
     <!-- END ONLINE -->
 
     <!-- POST THREAD MODAL -->

@@ -20,6 +20,7 @@
 		<div>
 			<!-- THREAD -->
 			<ul class="threadlist">
+      {% if page == 1 %}
 				<li class="thread-border">
 					<div class="avatar{% for user in onlineUsers %}{% if thread.author == user.username %}-online{% endif %}{% endfor %}" style="background-image: url(../avatars/{{ thread.author|getUserAvatar  }});"></div>
 					<div class="thread-row1">
@@ -28,11 +29,12 @@
 					</div>
 					<div class="thread-body">{{ thread.message }}{% for user in onlineUser %} {{user.username}} {% endfor %}</div>
 				</li>
+      {% endif %}
 
 				<!-- REPLIES -->
-				{% for reply in thread.replies %}
+				{% for reply in replies %}
 
-				
+
 				<li class="thread-border">
 					<div class="avatar{% for user in onlineUsers %}{% if reply.author == user.username %}-online{% endif %}{% endfor %}" style="background-image: url(../avatars/{{ reply.author|getUserAvatar  }});"></div>
 					<div class="thread-row2">
