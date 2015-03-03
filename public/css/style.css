@@ -767,27 +767,23 @@ textarea{
 }
 
 .banner{
-	clear:both;  
-	float:left; height:13px; 
-	width:50px; 
-	font-size:10px; 
-	text-align:center; 
+	clear:both;
+	float:left; height:13px;
+	width:50px;
+	font-size:10px;
+	text-align:center;
 	color:white;"
 }
 
-.banner0{
+.banner1{
 	background-color: #337ab7;
 }
 
-.banner1{
-	background-color: #7D47B1;
-}
-
 .banner2{
-	background-color: #70B870;
+	background-color: #00aa00;
 }
 
-.banner3{
+.banners-formDev {
 	background-color: #762B50;
 }
 

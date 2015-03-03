@@ -41,7 +41,7 @@
             <!-- TODO: templating for last reply, author and date-->
 
             <div class="contain-title2">
-              <div class="ellipsed2"><a href="#">Last Post</a> by <a href="user/{{ thread.replies[0].author }}" class="">{{ thread.lastPost.author }}</a></div>
+              <div class="ellipsed2"><a href="#">Last Post</a> by <a href="user/{{ thread.lastPost.author }}" class="user-title{{ thread.lastPost.author|getUserTitle }}">{{ thread.lastPost.author }}</a></div>
               <div class="ellipsed2">{{ convertToDate(thread.lastPost.time) }}</div>
             </div>
           </li>

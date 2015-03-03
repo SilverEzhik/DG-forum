@@ -185,11 +185,10 @@ var updateThreadLastPost = function(threadId, author, callback) {
       var curTime = Date.now();
       ThreadMongoModel.findOneAndUpdate({prettyId: threadId},
         {
-          $inc: {
-            'lastPost.post': count
-          },
           $set: {
+
             'lastPost.author': author,
+            'lastPost.post': count,
             'lastPost.time': curTime
           }
         },
