@@ -81,33 +81,39 @@ module.exports = function(app) {
     var threadID = validator.toString(req.params.id);
 
     if (!threadID) {
-      var result = {
-        code    : 400,
-        message : 'Thread not found.'
+      var templateVars = {
+        title: 'Thread not found.',
+        code: 404,
+        message: 'Thread not found.'
       };
-
-      res.send(result);
-      return;
+      res.render('error.html', templateVars);
     }
 
     Thread.get(threadID, page, function(err, thread, replies, lastPage) {
+      var templateVars;
       if (err) {
-        res.send(err);
-        return;
+
+        templateVars = {
+          title: 'Thread not found',
+          code: err.code,
+          message: err.message
+        };
+        res.render('error.html', templateVars);
+      } else {
+
+        templateVars = {
+          title: thread.subject,
+          thread: thread,
+          replies: replies,
+          page: page,
+          lastPage: lastPage,
+          convertToDate: convertToDate,
+          sessUser: req.session.user
+        };
+
+        // Render template
+        res.render('thread.html', templateVars);
       }
-
-      var templateVars = {
-        title: thread.subject,
-        thread: thread,
-        replies: replies,
-        page: page,
-        lastPage: lastPage,
-        convertToDate: convertToDate,
-        sessUser: req.session.user
-      };
-
-      // Render template
-      res.render('thread.html', templateVars);
     });
   };
 

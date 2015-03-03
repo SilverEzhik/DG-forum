@@ -116,7 +116,7 @@ var getThread = function(id, page, callback) {
         callback(result);
       } else if (!thread) {
         result = {
-          code    : 400,
+          code    : 404,
           message : 'Thread not found.'
         };
         callback(result);
