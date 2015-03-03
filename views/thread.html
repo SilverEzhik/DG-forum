@@ -21,12 +21,12 @@
 			<!-- THREAD -->
 			<ul class="threadlist">
 				<li class="thread-border">
-					<div class="avatar" style="background-image: url(../avatars/{{ thread.author|getUserAvatar  }});"></div>
+					<div class="avatar{% for user in onlineUsers %}{% if thread.author == user.username %}-online{% endif %}{% endfor %}" style="background-image: url(../avatars/{{ thread.author|getUserAvatar  }});"></div>
 					<div class="thread-row1">
 						<span class="thread-title">{{ thread.subject }}</span>
 						<div><a href="#" class="user-title{{ thread.author|getUserTitle }}">{{ thread.author }}</a> {{ convertToDate(thread.creationDate) }}</div>
 					</div>
-					<div class="thread-body">{{ thread.message }}</div>
+					<div class="thread-body">{{ thread.message }}{% for user in onlineUser %} {{user.username}} {% endfor %}</div>
 				</li>
 
 				<!-- REPLIES -->
@@ -34,7 +34,7 @@
 
 				
 				<li class="thread-border">
-					<div class="avatar" style="background-image: url(../avatars/{{ reply.author|getUserAvatar  }});"></div>
+					<div class="avatar{% for user in onlineUsers %}{% if reply.author == user.username %}-online{% endif %}{% endfor %}" style="background-image: url(../avatars/{{ reply.author|getUserAvatar  }});"></div>
 					<div class="thread-row2">
 						<span><a href="#" class="user-title{{ reply.author|getUserTitle }}">{{ reply.author }}</a></span>
 						<div>{{ convertToDate(reply.creationDate) }}</div>

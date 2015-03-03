@@ -14,7 +14,19 @@ a:hover{
 	margin-right: 13px;
 	margin-bottom: 13px;
 	border-radius: 50%;
-  background-size: 50px 50px;
+  	background-size: 50px 50px;
+}
+
+.avatar-online{
+	width: 50px;
+	height: 50px;
+	border: 1px solid #dfdfdf;
+	float: left;
+	margin-right: 13px;
+	margin-bottom: 13px;
+	border-radius: 50%;
+  	background-size: 50px 50px;
+  	box-shadow: 0 0 8px #337ab7;
 }
 
 .avatar-small{
@@ -27,12 +39,28 @@ a:hover{
 	background-position: center;
 	background-repeat: no-repeat;
 	background-color:white;
-  background-size: 40px 40px;
+  	background-size: 40px 40px;
 }
 
-.avatar-small:hover{
+.avatar-small-online{
+	display: block;
+	float: left;
+	width: 40px;
+	height: 40px;
+	border: 1px solid #dfdfdf;
+	border-radius: 50%;
+	background-position: center;
+	background-repeat: no-repeat;
+	background-color:white;
+  	background-size: 40px 40px;
+  	box-shadow: 0 0 8px #337ab7;
+}
+
+.avatar-small:hover, .avatar-small-online:hover, .avatar:hover, .avatar-online:hover{
 	border-color: #337ab7;
 }
+
+
 
 .avatar-stock{
 	height: 50px;

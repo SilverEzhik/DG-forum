@@ -27,7 +27,7 @@
           {% else %}
           <li class="root-thread-border">
           {% endif %}
-            <a href="user/{{ thread.author }}"><div class="avatar-small" title="{{ thread.author }}" style="background-image: url(../avatars/{{ thread.author|getUserAvatar  }}); "></div></a>
+            <a href="user/{{ thread.author }}"><div class="avatar-small{% for user in onlineUsers %}{% if thread.author == user.username %}-online{% endif %}{% endfor %}" title="{{ thread.author }}" style="background-image: url(../avatars/{{ thread.author|getUserAvatar  }}); "></div></a>
             <div class="contain-title">
               <div class="ellipsed">
                 <a href="thread/{{ thread.prettyId }}" style="font-size:1.2em;">{{ thread.subject }}</a>
