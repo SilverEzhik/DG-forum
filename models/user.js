@@ -268,7 +268,7 @@ var changeUserTitle = function(username, titleNum, callback) {
 
 var makeUserForumDev = function(username, bool, callback) {
   UserMongoModel.findOneAndUpdate({ usernameLower: username.toLowerCase() },
-    { forumDev: bool }, function(err, doc) {
+    { flags: {forumDev: bool } }, function(err, doc) {
       var result;
       if (err) {
         result = {
@@ -282,7 +282,7 @@ var makeUserForumDev = function(username, bool, callback) {
         };
       } else {
         var message;
-        if (doc.forumDev) {
+        if (doc.flags.forumDev) {
           message = doc.username + ' is now a forum developer.';
 
         } else {
@@ -405,9 +405,9 @@ var getUserTitle = function(username, callback) {
   );
 };
 
-var setUserOnlineStatus = function(userId, bool, callback) {
+var setUserOnlineStatus = function(username, bool, callback) {
 
-  UserMongoModel.findByIdAndUpdate(userId, {flags: {online: bool} },
+  UserMongoModel.findOneAndUpdate(username, {flags: {online: bool} },
     function(err, user) {
       var result;
       if (err) {
@@ -427,6 +427,27 @@ var setUserOnlineStatus = function(userId, bool, callback) {
   );
 };
 
+var getUserForumDevStatus = function(username, callback) {
+  UserMongoModel.findOne({usernameLower: username.toLowerCase()},
+  'flags.forumDev', function(err, user) {
+      var result;
+      if (err) {
+        result = {
+          code    : 500,
+          message : 'Something went wrong in the database.'
+        };
+        console.error(err);
+      } else if (!user) {
+        result = {
+          code    : 400,
+          message : 'User not found.'
+        };
+      }
+      callback(result, user.flags.forumDev);
+    }
+  );
+};
+
 var UserModel = {
   login: logInUser,
   create: createUser,
@@ -441,7 +462,8 @@ var UserModel = {
   getAvatar: getUserAvatar,
   getTitle: getUserTitle,
   stockAvatarsList: STOCKAVATARS,
-  setOnlineStatus: setUserOnlineStatus
+  setOnlineStatus: setUserOnlineStatus,
+  getForumDev: getUserForumDevStatus
 };
 
 module.exports = UserModel;

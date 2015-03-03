@@ -37,9 +37,9 @@
   					</div>
           {% endif %}
 
-          {% if thread.author.flags.forumDev %}
+          {% if thread.author|getForumDev %}
             <div class="banner banner-forumDev">
-              Forum Developer
+              Forum Dev
             </div>
           {% endif %}
 
@@ -60,12 +60,19 @@
 						</div>
 					</div>
 
-					<div class="banner banner{{ reply.author|getUserTitle }}">
-					{% if reply.author|getUserTitle == 0 %}Guest{% endif %}
-					{% if reply.author|getUserTitle == 1 %}Member{% endif %}
-					{% if reply.author|getUserTitle == 2 %}Officer{% endif %}
-					{% if reply.author|getUserTitle == 3%}Developer{% endif %}
-					</div>
+					{% if reply.author|getUserTitle != 0 %}
+            <div class="banner banner{{ reply.author|getUserTitle }}">
+              {% if reply.author|getUserTitle == 1 %}Member
+              {% elif reply.author|getUserTitle == 2 %}Officer{% endif %}
+            </div>
+          {% endif %}
+
+          <br>
+          {% if reply.author|getForumDev %}
+            <div class="banner banner-forumDev">
+              Forum Dev
+            </div>
+          {% endif %}
 
 					<div class="thread-body" style="clear:none;">{{ reply.message }}</div>
 				</li>

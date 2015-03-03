@@ -62,12 +62,16 @@ var env = new nunjucks.Environment(new nunjucks.FileSystemLoader('views'),
                                     { autoescape: false });
 env.express(app);
 
-env.addFilter('getUserAvatar', function(userId, callback) {
-  User.getAvatar(userId, callback);
+env.addFilter('getUserAvatar', function(username, callback) {
+  User.getAvatar(username, callback);
 }, true);
 
-env.addFilter('getUserTitle', function(userId, callback) {
-  User.getTitle(userId, callback);
+env.addFilter('getUserTitle', function(username, callback) {
+  User.getTitle(username, callback);
+}, true);
+
+env.addFilter('getForumDev', function(username, callback) {
+  User.getForumDev(username, callback);
 }, true);
 
 // Tell Express to serve static objects from the /public/ directory

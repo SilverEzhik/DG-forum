@@ -86,7 +86,7 @@ module.exports = function(app) {
         return;
       }
 
-      User.setOnlineStatus(user._id, true, function(err) {
+      User.setOnlineStatus(user.username, true, function(err) {
         if (err) {
           res.send(err);
           return;
@@ -257,7 +257,7 @@ module.exports = function(app) {
     }
 
 
-    User.setOnlineStatus(req.session.user._id, false, function(err) {
+    User.setOnlineStatus(req.session.user.username, false, function(err) {
 
       // TODO: Handle this error
 
