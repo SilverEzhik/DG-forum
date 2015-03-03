@@ -85,7 +85,6 @@ module.exports = function(app) {
         res.send(err);
         return;
       }
-
       User.setOnlineStatus(user.username, true, function(err) {
         if (err) {
           res.send(err);

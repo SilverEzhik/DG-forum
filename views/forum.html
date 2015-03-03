@@ -86,6 +86,7 @@
     {% if onlineUsers|length > 0 %}
     <div class="online-title"><span>Online users</span></div>
     <div class="online">
+
     	{% for user in onlineUsers %}
 
       	<a href="user/{{ user.username }}"><span class="avatar-small-online" title="{{ user.username }}" style="background-image: url(../avatars/{{ user.profile.avatar }});"></span></a>

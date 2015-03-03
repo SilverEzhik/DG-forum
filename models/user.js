@@ -300,10 +300,10 @@ var makeUserForumDev = function(username, bool, callback) {
 
 //curently updates on these routes:
 // /user/:userid, and all routes in forum.js
-var updateLastActivity = function(user, callback){
-
+var updateLastActivity = function(user, callback) {
+  var curTime = Date.now();
   UserMongoModel.update({ usernameLower: user.username.toLowerCase() },
-    { lastActivity: Date.now() }, function(err, numAffected, raw) {
+    { lastActivity: curTime }, function(err, numAffected, raw) {
 
       if (err) {
         callback(err);
@@ -325,7 +325,6 @@ var getActiveUsers = function(callback) {
   //timeout >= Date.now() - lastActivity -> lastActivity >= Date.now() - timeout
   UserMongoModel.find({ lastActivity: {$gte : ttl}, flags: { online: true } },
   'username usernameLower title profile.avatar', function (err, docs) {
-
       // TODO: Handle error
       if (docs) {
         callback(docs);
@@ -406,9 +405,8 @@ var getUserTitle = function(username, callback) {
 };
 
 var setUserOnlineStatus = function(username, bool, callback) {
-
-  UserMongoModel.findOneAndUpdate(username, {flags: {online: bool} },
-    function(err, user) {
+  UserMongoModel.findOneAndUpdate({usernameLower: username.toLowerCase()},
+  {flags: {online: bool} }, function(err, user) {
       var result;
       if (err) {
         result = {
