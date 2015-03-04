@@ -327,10 +327,10 @@ var makeUserForumDev = function(username, bool, callback) {
 
 //curently updates on these routes:
 // /user/:userid, and all routes in forum.js
-var updateLastActivity = function(user, callback) {
+var updateLastActivity = function(username, callback) {
   var curTime = Date.now();
-  UserMongoModel.update({ usernameLower: user.username.toLowerCase() },
-    { lastActivity: curTime }, function(err, numAffected, raw) {
+  UserMongoModel.update({ usernameLower: username.toLowerCase() },
+    { lastActivity: curTime, 'flags.online': true }, function(err) {
 
       if (err) {
         callback(err);
@@ -338,27 +338,6 @@ var updateLastActivity = function(user, callback) {
 
     });
 
-};
-
-//gets all members active within 30 minutes
-var getActiveUsers = function(callback) {
-
-  //30 mins * 60 sec * 1000 millisec
-  var TIMEOUT = 30 * 60 * 1000;
-
-  var curTime = Date.now();
-
-  var ttl = (curTime - TIMEOUT);
-  //timeout >= Date.now() - lastActivity -> lastActivity >= Date.now() - timeout
-  UserMongoModel.find({ flags: { online: true } },
-  'username usernameLower title profile.avatar', function (err, docs) {
-      // TODO: Handle error
-      if (docs) {
-        callback(docs);
-      }
-
-    }
-  );
 };
 
 var changeUserAvatar = function(username, avatarStr, callback) {
@@ -427,6 +406,20 @@ var getUserTitle = function(username, callback) {
 
       var title = user.title;
       callback(result, title);
+    }
+  );
+};
+
+var getActiveUsers = function(callback) {
+
+  UserMongoModel.find({ 'flags.online': true  },
+  'username usernameLower title profile.avatar', function (err, docs) {
+
+      // TODO: Handle error
+      if (docs) {
+        callback(docs);
+      }
+
     }
   );
 };

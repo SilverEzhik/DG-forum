@@ -246,7 +246,11 @@ module.exports = function(app) {
 
     // TODO: Check if request is logout
     if (req.session.user) {
-      User.updateActivity(req.session.user);
+      User.updateActivity(req.session.user.username, function(err) {
+        if (err) {
+          console.error(err);
+        }
+      });
 
 
       // Refresh the user's session expiration date if they view the forums
