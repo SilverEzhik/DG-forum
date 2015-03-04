@@ -80,25 +80,31 @@ module.exports = function(app) {
       return;
     }
 
-    User.login(usernameEmail, password, function(err, doc) {
+    User.login(usernameEmail, password, function(err, user) {
       if (err) {
         res.send(err);
         return;
       }
+      User.setOnlineStatus(user.username, true, function(err) {
+        if (err) {
+          res.send(err);
+          return;
+        }
 
-      req.session.user = doc;
+        req.session.user = user;
 
-      //         ms      s    m    h    d
-      var week = 1000 * 60 * 60 * 24 * 7;
+        //         ms      s    m    h    d
+        var week = 1000 * 60 * 60 * 24 * 7;
 
-      // Set the session to expire in a week
-      req.session.cookie.expires = new Date(Date.now() + week);
+        // Set the session to expire in a week
+        req.session.cookie.expires = new Date(Date.now() + week);
 
-      res.send({
-        code    : 200,
-        message : 'You have logged in.'
+        res.send({
+          code    : 200,
+          message : 'You have logged in.'
+        });
+
       });
-
     });
   };
 
@@ -123,6 +129,7 @@ module.exports = function(app) {
         var email     = validator.toString(req.body.email);
         var password  = validator.toString(req.body.password);
         var fName     = validator.toString(req.body.fName);
+        var lName     = validator.toString(req.body.lName);
 
         var result;
 
@@ -176,42 +183,67 @@ module.exports = function(app) {
         if (!fName) {
           result = {
             code    : 400,
-            message : 'Full Name field cannot be empty.'
+            message : 'First Name field cannot be empty.'
           };
           res.send(result);
           return;
         }
 
-        if (!isFullName(fName)) {
+        if (!lName) {
           result = {
             code    : 400,
-            message : 'Full Name can only contain letters and spaces.'
+            message : 'Last Name field cannot be empty.'
           };
           res.send(result);
           return;
         }
 
-        User.create(username, email, password, fName, function(err, doc) {
-          if (err) {
-            res.send(err);
-          } else {
+        if (!validator.isAlpha(fName)) {
+          result = {
+            code    : 400,
+            message : 'First Name can only contain letters.'
+          };
+          res.send(result);
+          return;
+        }
 
-            req.session.user = doc;
+        if (!validator.isAlpha(lName)) {
+          result = {
+            code    : 400,
+            message : 'Last Name can only contain letters.'
+          };
+          res.send(result);
+          return;
+        }
 
-            // 1 week
-            var week = 1000 * 60 * 60 * 24 * 7;
+        User.create(username, email, password, fName, lName,
+          function(err, user) {
+            if (err) {
+              res.send(err);
+            } else {
+              User.setOnlineStatus(user.username, true, function(err) {
+                if (err) {
+                  res.send(err);
+                  return;
+                }
+                req.session.user = user;
 
-            // Set the session to expire in a week
-            req.session.cookie.expires = new Date(Date.now() + week);
+                // 1 week
+                var week = 1000 * 60 * 60 * 24 * 7;
 
-            res.send({
-              code    : 200,
-              message : 'Account successfully created.'
-            });
+                // Set the session to expire in a week
+                req.session.cookie.expires = new Date(Date.now() + week);
+
+                res.send({
+                  code    : 200,
+                  message : 'Account successfully created.'
+                });
+              });
+            }
+
           }
-
-        });
-    }
+        );
+      }
     });
   };
 
@@ -222,12 +254,24 @@ module.exports = function(app) {
         code    : 400,
         message : 'You are not logged in.'
       };
+
+      // TODO: Handle this
       res.send(result);
       return;
     }
 
-    req.session.destroy(function(err) {
-      res.redirect('back');
+
+    User.setOnlineStatus(req.session.user.username, false, function(err) {
+
+      // TODO: Handle this error
+
+      req.session.destroy(function(err) {
+
+        // TODO: Handle this error
+
+        res.redirect('back');
+
+      });
     });
   };
 
@@ -237,17 +281,34 @@ module.exports = function(app) {
     var username = validator.toString(req.params.userid);
 
     //use the User model and get the User
-    User.get(username, function(errResult, doc) {
+    User.get(username, function(err, doc) {
 
+      var templateVars;
       //not sure if this is clean
       if (!doc) {
-        res.send(errResult);
+        templateVars = {
+          title: 'User not found',
+          code: err.code,
+          message: err.message
+        };
+
+        // Render template
+        res.render('error.html', templateVars);
       } else {
+<<<<<<< HEAD
         var templateVars = {
           title: doc.Username + '\'s Profile',
           user: doc,
           convertToDate: convertToDate,
           sessUser: req.session.user
+=======
+        templateVars = {
+          title: doc.username + '\'s Profile',
+          user: doc,
+          convertToDate: convertToDate,
+          sessUser: req.session.user,
+          STOCKAVATARS: User.stockAvatarsList
+>>>>>>> e4dfce947582c4d563d82fd1e20753466da3c333
         };
 
         // Render template
@@ -257,7 +318,7 @@ module.exports = function(app) {
 
   };
 
-   var handleUserAvatarChange = function(req, res) {
+  var handleUserAvatarChange = function(req, res) {
 
     var avatar = validator.toString(req.body.avatar);
     var user = req.session.user;
@@ -281,7 +342,6 @@ module.exports = function(app) {
       res.send(result);
       return;
     }
-
     User.changeAvatar(user.username, avatar, function(result) {
       res.send(result);
     });
@@ -306,6 +366,8 @@ module.exports = function(app) {
     });
 
   };
+
+
 
 
   app.post('/login'       , handleLoginRequest);

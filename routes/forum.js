@@ -6,8 +6,10 @@ module.exports = function(app) {
 
   var moment    = require('moment');
   var validator = require('validator');
+
   var User = require('.././models/user');
   var Thread  = require('.././models/thread');
+  var Reply  = require('.././models/reply');
 
   // Convert timestamps into readable human time
   var convertToDate = function(timeStamp) {
@@ -19,6 +21,8 @@ module.exports = function(app) {
 
     var page = validator.toInt(req.query.page) || 1;
 
+    // (TEMP)
+    var section = 0;
     // validation for page
     if ( (page < 1) || (page % 1 !== 0) ) {
       page = 1;
@@ -27,7 +31,7 @@ module.exports = function(app) {
 
 
     // Grab all threads.
-    Thread.getAll(page, function(err, doc, lastPage) {
+    Thread.getAll(section, page, function(err, threads, lastPage) {
 
       if (err) {
         res.send(err);
@@ -35,17 +39,17 @@ module.exports = function(app) {
       }
 
       // If user is on a page with no threads, redirect them to index
-      if (page > lastPage) {
+      if ((page !== 1) && (page > lastPage)) {
         res.redirect('/');
         return;
       }
 
-      User.getActiveMembers(function(docs) {
+      User.getActiveUsers(function(docs) {
         var onlineUsers = docs;
 
         var templateVars = {
           title: '',
-          threads: doc,
+          threads: threads,
           page: page,
           lastPage: lastPage,
           convertToDate: convertToDate,
@@ -77,32 +81,39 @@ module.exports = function(app) {
     var threadID = validator.toString(req.params.id);
 
     if (!threadID) {
-      var result = {
-        code    : 400,
-        message : 'Thread not found.'
+      var templateVars = {
+        title: 'Thread not found.',
+        code: 404,
+        message: 'Thread not found.'
       };
-
-      res.send(result);
-      return;
+      res.render('error.html', templateVars);
     }
 
-    Thread.get(threadID, page, function(err, doc, lastPage) {
+    Thread.get(threadID, page, function(err, thread, replies, lastPage) {
+      var templateVars;
       if (err) {
-        res.send(err);
-        return;
+
+        templateVars = {
+          title: 'Thread not found',
+          code: err.code,
+          message: err.message
+        };
+        res.render('error.html', templateVars);
+      } else {
+
+        templateVars = {
+          title: thread.subject,
+          thread: thread,
+          replies: replies,
+          page: page,
+          lastPage: lastPage,
+          convertToDate: convertToDate,
+          sessUser: req.session.user
+        };
+
+        // Render template
+        res.render('thread.html', templateVars);
       }
-
-      var templateVars = {
-        title: doc.subject,
-        thread: doc,
-        page: page,
-        lastPage: lastPage,
-        convertToDate: convertToDate,
-        sessUser: req.session.user
-      };
-
-      // Render template
-      res.render('thread.html', templateVars);
     });
   };
 
@@ -111,10 +122,12 @@ module.exports = function(app) {
     var subject = validator.toString(req.body.subject);
     var message = validator.toString(req.body.message);
 
-    // TODO: Replace this with the actual name of the author
     var author = req.session.user.username;
 
     //var author = req.session.author;
+
+    // (TEMP)
+    var section = 0;
     var result;
 
     if (!author) {
@@ -154,13 +167,11 @@ module.exports = function(app) {
       return;
     }
 
-    Thread.create(subject, message, author, function(err, result, doc) {
+    Thread.create(subject, message, author, section, function(result, doc) {
 
-      if (err) {
+      if (result) {
 
         res.send(result);
-
-        return console.error(err);
       } else {
 
         console.log('New thread created');
@@ -175,7 +186,7 @@ module.exports = function(app) {
 
   var handleThreadReply = function(req, res) {
 
-    var threadID = validator.toString(req.params.id);
+    var threadId = validator.toString(req.params.id);
     var message = validator.toString(req.body.message);
     var author = req.session.user.username;
 
@@ -191,7 +202,7 @@ module.exports = function(app) {
       return;
     }
 
-    if (!threadID) {
+    if (!threadId) {
       result = {
         code    : 400,
         message : 'Thread not found.'
@@ -209,22 +220,31 @@ module.exports = function(app) {
       return;
     }
 
-    Thread.makeReply(threadID, message, author,
-      function(err, doc) {
-        if (err) {
-          res.send(err);
-          return;
-        }
-        res.send({
-          code: 200,
-          message: 'Reply successfully created.'
-        });
+
+    Reply.create(threadId, message, author, function(err, reply) {
+
+      if (err) {
+        res.send(err);
+      } else {
+
+        Thread.updateLastPost(threadId, author, function(err, thread) {
+            if (err) {
+              res.send(err);
+              return;
+            }
+            res.send({
+              code: 200,
+              message: 'Reply successfully created.'
+            });
+          }
+        );
       }
-    );
+    });
   };
 
   var handleOnEveryRequest = function(req, res, next) {
 
+    // TODO: Check if request is logout
     if (req.session.user) {
       User.updateActivity(req.session.user);
 

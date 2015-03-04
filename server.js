@@ -70,6 +70,14 @@ env.addFilter('getUserAvatar', function(username, callback) {
   }
 }, true);
 
+env.addFilter('getUserTitle', function(username, callback) {
+  User.getTitle(username, callback);
+}, true);
+
+env.addFilter('getForumDev', function(username, callback) {
+  User.getForumDev(username, callback);
+}, true);
+
 // Tell Express to serve static objects from the /public/ directory
 app.use(express.static(path.join(__dirname, 'public')));
 
@@ -77,6 +85,16 @@ app.use(express.static(path.join(__dirname, 'public')));
 //is chained to all other requests
 require('./routes/forum')(app);
 require('./routes/user')(app);
+
+// Handle 404 Error
+app.use(function(req, res, next) {
+  var templateVars =
+  {
+    code: 404,
+    message: 'Not Found'
+  };
+  res.render('error.html', templateVars);
+});
 
 
 var server = app.listen(3000, function () {

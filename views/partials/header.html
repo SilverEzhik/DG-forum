@@ -2,23 +2,24 @@
 <div class="header">
   <a href="../">
     <div class="logo">
-      <img src="../img/dglogo.png" alt="DGLOGO" height="60px" width="60px">
+      <img src="../img/betaflag.png" class="betaflag" alt="Beta Flag" height="50px" width="63px">
+      <img src="../img/dglogo.png" class="DGLOGO" alt="DGLOGO" height="60px" width="60px">
     </div>
     <ul class="title">
-      <li>Developer's Guild Forum</li>
+      <li>Developers' Guild Forum</li>
     </ul>
   </a>
 
   {% if sessUser %}
   <!-- AVATAR -->
   <a href="../user/{{ sessUser.usernameLower}}">
-    <span class="avatar-small" title="{{ sessUser.username }}" style="background-image: url(../avatars/{{ sessUser.profile.avatar }});"></span>
+    <span class="avatar-small-online" title="{{ sessUser.username }}" style="background-image: url(../avatars/{{ sessUser.profile.avatar }});"></span>
   </a>
   <!-- END AVATAR -->
 
   <!-- MENU -->
   <ul class="menu">
-    <li><a href="../user/{{ sessUser.usernameLower}}">{{ sessUser.username }}</a></li>
+    <li><a href="../user/{{ sessUser.usernameLower}}" class="user-title{{ sessUser.username|getUserTitle }}">{{ sessUser.username }}</a></li>
     <li><a href="../logout">Logout</a></li>
     <li><a href="/members">Members</a></li>
     <li><a href="//developersguild.net">About</a></li>

@@ -14,7 +14,19 @@ a:hover{
 	margin-right: 13px;
 	margin-bottom: 13px;
 	border-radius: 50%;
-  background-size: 50px 50px;
+  	background-size: 50px 50px;
+}
+
+.avatar-online{
+	width: 50px;
+	height: 50px;
+	border: 1px solid #dfdfdf;
+	float: left;
+	margin-right: 13px;
+	margin-bottom: 13px;
+	border-radius: 50%;
+  	background-size: 50px 50px;
+  	box-shadow: 0 0 8px #337ab7;
 }
 
 .avatar-small{
@@ -27,12 +39,28 @@ a:hover{
 	background-position: center;
 	background-repeat: no-repeat;
 	background-color:white;
-  background-size: 40px 40px;
+  	background-size: 40px 40px;
 }
 
-.avatar-small:hover{
+.avatar-small-online{
+	display: block;
+	float: left;
+	width: 40px;
+	height: 40px;
+	border: 1px solid #dfdfdf;
+	border-radius: 50%;
+	background-position: center;
+	background-repeat: no-repeat;
+	background-color:white;
+  	background-size: 40px 40px;
+  	box-shadow: 0 0 8px #337ab7;
+}
+
+.avatar-small:hover, .avatar-small-online:hover, .avatar:hover, .avatar-online:hover{
 	border-color: #337ab7;
 }
+
+
 
 .avatar-stock{
 	height: 50px;
@@ -44,7 +72,7 @@ a:hover{
 	background-color:white;
 }
 
-.header .avatar-small{
+.header .avatar-small-online{
 	margin: 10px;
 	float: right;
 }
@@ -55,8 +83,9 @@ a:hover{
 	margin-right: 0;
 }
 
-body{
+html, body{
 	word-wrap: break-word;
+	height: 100%;
 }
 
 .btn{
@@ -115,6 +144,7 @@ body{
 }
 
 .edit-profile{
+	margin-top: 2em;
 	text-align: center;
 	padding-bottom: 1em;
 }
@@ -182,14 +212,15 @@ body{
 .field-avatar{
 	border: 1px solid #dfdfdf;
 	border-top:none;
-	height: 73px;
 	width: 100%;
+	height: 320px;
 	line-height: 56px;
 	padding: 0px 17.5px;
 }
 
-.field-avatar .btn{
-	width: 20%;
+.field-avatar .button-clicked{
+	box-shadow: 0 0 12px #337ab7;
+	border-color: #337ab7;
 }
 
 .fieldset{
@@ -199,7 +230,7 @@ body{
 
 .profile .fieldset{
 	width: 493px;
-	height: 373px;
+	height: 800px;
 }
 
 .fieldset>.field:first-child{
@@ -227,11 +258,6 @@ figcaption p{
 	line-height: 1.3;
 }
 
-.footer{
-	clear: both;
-	text-align: center;
-	margin: 4em;
-}
 
 #frame {
 	background-color: #FFF;
@@ -249,8 +275,9 @@ figcaption p{
 
 .header{
 	height: 60px;
-	padding: 0 1em;
+  	padding-right: 1em;
 	overflow: hidden;
+	border-bottom: 1px solid #dfdfdf;
 }
 
 .header a{
@@ -279,6 +306,10 @@ input{
 	vertical-align: middle;
 }
 
+.profile .field input{
+	width: 250px;
+}
+
 .field input:-webkit-autofill{
 	background-color: white;
 }
@@ -298,6 +329,15 @@ label{
 	float: left;
 }
 
+.betaflag {
+  z-index:2;
+  position: absolute;
+}
+
+.DGLOGO {
+  z-index:1;
+  margin-left: 1em;
+}
 .menu{
 	float: right;
 }
@@ -369,9 +409,11 @@ label{
 	border: 1px solid #dfdfdf;
 }
 
-.online .avatar-small{
+.online .avatar-small-online{
 	margin: 1em;
 	margin-right: 0;
+	padding-right: 0;
+	box-shadow: 0 0 8px #337ab7;
 }
 
 .username{
@@ -426,7 +468,7 @@ label{
 	height: 250px;
 	overflow: hidden;
 	min-width: 400px;
-	border: 1px solid #dfdfdf;
+	border-bottom: 1px solid #dfdfdf;
 	border-left: none;
 	border-right: none;
 }
@@ -592,6 +634,26 @@ textarea{
 	list-style: none;
 	padding: 1em;
 	border: 1px solid #d4d4d4;
+	border-bottom: none;
+    overflow: hidden;
+    clear: both;
+}
+
+.thread-border:first-child{
+	background-color: #FFF;
+	list-style: none;
+	padding: 1em;
+	border: 1px solid #d4d4d4;
+	border-bottom: none;
+    overflow: hidden;
+    clear: both;
+}
+
+.thread-border:last-child{
+	background-color: #FFF;
+	list-style: none;
+	padding: 1em;
+	border: 1px solid #d4d4d4;
     overflow: hidden;
     clear: both;
 }.thread-border:first-child{
@@ -604,8 +666,10 @@ textarea{
     clear: both;
 }
 
+
 .thread-body{
 	white-space: pre-wrap;
+	margin-left: 63px;
 }
 
 .thread-content{
@@ -680,7 +744,54 @@ textarea{
     text-align: left;
 }
 
-.change-page{
-	margin-top: 1em;
-	margin-bottom: 1em;
+.user-title0 {
 }
+
+.user-title1 {
+	font-weight: bold;
+}
+
+.user-title2 {
+  font-weight: bold;
+	color: #00aa00;
+}
+
+.wrapper{
+	min-height: 100%;
+	height: auto !important;
+	height: 100%;
+	margin: 0 auto -8em;
+}
+
+.footer, .push{
+	height: 8em;
+}
+
+.footer{
+	text-align: center;
+	width: 100%;
+	line-height: 8em;
+	vertical-align: middle;
+}
+
+.banner{
+	clear:both;
+	float:left; height:13px;
+	width:50px;
+	font-size:10px;
+	text-align:center;
+	color:white;"
+}
+
+.banner1{
+	background-color: #337ab7;
+}
+
+.banner2{
+	background-color: #00aa00;
+}
+
+.banner-forumDev {
+	background-color: #762B50;
+}
+

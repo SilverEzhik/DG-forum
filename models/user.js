@@ -28,9 +28,12 @@ var TITLES = [
   }
 ];
 */
-var STOCKAVATARS = ['dg.png', 'github.png', 'bitbucket.png', 'deanza.png',
-                    'nodejs.png', 'swift.png', 'windows.png', 'osx.png',
-                    'linux.png', 'stackoverflow.png'];
+var STOCKAVATARS = ['alpaca.png', 'anthony.png', 'bird.png', 'cat.png',
+                    'chinchilla.png', 'fox.png', 'hedgehog.png', 'rat.png',
+                    'husky.png', 'rabbit.png', 'polarbear.png', 'wifi.gif',
+                    'slice.gif', 'cubes.gif','fronting.gif', 'infinite.gif',
+                    'bouncy.gif', 'deanza.png','github.png', 'nodejs.png',
+                    'swift.png', 'windows.png', 'osx.png','linux.png'];
 
 // Get a random stock avatar
 function getRandomStockAvatar() {
@@ -49,86 +52,69 @@ var UserSchema = mongoose.Schema({
   password      : { type: String, required: true },
   creationDate  : { type: Number, default: Date.now },
   title         : { type: Number, default: 0 },
-  banned        : { type: Boolean, default: false },
-  forumDev      : { type: Boolean, default: false},
-  retired       : { type: Boolean, default: false },
   lastActivity  : { type: Number, default: Date.now },
+  flags         : {
+    banned        : { type: Boolean, default: false },
+    forumDev      : { type: Boolean, default: false },
+    retired       : { type: Boolean, default: false },
+    online        : { type: Boolean, default: true }
+  },
   profile       : {
-    fullName      : { type: String, required: true },
+    fName         : { type: String, required: true },
+    lName         : { type: String, required: true},
     avatar        : { type: String, default: getRandomStockAvatar },
     bio           : { type: String },
     website       : { type: String },
-    githubName    : { type: String },
-    signature     : { type: String }
+    githubName    : { type: String }
   }
 });
 
 var UserMongoModel = db.model('users', UserSchema);
 
 var logInUser = function(usernameEmail, password, callback) {
-
+  var query;
   if (validator.isEmail(usernameEmail)) {
-    UserMongoModel.findOne({ emailLower: usernameEmail.toLowerCase() },
-      function(err, doc) {
-        var result;
-        if (!doc) {
-          result = {
-            code    : 400,
-            message : 'Can\'t find that email.'
-          };
-          callback(result);
-        } else {
-          bcrypt.compare(password, doc.password, function(err, correct) {
-            if (!correct) {
-              result = {
-                code    : 400,
-                message : 'You entered the wrong password'
-              };
-              callback(result);
-            } else {
-              callback(result, doc);
-            }
-          });
-        }
-      }
-    );
+    query = { emailLower: usernameEmail.toLowerCase() };
   } else {
-    UserMongoModel.findOne({ usernameLower: usernameEmail.toLowerCase() },
-      function(err, doc) {
-        var result;
-        if (!doc) {
-          result = {
-            code    : 400,
-            message : 'Can\'t find that username.'
-          };
-          callback(result);
-        } else {
-          bcrypt.compare(password, doc.password, function(err, correct) {
-            if (!correct) {
-              result = {
-                code    : 400,
-                message : 'You entered the wrong password'
-              };
-              callback(result);
-            } else {
-              callback(result, doc);
-            }
-          });
-        }
-      }
-    );
+    query = { usernameLower: usernameEmail.toLowerCase() };
   }
+
+  UserMongoModel.findOne(query,
+  '_id username usernameLower password title flags profile.avatar',
+    function(err, user) {
+      var result;
+      if (!user) {
+        result = {
+          code    : 400,
+          message : 'Can\'t find that username or email.'
+        };
+        callback(result);
+      } else {
+        bcrypt.compare(password, user.password, function(err, correct) {
+          if (!correct) {
+            result = {
+              code    : 400,
+              message : 'You entered the wrong password'
+            };
+            callback(result);
+          } else {
+            callback(result, user);
+          }
+        });
+      }
+    }
+  );
 };
 
-var createUser = function(username, email, password, fName, callback) {
+var createUser = function(username, email, password, fName, lName, callback) {
 
   // Use series to check to see if username or email already exists
   async.series([
     function(seriesCallback) {
-      UserMongoModel.findOne({ usernameLower: username.toLowerCase() },
-        function(err, doc) {
+      UserMongoModel.findOne({ usernameLower: username.toLowerCase() }, '_id',
+        function(err, user) {
           var result;
-          if (doc) {
+          if (user) {
 
             // Non-null result ends the series immediately.
             result = {
@@ -141,10 +127,10 @@ var createUser = function(username, email, password, fName, callback) {
       );
     }
   , function(seriesCallback) {
-      UserMongoModel.findOne({ emailLower: email.toLowerCase() },
-        function(err, doc) {
+      UserMongoModel.findOne({ emailLower: email.toLowerCase() }, '_id',
+        function(err, user) {
           var result;
-          if (doc) {
+          if (user) {
 
             // Non-null result ends the series immediately.
             result = {
@@ -162,18 +148,18 @@ var createUser = function(username, email, password, fName, callback) {
         callback(result);
       } else {
         bcrypt.hash(password, 10, function(err, hash) {
-          var NewUser = new UserMongoModel({
+
+          UserMongoModel.create({
             username      : username,
             usernameLower : username.toLowerCase(),
             email         : email,
             emailLower    : email.toLowerCase(),
             password      : hash,
             profile : {
-              fullName: fName
+              fName: fName,
+              lName: lName
             }
-          });
-
-          NewUser.save(function(err, doc) {
+          }, function(err, user) {
 
             var result;
 
@@ -184,7 +170,7 @@ var createUser = function(username, email, password, fName, callback) {
               };
             }
 
-            callback(result, doc);
+            callback(result, user);
 
           });
         });
@@ -193,32 +179,65 @@ var createUser = function(username, email, password, fName, callback) {
 
 };
 
-var getUser = function(username, callback) {
+var getUser = function(usernameOrId, callback) {
+
+  var query;
+
+  if (validator.isMongoId(usernameOrId)) {
+    query = {_id: usernameOrId};
+  } else {
+    query = {usernameLower: usernameOrId.toLowerCase()};
+  }
+
+  UserMongoModel.findOne(query,
+  '_id username usernameLower title flags profile.avatar', function(err, user) {
+
+    var errorResult;
+
+    if (err) {
+      errorResult = {
+        code    : 500,
+        message : 'Something went wrong in the database.'
+      };
+    } else if (!user) {
+      errorResult = {
+        code    : 404,
+        message : 'User not found.'
+      };
+    }
+    callback(errorResult, user);
+
+  });
+
+};
+
+var getUserProfile = function(username, callback) {
 
   UserMongoModel.findOne({usernameLower: username.toLowerCase()},
-    function(err, doc) {
+  'username usernameLower email creationDate title lastActivity flags profile',
+    function(err, user) {
 
-       var errorResult;
+      var errorResult;
 
       if (err) {
         errorResult = {
           code    : 500,
           message : 'Something went wrong in the database.'
         };
-      } else if(!doc) {
+      } else if (!user) {
         errorResult = {
-          code    : 400,
-          message : 'User could not be found.'
+          code    : 404,
+          message : 'User not found.'
         };
       }
-      callback(errorResult, doc);
+      callback(errorResult, user);
 
     }
-
   );
 
 };
 
+<<<<<<< HEAD
 
 var getAllMembers = function(callback) {
 
@@ -238,6 +257,9 @@ var getAllMembers = function(callback) {
       }
 
     });
+=======
+var getAllMembers = function() {
+>>>>>>> e4dfce947582c4d563d82fd1e20753466da3c333
 
 };
 
@@ -258,7 +280,7 @@ var changeUserTitle = function(username, titleNum, callback) {
       } else {
         result = {
           code: 200,
-          message: doc.username + ' is now a ' + TITLES[doc.title].label + '.'
+          message: doc.username + ' is now a ' + TITLES[doc.title] + '.'
         };
       }
       callback(result);
@@ -268,7 +290,7 @@ var changeUserTitle = function(username, titleNum, callback) {
 
 var makeUserForumDev = function(username, bool, callback) {
   UserMongoModel.findOneAndUpdate({ usernameLower: username.toLowerCase() },
-    { forumDev: bool }, function(err, doc) {
+    { flags: {forumDev: bool } }, function(err, doc) {
       var result;
       if (err) {
         result = {
@@ -282,7 +304,7 @@ var makeUserForumDev = function(username, bool, callback) {
         };
       } else {
         var message;
-        if (doc.forumDev) {
+        if (doc.flags.forumDev) {
           message = doc.username + ' is now a forum developer.';
 
         } else {
@@ -300,10 +322,10 @@ var makeUserForumDev = function(username, bool, callback) {
 
 //curently updates on these routes:
 // /user/:userid, and all routes in forum.js
-var updateLastActivity = function(user, callback){
-
+var updateLastActivity = function(user, callback) {
+  var curTime = Date.now();
   UserMongoModel.update({ usernameLower: user.username.toLowerCase() },
-    { lastActivity: Date.now() }, function(err, numAffected, raw) {
+    { lastActivity: curTime }, function(err, numAffected, raw) {
 
       if (err) {
         callback(err);
@@ -314,15 +336,18 @@ var updateLastActivity = function(user, callback){
 };
 
 //gets all members active within 30 minutes
-var getActiveMembers = function(callback) {
+var getActiveUsers = function(callback) {
 
   //30 mins * 60 sec * 1000 millisec
-  var timeout = 30 * 60 * 1000;
+  var TIMEOUT = 30 * 60 * 1000;
 
-  //timeout >= Date.now() - lastActivity ---> lastActivity >= Date.now() - timeout
-  UserMongoModel.find({ lastActivity: {$gte : Date.now() - timeout} },
-    function (err, docs) {
+  var curTime = Date.now();
 
+  var ttl = (curTime - TIMEOUT);
+  //timeout >= Date.now() - lastActivity -> lastActivity >= Date.now() - timeout
+  UserMongoModel.find({ lastActivity: {$gte : ttl}, flags: { online: true } },
+  'username usernameLower title profile.avatar', function (err, docs) {
+      // TODO: Handle error
       if (docs) {
         callback(docs);
       }
@@ -357,23 +382,88 @@ var changeUserAvatar = function(username, avatarStr, callback) {
 };
 
 var getUserAvatar = function(username, callback) {
-  UserMongoModel.findOne({ usernameLower: username.toLowerCase() },
-    function(err, doc) {
+  UserMongoModel.findOne({usernameLower: username.toLowerCase()},
+    'profile.avatar', function(err, user) {
       var result;
       if (err) {
         result = {
           code    : 500,
           message : 'Something went wrong in the database. Try again.'
         };
-      } else if (!doc) {
+      } else if (!user) {
         result = {
           code    : 400,
           message : 'Couldn\'t find that user.'
         };
       }
 
-      var avatarStr = doc.profile.avatar || undefined;
+      var avatarStr = user.profile.avatar || undefined;
       callback(result, avatarStr);
+    }
+  );
+};
+
+var getUserTitle = function(username, callback) {
+  UserMongoModel.findOne({usernameLower: username.toLowerCase()},
+    'title', function(err, user) {
+      var result;
+      if (err) {
+        result = {
+          code    : 500,
+          message : 'Something went wrong in the database. Try again.'
+        };
+        console.error(err);
+      } else if (!user) {
+        result = {
+          code    : 400,
+          message : 'Couldn\'t find that user.'
+        };
+      }
+
+      var title = user.title;
+      callback(result, title);
+    }
+  );
+};
+
+var setUserOnlineStatus = function(username, bool, callback) {
+  UserMongoModel.findOneAndUpdate({usernameLower: username.toLowerCase()},
+  {flags: {online: bool} }, function(err, user) {
+      var result;
+      if (err) {
+        result = {
+          code    : 500,
+          message : 'Something went wrong in the database.'
+        };
+        console.error(err);
+      } else if (!user) {
+        result = {
+          code    : 400,
+          message : 'User not found.'
+        };
+      }
+      callback(result);
+    }
+  );
+};
+
+var getUserForumDevStatus = function(username, callback) {
+  UserMongoModel.findOne({usernameLower: username.toLowerCase()},
+  'flags.forumDev', function(err, user) {
+      var result;
+      if (err) {
+        result = {
+          code    : 500,
+          message : 'Something went wrong in the database.'
+        };
+        console.error(err);
+      } else if (!user) {
+        result = {
+          code    : 400,
+          message : 'User not found.'
+        };
+      }
+      callback(result, user.flags.forumDev);
     }
   );
 };
@@ -382,13 +472,18 @@ var UserModel = {
   login: logInUser,
   create: createUser,
   get: getUser,
+  getProfile: getUserProfile,
   getAllMembers: getAllMembers,
   changeTitle: changeUserTitle,
   makeForumDev: makeUserForumDev,
   updateActivity: updateLastActivity,
-  getActiveMembers: getActiveMembers,
+  getActiveUsers: getActiveUsers,
   changeAvatar: changeUserAvatar,
-  getAvatar: getUserAvatar
+  getAvatar: getUserAvatar,
+  getTitle: getUserTitle,
+  stockAvatarsList: STOCKAVATARS,
+  setOnlineStatus: setUserOnlineStatus,
+  getForumDev: getUserForumDevStatus
 };
 
 module.exports = UserModel;

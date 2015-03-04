@@ -9,31 +9,81 @@
     {% endif %}
     -->
 
-		<!-- PROFILE -->
+    {% if user.username == sessUser.username %}
+		<!-- EDITPROFILE -->
 		<div class="profile">
 			<div class="edit-profile">Edit Profile</div>
-			<form action="/register" method="post">
+      <!-- NOTE: This route isn't configured yet. -->
+			<form action="/changeprofile" method="post">
 				<div class="fieldset">
 					<div class="field">
-						<label for="first-name">Password</label>
-						<input type="password" autocapitalize="off" autocomplete="password" id="password" placeholder="Password">
+						<label for="password">Password</label>
+						<input name="password" type="password" autocapitalize="off" autocomplete="password" placeholder="Password">
 					</div>
 					<div class="field">
-						<label for="first-name">Full name</label>
-						<input autocapitalize="off" autocomplete="first-name" id="first-name" placeholder="{{ sessUser.fllname }}">
+						<label for="fName">First name</label>
+						<input name="fName" autocapitalize="off" placeholder="{{ sessUser.profile.fName }}">
 					</div>
 					<div class="field">
-						<label for="first-name">Email address</label>
-						<input autocapitalize="off" autocomplete="email-address" id="email-address" placeholder="{{ sessUser.email }}">
+						<label for="lName">Last name</label>
+						<input name="lName" autocapitalize="off" placeholder="{{ sessUser.profile.lName }}">
 					</div>
 					<div class="field">
-						<label for="Avatar">Avatar</label>
-						<input type="file" name="pic" accept="image/*">
+						<label for="email">Email address</label>
+						<input name="email" autocapitalize="off" autocomplete="email-address" placeholder="{{ sessUser.email }}">
+					</div>
+					<div class="field">
+						<label for="bio">Bio</label>
+						<input name="bio" autocapitalize="off" placeholder="{{ sessUser.profile.bio }}">
+					</div>
+					<div class="field">
+						<label for="website">Website</label>
+						<input name="website" autocapitalize="off" placeholder="{{ sessUser.profile.website }}">
+					</div>
+					<div class="field">
+						<label for="githubName">Github name</label>
+						<input name="githubName" autocapitalize="off" placeholder="{{ sessUser.profile.githubName }}">
+					</div>
+					<div class="field-avatar">
+						<label for="Avatar" style="width:100%;">avatar-num</label>
+
+						<select id="mySelect" style="width:250px; display:none;" name="avatarSelect">
+	    					{% for avatar in STOCKAVATARS %}
+	      					<option value="{{loop.index}}" {% if avatar==sessUser.profile.avatar%}selected="selected"{% endif %}>{{loop.index}}</option>
+	    					{% endfor %}
+    					</select>
+
+    					{% for avatar in STOCKAVATARS %}
+    					<button type="button" class="avatar clickable {% if avatar==sessUser.profile.avatar %}button-clicked{% endif %}" onclick="selectAvatar( {{ loop.index }} )" style="background-image: url(../avatars/{{ avatar }}); background-color: white;"></button>
+    					{% endfor %}
+    					
 					</div>
 					<input id="register-btn" class="btn" value="Save changes" type="submit">
 				</div>
 			</form>
 		</div>
-		<!-- END PROFILE -->
+		<!-- END EDITPROFILE -->
+
+		{% else %}
+
+		<div>
+				Page Under Construction	
+				<div class="avatar{% if user.flags.online %}-online{% endif %}" style="background-image: url(../avatars/{{ user.profile.avatar }}); margin:0 auto;"></div>
+				
+				<div style="width:100%;">
+				Name:	{{user.username}}
+				Title:	{% if user.title==0 %}Guest{% endif %}
+						{% if user.title==1 %}Member{% endif %}
+						{% if user.title==2 %}Officer{% endif %}
+						{% if user.title==3 %}Developer{% endif %}
+				{% if user.flags.online %}Online{% endif %}
+				</div>
+			
+		</div>
+
+
+		{% endif %}
+
+
 
 {% endblock %}

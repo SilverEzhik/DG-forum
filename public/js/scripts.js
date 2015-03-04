@@ -152,33 +152,43 @@ $('#createReply_form').submit(function() {
   return false;
 });
 
-
 //sly
 jQuery(function ($) {
-
   $('#frame').sly({
     horizontal: 1,
-
-
     itemNav: 'centered',
     smart: 1,
     activateOn: 'click',
-
     scrollBy: 1,
-
     mouseDragging: 1,
     swingSpeed: 1,
     scrollTrap: 1,
-
     cycleInterval: 1000,
-
     scrollBar: $('.scrollbar'),
     dragHandle: 1,
-
     speed: 200,
     startAt: 0
-
-
   });
+});
 
+//jquery-ui
+$(function(){
+  $(document).tooltip({
+    position: {
+      at: "left-7"
+    }
+  });
+});
+
+//select val for avatar
+var selectAvatar = function(id) {
+  $('#mySelect').val(id).change();
+};
+
+//glow selected avatar
+$(function(){
+  $('.clickable').on('click', function() {
+    $('.field-avatar .button-clicked').removeClass('button-clicked');
+    $(this).addClass('button-clicked');
+  });
 });

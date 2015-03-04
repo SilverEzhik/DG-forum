@@ -27,35 +27,30 @@
           {% else %}
           <li class="root-thread-border">
           {% endif %}
-            <a href="user/{{ thread.author }}"><div class="avatar-small" title="{{ thread.author }}" style="background-image: url(../avatars/{{ thread.author|getUserAvatar  }}); "></div></a>
+            <a href="user/{{ thread.author }}"><div class="avatar-small{% for user in onlineUsers %}{% if thread.author == user.username %}-online{% endif %}{% endfor %}" title="{{ thread.author }}" style="background-image: url(../avatars/{{ thread.author|getUserAvatar  }}); "></div></a>
             <div class="contain-title">
               <div class="ellipsed">
                 <a href="thread/{{ thread.prettyId }}" style="font-size:1.2em;">{{ thread.subject }}</a>
-                <span style="font-size:1em;">({{ thread.numOfPosts }} replies)</span>
+                <span style="font-size:1em;">({{ thread.lastPost.post }} replies)</span>
               </div>
               <div class="ellipsed">
-                <div class="ellipsed2">submitted by <a href="user/{{ thread.author }}" class="author">{{ thread.author }}</a></div>
+                <div class="ellipsed2">submitted by <a href="user/{{ thread.author }}" class="user-title{{ thread.author|getUserTitle }}">{{ thread.author }}</a></div>
               </div>
             </div>
 
             <!-- TODO: templating for last reply, author and date-->
 
             <div class="contain-title2">
-              {% if thread.replies[0] %}
-              <div class="ellipsed2"><a href="#">Last Post</a> by <a href="user/{{ thread.replies[0].author }}" class="last-poster">{{ thread.replies[0].author }}</a></div>
-              <div class="ellipsed2">{{ convertToDate(thread.replies[0].creationDate) }}</div>
-              {% else %}
-              <div class="ellipsed2">No Replies Yet</div>
-              {% endif %}
+              <div class="ellipsed2"><a href="#">Last Post</a> by <a href="user/{{ thread.lastPost.author }}" class="user-title{{ thread.lastPost.author|getUserTitle }}">{{ thread.lastPost.author }}</a></div>
+              <div class="ellipsed2">{{ convertToDate(thread.lastPost.time) }}</div>
             </div>
           </li>
         </ul>
         {% endfor %}
       </div>
-      
-    <div class="change-page">
+
     {% include "partials/pagination.html" %}
-    </div>
+
     </div>
 
 
@@ -87,16 +82,20 @@
     <!-- END FEED -->
 
     <!-- ONLINE -->
+    <!-- Check to see if there are any users online -->
+    {% if onlineUsers|length > 0 %}
     <div class="online-title"><span>Online users</span></div>
     <div class="online">
 
     	{% for user in onlineUsers %}
 
-      	<a href="user/{{ user.username }}"><span class="avatar-small" title="{{ user.username }}" style="background-image: url(../avatars/{{ user.profile.avatar }});"></span></a>
+      	<a href="user/{{ user.username }}"><span class="avatar-small-online" title="{{ user.username }}" style="background-image: url(../avatars/{{ user.profile.avatar }});"></span></a>
 
     	{% endfor %}
 
     </div>
+
+    {% endif %}
     <!-- END ONLINE -->
 
     <!-- POST THREAD MODAL -->
