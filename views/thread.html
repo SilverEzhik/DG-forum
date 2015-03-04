@@ -20,40 +20,39 @@
 		<div>
 			<!-- THREAD -->
 			<ul class="threadlist">
-      {% if page == 1 %}
+      		{% if page == 1 %}
 				<li class="thread-border">
 					<div style="width:100%; height:50px;">
-						<a href="../user/{{ thread.author }}"><div class="avatar{% for user in onlineUsers %}{% if thread.author == user.username %}-online{% endif %}{% endfor %}" style="background-image: url(../avatars/{{ thread.author|getUserAvatar  }});"></div></a>
+						<a href="../user/{{ thread.author }}"><div class="avatar{% if thread.author|getOnline %}-online{% endif %}" style="background-image: url(../avatars/{{ thread.author|getUserAvatar  }});"></div></a>
 						<div class="thread-row1">
 							<span class="thread-title">{{ thread.subject }}</span>
 							<div><a href="../user/{{ thread.author }}" class="user-title{{ thread.author|getUserTitle }}">{{ thread.author }}</a> {{ convertToDate(thread.creationDate) }}</div>
 						</div>
 					</div>
 
-          {% if thread.author|getUserTitle != 0 %}
+          			{% if thread.author|getUserTitle != 0 %}
   					<div class="banner banner{{ thread.author|getUserTitle }}">
     					{% if thread.author|getUserTitle == 1 %}Member
     					{% elif thread.author|getUserTitle == 2 %}Officer{% endif %}
   					</div>
-          {% endif %}
+          			{% endif %}
 
-          {% if thread.author|getForumDev %}
-            <div class="banner banner-forumDev">
-              Forum Dev
-            </div>
-          {% endif %}
+          			{% if thread.author|getForumDev %}
+            		<div class="banner banner-forumDev">
+              		Forum Dev
+            		</div>
+          			{% endif %}
 
 					<div class="thread-body" style="clear:none;">{{ thread.message }}</div>
 				</li>
-      {% endif %}
+      		{% endif %}
 
 				<!-- REPLIES -->
 				{% for reply in replies %}
 
-
 				<li class="thread-border">
 					<div style="width:100%; height:50px;">
-						<a href="../user/{{ reply.author }}"><div class="avatar{% for user in onlineUsers %}{% if reply.author == user.username %}-online{% endif %}{% endfor %}" style="background-image: url(../avatars/{{ reply.author|getUserAvatar  }});"></div></a>
+						<a href="../user/{{ reply.author }}"><div class="avatar{% if reply.author|getOnline %}-online{% endif %}" style="background-image: url(../avatars/{{ reply.author|getUserAvatar  }});"></div></a>
 						<div class="thread-row2">
 							<span><a href="../user/{{ thread.author }}" class="user-title{{ reply.author|getUserTitle }}">{{ reply.author }}</a></span>
 							<div>{{ convertToDate(reply.creationDate) }}</div>
@@ -61,26 +60,32 @@
 					</div>
 
 					{% if reply.author|getUserTitle != 0 %}
-            <div class="banner banner{{ reply.author|getUserTitle }}">
-              {% if reply.author|getUserTitle == 1 %}Member
-              {% elif reply.author|getUserTitle == 2 %}Officer{% endif %}
-            </div>
-          {% endif %}
 
-          <br>
-          {% if reply.author|getForumDev %}
-            <div class="banner banner-forumDev">
-              Forum Dev
-            </div>
-          {% endif %}
+	            	<div class="banner banner{{ reply.author|getUserTitle }}">
+	              	{% if reply.author|getUserTitle == 1 %}Member
+	              	{% elif reply.author|getUserTitle == 2 %}Officer{% endif %}
+	            	</div>
+
+	          		{% endif %}
+
+	          		<br>
+	          		{% if reply.author|getForumDev %}
+	            	<div class="banner banner-forumDev">Forum Dev</div>
+	          		{% endif %}
 
 					<div class="thread-body" style="clear:none;">{{ reply.message }}</div>
+
 				</li>
 
 				{% endfor %}
 				<!-- END REPLIES -->
 			</ul>
 			<!-- END THREAD -->
+			{% if sessUser %}
+			<div class="post-reply" style="text-align:center;">
+				<a href="#reply" data-toggle="modal">Reply</a>
+			</div>
+			{% endif %}
 		</div>
 	</div>
 	<!-- END GENERAL DISCUSSION -->

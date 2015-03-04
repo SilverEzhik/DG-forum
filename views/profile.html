@@ -45,7 +45,7 @@
 						<input name="githubName" autocapitalize="off" placeholder="{{ sessUser.profile.githubName }}">
 					</div>
 					<div class="field-avatar">
-						<label for="Avatar" style="width:100%;">avatar-num</label>
+						<label for="Avatar" style="width:100%;">Avatar</label>
 
 						<select id="mySelect" style="width:250px; display:none;" name="avatarSelect">
 	    					{% for avatar in STOCKAVATARS %}
@@ -56,7 +56,7 @@
     					{% for avatar in STOCKAVATARS %}
     					<button type="button" class="avatar clickable {% if avatar==sessUser.profile.avatar %}button-clicked{% endif %}" onclick="selectAvatar( {{ loop.index }} )" style="background-image: url(../avatars/{{ avatar }}); background-color: white;"></button>
     					{% endfor %}
-    					
+
 					</div>
 					<input id="register-btn" class="btn" value="Save changes" type="submit">
 				</div>
@@ -65,25 +65,47 @@
 		<!-- END EDITPROFILE -->
 
 		{% else %}
+		<div class="user-profile">
+			<div class="avatar{% if user.flags.online %}-online{% endif %}" style="background-image: url(../avatars/{{ user.profile.avatar }});"></div>
 
-		<div>
-				Page Under Construction	
-				<div class="avatar{% if user.flags.online %}-online{% endif %}" style="background-image: url(../avatars/{{ user.profile.avatar }}); margin:0 auto;"></div>
-				
-				<div style="width:100%;">
-				Name:	{{user.username}}
-				Title:	{% if user.title==0 %}Guest{% endif %}
-						{% if user.title==1 %}Member{% endif %}
-						{% if user.title==2 %}Officer{% endif %}
-						{% if user.title==3 %}Developer{% endif %}
-				{% if user.flags.online %}Online{% endif %}
-				</div>
-			
-		</div>
+			<div style="text-align:center;"><a href="../user/{{ user.username }}" class="user-title{{ user.title }}">{{ user.username }}</a></div>
 
+			{% if user.title != 0%}
+  			<div class="banner banner{{ user.title }}" style="margin:0 auto; float:none;">
+  			{% if user.title == 1%}Member
+  			{% elif user.title == 2%}Officer{% endif %}
+  			</div>
+			{% endif %}
+
+			{% if user.flags.forumDev %}
+			<div class="banner banner-forumDev" style="margin:0 auto; float:none;">Forum Dev</div>
+	     {% endif %}
+
+	        <div style="text-align:center; font-size:.9em;">Last Active: {{ user.lastActivity }}</div>
+
+	        <div style="margin-top:1em;">
+	        	{% if user.profile.fName %}
+		        <div class="info">Name</div>
+		        <div class="info-val">{{ user.profile.fName }} {{ user.profile.lName }}</div>
+		        {% endif %}
+
+		        {% if user.profile.fName %}
+		        <div class="info">Website</div>
+		        <div class="info-val">{{ user.profile.website }}</div>
+		        {% endif %}
+
+		        {% if user.profile.fName %}
+		        <div class="info">Github</div>
+		        <div class="info-val">{{ user.profile.github }}</div>
+		        {% endif %}
+
+		        {% if user.profile.fName %}
+		        <div class="info">Bio</div>
+		        <div class="info-val">{{ user.profile.bio }}</div>
+		        {% endif %}
+		    </div>
+	    </div>
 
 		{% endif %}
-
-
 
 {% endblock %}

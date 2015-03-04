@@ -71,6 +71,33 @@ var UserSchema = mongoose.Schema({
 
 var UserMongoModel = db.model('users', UserSchema);
 
+// Every 5 minutes, check to see if a user is online
+setInterval(function(){
+
+  //30 mins * 60 sec * 1000 millisec
+  var TIMEOUT = 30 * 60 * 1000;
+
+  var curTime = Date.now();
+
+  var ttl = (curTime - TIMEOUT);
+
+  // Find users that are flagged as online and have last activity less than TTL
+  UserMongoModel.update({ lastActivity: {$lt : ttl},
+  flags: { online: true } },
+  {flags: {online: false} },
+   function (err) {
+      if (err) {
+        console.log(err);
+      }
+
+    }
+  );
+
+
+
+}, 1000 * 60 * 5);
+
+
 var logInUser = function(usernameEmail, password, callback) {
   var query;
   if (validator.isEmail(usernameEmail)) {
@@ -318,10 +345,10 @@ var makeUserForumDev = function(username, bool, callback) {
 
 //curently updates on these routes:
 // /user/:userid, and all routes in forum.js
-var updateLastActivity = function(user, callback) {
+var updateLastActivity = function(username, callback) {
   var curTime = Date.now();
-  UserMongoModel.update({ usernameLower: user.username.toLowerCase() },
-    { lastActivity: curTime }, function(err, numAffected, raw) {
+  UserMongoModel.update({ usernameLower: username.toLowerCase() },
+    { lastActivity: curTime, 'flags.online': true }, function(err) {
 
       if (err) {
         callback(err);
@@ -329,27 +356,6 @@ var updateLastActivity = function(user, callback) {
 
     });
 
-};
-
-//gets all members active within 30 minutes
-var getActiveUsers = function(callback) {
-
-  //30 mins * 60 sec * 1000 millisec
-  var TIMEOUT = 30 * 60 * 1000;
-
-  var curTime = Date.now();
-
-  var ttl = (curTime - TIMEOUT);
-  //timeout >= Date.now() - lastActivity -> lastActivity >= Date.now() - timeout
-  UserMongoModel.find({ lastActivity: {$gte : ttl}, flags: { online: true } },
-  'username usernameLower title profile.avatar', function (err, docs) {
-      // TODO: Handle error
-      if (docs) {
-        callback(docs);
-      }
-
-    }
-  );
 };
 
 var changeUserAvatar = function(username, avatarStr, callback) {
@@ -422,6 +428,20 @@ var getUserTitle = function(username, callback) {
   );
 };
 
+var getActiveUsers = function(callback) {
+
+  UserMongoModel.find({ 'flags.online': true  },
+  'username usernameLower title profile.avatar', function (err, docs) {
+
+      // TODO: Handle error
+      if (docs) {
+        callback(docs);
+      }
+
+    }
+  );
+};
+
 var setUserOnlineStatus = function(username, bool, callback) {
   UserMongoModel.findOneAndUpdate({usernameLower: username.toLowerCase()},
   {flags: {online: bool} }, function(err, user) {
@@ -442,6 +462,28 @@ var setUserOnlineStatus = function(username, bool, callback) {
     }
   );
 };
+
+var getUserOnlineStatus = function(username, callback) {
+  UserMongoModel.findOne({usernameLower: username.toLowerCase()},'flags.online',
+    function(err, user) {
+      var result;
+      if (err) {
+        result = {
+          code    : 500,
+          message : 'Something went wrong in the database.'
+        };
+        console.error(err);
+      } else if (!user) {
+        result = {
+          code    : 400,
+          message : 'User not found.'
+        };
+      }
+      callback(result, user.flags.online);
+    }
+  );
+};
+
 
 var getUserForumDevStatus = function(username, callback) {
   UserMongoModel.findOne({usernameLower: username.toLowerCase()},
@@ -479,6 +521,7 @@ var UserModel = {
   getTitle: getUserTitle,
   stockAvatarsList: STOCKAVATARS,
   setOnlineStatus: setUserOnlineStatus,
+  getOnlineStatus: getUserOnlineStatus,
   getForumDev: getUserForumDevStatus
 };
 

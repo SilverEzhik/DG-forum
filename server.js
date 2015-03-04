@@ -78,6 +78,10 @@ env.addFilter('getForumDev', function(username, callback) {
   User.getForumDev(username, callback);
 }, true);
 
+env.addFilter('getOnline', function(username, callback) {
+  User.getOnlineStatus(username, callback);
+}, true);
+
 // Tell Express to serve static objects from the /public/ directory
 app.use(express.static(path.join(__dirname, 'public')));
 
