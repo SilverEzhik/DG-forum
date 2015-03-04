@@ -787,4 +787,26 @@ textarea{
 	background-color: #762B50;
 }
 
+.user-profile .avatar{
+	margin: 0 auto;
+	float: none;
+	margin-bottom: 1em;
+}
 
+.user-profile .info{
+	text-align: left;
+	font-style: italic;
+}
+
+.user-profile .info-val{
+	text-align: left;
+	color: #337ab7;
+}
+
+.user-profile{
+	width: 20%;
+	margin: 0 auto;
+	margin-top: 1em;
+	padding: 1em;
+	border: 1px solid #d4d4d4;
+}
