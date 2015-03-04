@@ -425,6 +425,28 @@ var setUserOnlineStatus = function(username, bool, callback) {
   );
 };
 
+var getUserOnlineStatus = function(username, callback) {
+  UserMongoModel.findOne({usernameLower: username.toLowerCase()},'flags.online',
+    function(err, user) {
+      var result;
+      if (err) {
+        result = {
+          code    : 500,
+          message : 'Something went wrong in the database.'
+        };
+        console.error(err);
+      } else if (!user) {
+        result = {
+          code    : 400,
+          message : 'User not found.'
+        };
+      }
+      callback(result, user.flags.online);
+    }
+  );
+};
+
+
 var getUserForumDevStatus = function(username, callback) {
   UserMongoModel.findOne({usernameLower: username.toLowerCase()},
   'flags.forumDev', function(err, user) {
@@ -461,6 +483,7 @@ var UserModel = {
   getTitle: getUserTitle,
   stockAvatarsList: STOCKAVATARS,
   setOnlineStatus: setUserOnlineStatus,
+  getOnlineStatus: getUserOnlineStatus,
   getForumDev: getUserForumDevStatus
 };
 
