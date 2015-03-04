@@ -71,6 +71,33 @@ var UserSchema = mongoose.Schema({
 
 var UserMongoModel = db.model('users', UserSchema);
 
+// Every 5 minutes, check to see if a user is online
+setInterval(function(){
+
+  //30 mins * 60 sec * 1000 millisec
+  var TIMEOUT = 30 * 60 * 1000;
+
+  var curTime = Date.now();
+
+  var ttl = (curTime - TIMEOUT);
+
+  // Find users that are flagged as online and have last activity less than TTL
+  UserMongoModel.update({ lastActivity: {$lt : ttl},
+  flags: { online: true } },
+  {flags: {online: false} },
+   function (err) {
+      if (err) {
+        console.log(err);
+      }
+
+    }
+  );
+
+
+
+}, 1000 * 60 * 5);
+
+
 var logInUser = function(usernameEmail, password, callback) {
   var query;
   if (validator.isEmail(usernameEmail)) {
@@ -323,7 +350,7 @@ var getActiveUsers = function(callback) {
 
   var ttl = (curTime - TIMEOUT);
   //timeout >= Date.now() - lastActivity -> lastActivity >= Date.now() - timeout
-  UserMongoModel.find({ lastActivity: {$gte : ttl}, flags: { online: true } },
+  UserMongoModel.find({ flags: { online: true } },
   'username usernameLower title profile.avatar', function (err, docs) {
       // TODO: Handle error
       if (docs) {
