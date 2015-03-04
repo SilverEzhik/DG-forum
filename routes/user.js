@@ -295,20 +295,12 @@ module.exports = function(app) {
         // Render template
         res.render('error.html', templateVars);
       } else {
-<<<<<<< HEAD
-        var templateVars = {
-          title: doc.Username + '\'s Profile',
-          user: doc,
-          convertToDate: convertToDate,
-          sessUser: req.session.user
-=======
         templateVars = {
           title: doc.username + '\'s Profile',
           user: doc,
           convertToDate: convertToDate,
           sessUser: req.session.user,
           STOCKAVATARS: User.stockAvatarsList
->>>>>>> e4dfce947582c4d563d82fd1e20753466da3c333
         };
 
         // Render template

@@ -237,7 +237,6 @@ var getUserProfile = function(username, callback) {
 
 };
 
-<<<<<<< HEAD
 
 var getAllMembers = function(callback) {
 
@@ -257,9 +256,6 @@ var getAllMembers = function(callback) {
       }
 
     });
-=======
-var getAllMembers = function() {
->>>>>>> e4dfce947582c4d563d82fd1e20753466da3c333
 
 };
 
