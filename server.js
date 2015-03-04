@@ -27,7 +27,13 @@ var sess = {
   cookie: {}
 };
 
+var SERVER_ADDRESS = process.env.SERVER_ADDRESS || 'localhost';
+var SERVER_PORT = process.env.SERVER_PORT || 3000;
+
+
 if (app.get('env') === 'production') {
+
+
 
   // Set secure cookies when app is in production
   sess.cookie.secure = true;
@@ -97,7 +103,7 @@ app.use(function(req, res, next) {
 });
 
 
-var server = app.listen(3000, function () {
+var server = app.listen(SERVER_PORT, SERVER_ADDRESS, function () {
 
   var host = server.address().address;
   var port = server.address().port;
