@@ -131,6 +131,7 @@ html, body{
 	width: 97.5%;
 	overflow: auto;
 	padding-left: 2.5%;
+	margin-bottom: 4em;
 
 	//beta
 	//padding-right: 2.5%;
@@ -592,6 +593,7 @@ textarea{
 	width: 100%;
 	min-width: 400px;
 	padding: 0 2.5%;
+	margin-bottom: 4em;
 }
 
 .thread-body{
@@ -764,6 +766,8 @@ textarea{
 	width: 100%;
 	line-height: 8em;
 	vertical-align: middle;
+	border-top: 1px solid #d4d4d4;
+	clear: both;
 }
 
 .banner{
@@ -772,7 +776,7 @@ textarea{
 	width:50px;
 	font-size:10px;
 	text-align:center;
-	color:white;"
+	color:white;
 }
 
 .banner1{
@@ -809,4 +813,6 @@ textarea{
 	margin-top: 1em;
 	padding: 1em;
 	border: 1px solid #d4d4d4;
+	min-width: 135px;
 }
+
