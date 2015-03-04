@@ -49,7 +49,7 @@
     					{% for avatar in STOCKAVATARS %}
     					<button type="button" class="avatar clickable {% if avatar==sessUser.profile.avatar %}button-clicked{% endif %}" onclick="selectAvatar( {{ loop.index }} )" style="background-image: url(../avatars/{{ avatar }}); background-color: white;"></button>
     					{% endfor %}
-    					
+
 					</div>
 					<input id="register-btn" class="btn" value="Save changes" type="submit">
 				</div>
@@ -64,15 +64,15 @@
 			<div style="text-align:center;"><a href="../user/{{ user.username }}" class="user-title{{ user.title }}">{{ user.username }}</a></div>
 
 			{% if user.title != 0%}
-			<div class="banner banner{{ user.title }}" style="margin:0 auto; float:none;">
-			{% if user.title == 1%}Member
-			{% elif user.title == 2%}Officer{% endif %}
-			</div>
+  			<div class="banner banner{{ user.title }}" style="margin:0 auto; float:none;">
+  			{% if user.title == 1%}Member
+  			{% elif user.title == 2%}Officer{% endif %}
+  			</div>
 			{% endif %}
 
-			{% if user.title != 3%}
+			{% if user.flags.forumDev %}
 			<div class="banner banner-forumDev" style="margin:0 auto; float:none;">Forum Dev</div>
-	        {% endif %}
+	     {% endif %}
 
 	        <div style="text-align:center; font-size:.9em;">Last Active: {{ user.lastActivity }}</div>
 
