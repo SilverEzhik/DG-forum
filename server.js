@@ -36,7 +36,7 @@ if (app.get('env') === 'production') {
 
 
   // Set secure cookies when app is in production
-  sess.cookie.secure = true;
+  //sess.cookie.secure = true;
 }
 
 
