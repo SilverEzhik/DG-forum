@@ -8,7 +8,6 @@
       </div>
         <div class="modal-body">
 	        <form id="signup_form" action="/signup" method="post">
-	          <img src="../img/loading.gif" id="loadingIcon_signup" height="32px" width="32px" style="display:none">
 	            <div class="fieldset">
 		            <div class="field">
 		              <label for="username">Username</label>
@@ -25,23 +24,22 @@
 		              <input name="fName" autocapitalize="off" required autocomplete="first-name" id="first-name" placeholder="First Name">
 		            </div>
 
-                <div class="field">
-                  <label for="last-name">Last Name</label>
-                  <input name="lName" autocapitalize="off" required autocomplete="last-name" id="last-name" placeholder="Last Name">
-                </div>
+	                <div class="field">
+	                  <label for="last-name">Last Name</label>
+	                  <input name="lName" autocapitalize="off" required autocomplete="last-name" id="last-name" placeholder="Last Name">
+	                </div>
 
 		            <div class="field">
 		              <label for="first-name">Email Address</label>
 		              <input name="email" autocapitalize="off" required autocomplete="email-address" id="email-address" placeholder="Email Address">
 		            </div>
-
+		            
 		            <div class="g-recaptcha" data-sitekey="6Lc4KAETAAAAANqjmmrIuQm1iojbfFetPmk2TJ-Q"></div>
-
-		            <input id="register-btn" class="btn" value="Create account" type="submit">
-
+		            <input id="register-btn" class="btn" value="Create account" type="submit">        	
 		            <label id="error_signup" style="display:none"></label>
 	            </div>
 	        </form>
+	        <div style="height:32px; width:32px; margin:auto;"><img src="../img/loading.gif" id="loadingIcon_signup" height="32px" width="32px" style="display:none"></div>
         </div>
     </div>
   </div>

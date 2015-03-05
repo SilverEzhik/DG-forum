@@ -19,7 +19,7 @@ module.exports = function(app) {
 
   var handleForumFetch = function(req, res) {
 
-    var page = validator.toInt(req.query.page) || 1;
+    var page = validator.toInt(validator.escape(req.query.page)) || 1;
 
     // (TEMP)
     var section = 0;
@@ -70,7 +70,7 @@ module.exports = function(app) {
 
   var handleThreadFetch = function(req, res) {
 
-    var page = validator.toInt(req.query.page) || 1;
+    var page = validator.toInt(validator.escape(req.query.page)) || 1;
 
     // validation for page
     if ( (page < 1) || (page % 1 !== 0) ) {
@@ -119,8 +119,8 @@ module.exports = function(app) {
 
   var handleThreadCreate = function(req, res) {
 
-    var subject = validator.toString(req.body.subject);
-    var message = validator.toString(req.body.message);
+    var subject = validator.toString(validator.escape(req.body.subject));
+    var message = validator.toString(validator.escape(req.body.message));
 
     var author = req.session.user.username;
 
@@ -186,8 +186,8 @@ module.exports = function(app) {
 
   var handleThreadReply = function(req, res) {
 
-    var threadId = validator.toString(req.params.id);
-    var message = validator.toString(req.body.message);
+    var threadId = validator.toString(validator.escape(req.params.id));
+    var message = validator.toString(validator.escape(req.body.message));
     var author = req.session.user.username;
 
 

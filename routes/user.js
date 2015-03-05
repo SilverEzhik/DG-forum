@@ -49,8 +49,8 @@ module.exports = function(app) {
   }
 
   var handleLoginRequest = function(req, res) {
-    var usernameEmail  = validator.toString(req.body.usernameEmail);
-    var password  = validator.toString(req.body.password);
+    var usernameEmail  = validator.toString(validator.escape(req.body.usernameEmail));
+    var password  = validator.toString(validator.escape(req.body.password));
 
     var result;
 
@@ -125,11 +125,11 @@ module.exports = function(app) {
 
       } else {
 
-        var username  = validator.toString(req.body.username);
-        var email     = validator.toString(req.body.email);
-        var password  = validator.toString(req.body.password);
-        var fName     = validator.toString(req.body.fName);
-        var lName     = validator.toString(req.body.lName);
+        var username  = validator.toString(validator.escape(req.body.username));
+        var email     = validator.toString(validator.escape(req.body.email));
+        var password  = validator.toString(validator.escape(req.body.password));
+        var fName     = validator.toString(validator.escape(req.body.fName));
+        var lName     = validator.toString(validator.escape(req.body.lName));
 
         var result;
 
@@ -278,7 +278,7 @@ module.exports = function(app) {
   var handleProfileRequest = function(req, res) {
 
     //sanitize username
-    var username = validator.toString(req.params.userid);
+    var username = validator.toString(validator.escape(req.params.userid));
 
     //use the User model and get the User
     User.get(username, function(err, doc) {
@@ -312,8 +312,8 @@ module.exports = function(app) {
 
   var handleUserAvatarChange = function(req, res) {
 
-    var avatar = validator.toString(req.body.avatar);
-    var user = req.session.user;
+  var avatar = validator.toString(validator.escape(req.body.avatar));
+  var user = req.session.user;
 
     var result;
 

@@ -8,7 +8,6 @@
       </div>
 		<div class="modal-body">
 		  <form id="login_form" action="/login" method="post">
-		    <img src="../img/loading.gif" id="loadingIcon_login" height="32px" width="32px" style="display:none">
 		    <div class="fieldset">
 		      <div class="field">
 		        <label for="username">Username/Email</label>
@@ -21,15 +20,16 @@
 		      <input id="register-btn" class="btn" value="Login" type="submit">
 		      <label id="error_login" style="display:none"></label>
 		    </div>
+		    <div style="height:32px; width:32px; margin:auto;"><img src="../img/loading.gif" id="loadingIcon_login" height="32px" width="32px" style="display:none"></div>
 		  </form>
-		  <div><a href="#forgot" data-toggle="modal">Forgot Password</a></div>
+		  <!--<div><a href="#forgot" data-toggle="modal">Forgot Password</a></div>-->
 		</div>
 	</div>
   </div>
 </div>
 <!-- END LOGIN MODAL -->
 
-<!-- FORGOT PWORD MODAL -->
+<!-- FORGOT PWORD MODAL 
 <div class="modal fade" id="forgot" role="dialog">
 	<div class ="modal-dialog">
 		<div class ="modal-content">
@@ -53,4 +53,4 @@
 		</div>
 	</div>
 </div>
-<!-- END FORGOT PWORD MODAL -->
+END FORGOT PWORD MODAL -->
