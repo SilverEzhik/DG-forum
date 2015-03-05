@@ -413,7 +413,8 @@ var getUserTitle = function(username, callback) {
 var getActiveUsers = function(callback) {
 
   UserMongoModel.find({ 'flags.online': true  },
-  'username usernameLower title profile.avatar', function (err, docs) {
+  'username usernameLower title profile.avatar', {sort: {'lastActivity': -1} },
+  function (err, docs) {
 
       // TODO: Handle error
       if (docs) {
