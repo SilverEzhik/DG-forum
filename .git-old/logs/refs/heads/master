@@ -1,4 +1,0 @@
-0000000000000000000000000000000000000000 ea11223ac35734fd996df4621b97b5a68538dc61 waazup2 <brandonlchai@gmail.com> 1425497544 -0800	clone: from https://github.com/DevelopersGuild/DG-forum.git
-ea11223ac35734fd996df4621b97b5a68538dc61 ed147738c0b5f5a7db5eb81a35e699738dbc6b9a waazup2 <brandonlchai@gmail.com> 1425500463 -0800	commit: fixed profile min-width and added footer top border
-ed147738c0b5f5a7db5eb81a35e699738dbc6b9a dad1e4d32ed1da84c32830d78e0896dae442cbb2 waazup2 <brandonlchai@gmail.com> 1425521759 -0800	pull: Fast-forward
-dad1e4d32ed1da84c32830d78e0896dae442cbb2 7b00c5009b2bb5a325eb038ce84e0d714e7ac692 waazup2 <brandonlchai@gmail.com> 1425525310 -0800	commit: moved loading circle in login/signup
