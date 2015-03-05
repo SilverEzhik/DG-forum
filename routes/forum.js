@@ -78,7 +78,7 @@ module.exports = function(app) {
     }
 
     // Find the thread
-    var threadID = validator.toString(req.params.id);
+    var threadID = validator.toString(validator.escape(req.params.id));
 
     if (!threadID) {
       var templateVars = {
