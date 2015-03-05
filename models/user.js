@@ -264,7 +264,25 @@ var getUserProfile = function(username, callback) {
 
 };
 
-var getAllMembers = function() {
+
+var getAllMembers = function(callback) {
+
+  var memberNum = 1; 
+  var officerNum = 2;
+  var selectedFields = 'username usernameLower title forumDev retired lastActivity profile.avatar profile.githubName';
+  
+  //.find({}) returns a query object, which can do more specific queries like
+  //the or function, looking for either memberNum or officerNum
+  //exec() sends docs to a callback
+  UserMongoModel.find({}, selectedFields)
+  .or([ {title: memberNum}, { title: officerNum}])
+    .exec(function(err, docs){
+
+      if(docs){
+        callback(docs);
+      }
+
+    });
 
 };
 
@@ -494,7 +512,7 @@ var UserModel = {
   create: createUser,
   get: getUser,
   getProfile: getUserProfile,
-  getMembers: getAllMembers,
+  getAllMembers: getAllMembers,
   changeTitle: changeUserTitle,
   makeForumDev: makeUserForumDev,
   updateActivity: updateLastActivity,

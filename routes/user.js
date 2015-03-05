@@ -310,40 +310,63 @@ module.exports = function(app) {
 
   };
 
- var handleUserAvatarChange = function(req, res) {
+  var handleUserAvatarChange = function(req, res) {
 
   var avatar = validator.toString(validator.escape(req.body.avatar));
   var user = req.session.user;
 
-  var result;
+    var result;
 
-  if (!user) {
-    result = {
-      code    : 400,
-      message : 'You are not logged in.'
-    };
-    res.send(result);
-    return;
-  }
+    if (!user) {
+      result = {
+        code    : 400,
+        message : 'You are not logged in.'
+      };
+      res.send(result);
+      return;
+    }
 
-  if (!avatar) {
-    result = {
-      code    : 400,
-      message : 'Invalid avatar.'
-    };
-    res.send(result);
-    return;
-  }
+    if (!avatar) {
+      result = {
+        code    : 400,
+        message : 'Invalid avatar.'
+      };
+      res.send(result);
+      return;
+    }
+    User.changeAvatar(user.username, avatar, function(result) {
+      res.send(result);
+    });
+  };
 
-  User.changeAvatar(user.username, avatar, function(result) {
-    res.send(result);
-  });
-};
+  var handleGetMembers = function(req, res){
+
+    User.getAllMembers(function(docs){
+
+      if(docs){
+
+        var templateVars = {
+          title: 'Members List',
+          members: docs,
+          convertToDate: convertToDate,
+          sessUser: req.session.user
+        };
+
+        res.render('membersList.html', templateVars);
+      }
+      
+    });
+
+  };
+
+
+
 
   app.post('/login'       , handleLoginRequest);
   app.get('/logout'       , handleLogoutRequest);
   app.post('/signup'      , handleSignupRequest);
   app.get('/user/:userid' , handleProfileRequest);
   app.post('/changeavatar', handleUserAvatarChange);
+  app.get('/members'      , handleGetMembers);
 
 };

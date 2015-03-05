@@ -658,6 +658,14 @@ textarea{
 	border: 1px solid #d4d4d4;
     overflow: hidden;
     clear: both;
+}.thread-border:first-child{
+	background-color: #FFF;
+	list-style: none;
+	padding: 1em;
+	border: 1px solid #d4d4d4;
+	border-top: 2px solid #d4d4d4;
+    overflow: hidden;
+    clear: both;
 }
 
 

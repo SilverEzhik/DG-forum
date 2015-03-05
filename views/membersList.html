@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block page %}
+
+<ul>
+	{% for member in members %}
+	<li> Username: {{member.username}}, Title: {{member.title}}, ForumDev: {{member.forumDev}}, Retired: {{member.retired}},
+	 LastActivity: {{member.lastActivity}}, Avatar: {{member.profile.avatar}}, GithubName: {{member.profile.githubName}} </li>
+	{% endfor %}
+</ul>
+
+{% endblock %}
