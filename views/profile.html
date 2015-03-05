@@ -79,9 +79,9 @@
 
 			{% if user.flags.forumDev %}
 			<div class="banner banner-forumDev" style="margin:0 auto; float:none;">Forum Dev</div>
-	     {% endif %}
+	        {% endif %}
 
-	        <div style="text-align:center; font-size:.9em;">Last Active: {{ user.lastActivity }}</div>
+	        <div style="text-align:center; font-size:.9em;">Last Active: {{ convertToDate(user.lastActivity) }}</div>
 
 	        <div style="margin-top:1em;">
 	        	{% if user.profile.fName %}
@@ -89,17 +89,17 @@
 		        <div class="info-val">{{ user.profile.fName }} {{ user.profile.lName }}</div>
 		        {% endif %}
 
-		        {% if user.profile.fName %}
+		        {% if user.profile.website %}
 		        <div class="info">Website</div>
 		        <div class="info-val">{{ user.profile.website }}</div>
 		        {% endif %}
 
-		        {% if user.profile.fName %}
+		        {% if user.profile.github %}
 		        <div class="info">Github</div>
 		        <div class="info-val">{{ user.profile.github }}</div>
 		        {% endif %}
 
-		        {% if user.profile.fName %}
+		        {% if user.profile.bio %}
 		        <div class="info">Bio</div>
 		        <div class="info-val">{{ user.profile.bio }}</div>
 		        {% endif %}

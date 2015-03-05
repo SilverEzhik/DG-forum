@@ -641,16 +641,6 @@ textarea{
     clear: both;
 }
 
-.thread-border:first-child{
-	background-color: #FFF;
-	list-style: none;
-	padding: 1em;
-	border: 1px solid #d4d4d4;
-	border-bottom: none;
-    overflow: hidden;
-    clear: both;
-}
-
 .thread-border:last-child{
 	background-color: #FFF;
 	list-style: none;
@@ -658,16 +648,7 @@ textarea{
 	border: 1px solid #d4d4d4;
     overflow: hidden;
     clear: both;
-}.thread-border:first-child{
-	background-color: #FFF;
-	list-style: none;
-	padding: 1em;
-	border: 1px solid #d4d4d4;
-	border-top: 2px solid #d4d4d4;
-    overflow: hidden;
-    clear: both;
 }
-
 
 .thread-body{
 	white-space: pre-wrap;
@@ -684,7 +665,6 @@ textarea{
 
 .thread-menubar{
 	margin-top: 2em;
-	margin-bottom: 1em;
 	text-align: center;
 	overflow: hidden;
 }
@@ -828,3 +808,17 @@ textarea{
 	vertical-align: middle;
 	clear: both;
 }
+
+.members-list .user-profile{
+	width: 135px;
+	float: left;
+	margin-right:2em;
+	margin-top: 0;
+}
+
+.members-list{
+	margin: 2em;
+}
+
+
+

@@ -2,11 +2,30 @@
 
 {% block page %}
 
-<ul>
-	{% for member in members %}
-	<li> Username: {{member.username}}, Title: {{member.title}}, ForumDev: {{member.forumDev}}, Retired: {{member.retired}},
-	 LastActivity: {{member.lastActivity}}, Avatar: {{member.profile.avatar}}, GithubName: {{member.profile.githubName}} </li>
-	{% endfor %}
-</ul>
+<div class="members-list">
+{% for member in members %}
+	<div class="user-profile">
+		<div class="avatar{% if member.flags.online %}-online{% endif %}" style="background-image: url(../avatars/{{ member.profile.avatar }});"></div>
+
+		<div style="text-align:center;"><a href="../user/{{ member.username }}" class="user-title{{ member.title }}">{{ member.username }}</a></div>
+
+		{% if member.title != 0%}
+			<div class="banner banner{{ member.title }}" style="margin:0 auto; float:none;">
+			{% if member.title == 1%}Member
+			{% elif member.title == 2%}Officer{% endif %}
+			</div>
+		{% endif %}
+
+		{% if member.flags.forumDev %}
+		<div class="banner banner-forumDev" style="margin:0 auto; float:none;">Forum Dev</div>
+        {% endif %}
+
+        <div style="text-align:center; font-size:.9em;">Last Active:<br>{{ convertToDate(member.lastActivity) }}</div>
+    </div>
+	<!--Username: {{member.username}}, Title: {{member.title}}, ForumDev: {{member.forumDev}}, Retired: {{member.retired}},
+	 LastActivity: {{member.lastActivity}}, Avatar: {{member.profile.avatar}}, GithubName: {{member.profile.githubName}} -->
+{% endfor %}
+	<div style="clear:both"></div>
+</div>
 
 {% endblock %}

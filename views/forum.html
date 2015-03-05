@@ -8,14 +8,17 @@
     <div class="discussion-container">
 
       <div class="thread-menubar">
-        <span id="discussion-title">General Discussion</span>
-
+        <!--<span id="discussion-title">General Discussion</span>-->
+        <div id="discussion-title" style="display:block; float:left">General Discussion</div>
         {% include "partials/pagination.html" %}
 
         {% if sessUser %}
-        <span class="post-thread">
+        <!--<span class="post-thread">
           <a href="#post" data-toggle="modal">Post New Thread</a>
-        </span>
+        </span>-->
+
+        <div style="display:block; clear:both; position: relative; top:-20px;"> <a href="#post" data-toggle="modal">Post New Thread</a></div>
+
         {% endif %}
       </div>
 

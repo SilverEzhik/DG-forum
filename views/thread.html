@@ -9,10 +9,13 @@
 			<span class="thread-title-menu">{{ thread.subject }}</span>
       {% include "partials/pagination.html" %}
 
-			{% if sessUser %}
+			{% if sessUser %}<!--
 			<span class="post-reply">
 				<a href="#reply" data-toggle="modal">Reply</a>
-			</span>
+			</span>-->
+
+			<div style="display:block; clear:both; margin-top:2em; margin-bottom:1em;"><a href="#reply" data-toggle="modal">Reply</a></div>
+
 			{% endif %}
 		</div>
 		<!-- END THREAD MENU BAR -->
@@ -23,7 +26,7 @@
       		{% if page == 1 %}
 				<li class="thread-border">
 					<div style="width:100%; height:50px;">
-						<a href="../user/{{ thread.author }}"><div class="avatar{% if thread.author|getOnline %}-online{% endif %}" style="background-image: url(../avatars/{{ thread.author|getUserAvatar  }});"></div></a>
+						<a href="../user/{{ thread.author }}"><div class="avatar{% if thread.author|getOnline %}-online{% endif %}" style="background-image: url(../avatars/{{ thread.author|getUserAvatar  }});" title="{{ thread.author }}"></div></a>
 						<div class="thread-row1">
 							<span class="thread-title">{{ thread.subject }}</span>
 							<div><a href="../user/{{ thread.author }}" class="user-title{{ thread.author|getUserTitle }}">{{ thread.author }}</a> {{ convertToDate(thread.creationDate) }}</div>
@@ -52,7 +55,7 @@
 
 				<li class="thread-border">
 					<div style="width:100%; height:50px;">
-						<a href="../user/{{ reply.author }}"><div class="avatar{% if reply.author|getOnline %}-online{% endif %}" style="background-image: url(../avatars/{{ reply.author|getUserAvatar  }});"></div></a>
+						<a href="../user/{{ reply.author }}"><div class="avatar{% if reply.author|getOnline %}-online{% endif %}" style="background-image: url(../avatars/{{ reply.author|getUserAvatar  }});" title="{{ reply.author }}"></div></a>
 						<div class="thread-row2">
 							<span><a href="../user/{{ reply.author }}" class="user-title{{ reply.author|getUserTitle }}">{{ reply.author }}</a></span>
 							<div>{{ convertToDate(reply.creationDate) }}</div>
