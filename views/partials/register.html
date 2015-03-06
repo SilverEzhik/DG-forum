@@ -11,32 +11,32 @@
 	            <div class="fieldset">
 		            <div class="field">
 		              <label>Username</label>
-		              <input name="username" autocapitalize="off" autocomplete="off" id="username" maxlength="20" pattern=".{4,}" placeholder="Username">
+		              <input name="username" autocapitalize="off" autocomplete="off" id="username" maxlength="20" minlength="4" placeholder="Username">
 		            </div>
 
 		            <div class="field">
 		              <label>Password</label>
-		              <input name="password" type="password" autocapitalize="off" required maxlength="512" minlength="7" pattern=".{7,}" autocomplete="password" id="password" placeholder="Password">
+		              <input name="password" type="password" autocapitalize="off" required maxlength="512" minlength="7" autocomplete="password" id="password" placeholder="Password">
 		            </div>
 
 		            <div class="field">
 		              <label>Confirm password</label>
-		              <input name="password2" type="password" autocapitalize="off" required maxlength="512" pattern=".{7,}" id="password2" placeholder="Confirm password" onkeyup = "checkPass(); return false;">
+		              <input name="password2" type="password" autocapitalize="off" required maxlength="512" minlength="7" id="password2" placeholder="Confirm password" onkeyup = "checkPass(); return false;">
 		            </div>
 
 		            <div class="field">
 		              <label>First Name</label>
-		              <input name="fName" autocapitalize="off" required maxlength="15" pattern=".{1,}" autocomplete="first-name" id="first-name" placeholder="First Name">
+		              <input name="fName" autocapitalize="off" required maxlength="15" minlength="1" autocomplete="first-name" id="first-name" placeholder="First Name">
 		            </div>
 
 	                <div class="field">
 	                  <label>Last Name</label>
-	                  <input name="lName" autocapitalize="off" required maxlength="15" pattern=".{1,}" autocomplete="last-name" id="last-name"placeholder="Last Name">
+	                  <input name="lName" autocapitalize="off" required maxlength="15" minlength="1" autocomplete="last-name" id="last-name"placeholder="Last Name">
 	                </div>
 
 		            <div class="field">
 		              <label>Email Address</label>
-		              <input name="email" autocapitalize="off" required maxlength="254" pattern=".{5,}" autocomplete="email-address" id="email-address" placeholder="Email Address">
+		              <input name="email" autocapitalize="off" required maxlength="254" minlength="5" autocomplete="email-address" id="email-address" placeholder="Email Address">
 		            </div>
 
 		            <div class="g-recaptcha" data-sitekey="6Lc4KAETAAAAANqjmmrIuQm1iojbfFetPmk2TJ-Q" style="margin:1em; margin-left:3em;"></div>

@@ -14,102 +14,107 @@
     <div class="profile">
       <div class="edit-profile">Edit Profile</div>
       <!-- NOTE: This route isn't configured yet. -->
-			<form action="/changeprofile" method="post">
-				<div class="fieldset">
-					<div class="field">
-						<label>Password</label>
-						<input name="password" type="password" autocapitalize="off" maxlength="512" pattern=".{7,}" id="password3"autocomplete="password" placeholder="Password">
-					</div>
-					<div class="field">
-		              	<label>Confirm password</label>
-		              	<input name="password2" type="password" autocapitalize="off" required maxlength="512" pattern=".{7,}" id="password4" placeholder="Confirm password" onkeyup = "checkPass2(); return false;">
-		            </div>
-					<div class="field">
-						<label>First name</label>
-						<input name="fName" autocapitalize="off" maxlength="15" pattern=".{1,}" placeholder="{{ sessUser.profile.fName }}">
-					</div>
-					<div class="field">
-						<label>Last name</label>
-						<input name="lName" maxlength="15" pattern=".{1,}"autocapitalize="off" placeholder="{{ sessUser.profile.lName }}">
-					</div>
-					<div class="field">
-						<label for="email">Email address</label>
-						<input name="email" maxlength="254" pattern=".{5,}"autocapitalize="off" autocomplete="email-address" placeholder="{{ sessUser.email }}">
-					</div>
-					<div class="field">
-						<label>Bio</label>
-						<input name="bio" maxlength="2500" pattern=".{1,}" autocapitalize="off" placeholder="{{ sessUser.profile.bio }}">
-					</div>
-					<div class="field">
-						<label>Website</label>
-						<input name="website" maxlength="35" pattern=".{4,}"autocapitalize="off" placeholder="{{ sessUser.profile.website }}">
-					</div>
-					<div class="field">
-						<label>Github name</label>
-						<input name="githubName" maxlength="39" pattern=".{1,}"autocapitalize="off" placeholder="{{ sessUser.profile.githubName }}">
-					</div>
-					<div class="field-avatar">
-						<label style="width:100%;">Avatar</label>
+      <form action="/changeprofile" method="post">
+        <div class="fieldset">
+          <!-- Add this in at a later date.
 
-						<select id="mySelect" style="width:250px; display:none;" name="avatarSelect">
-	    					{% for avatar in STOCKAVATARS %}
-	      					<option value="{{loop.index}}" {% if avatar==sessUser.profile.avatar%}selected="selected"{% endif %}>{{loop.index}}</option>
-	    					{% endfor %}
-    					</select>
+          <div class="field">
+            <label>Password</label>
+            <input name="password" type="password" autocapitalize="off" maxlength="512" minlength="7" id="password3"autocomplete="password" placeholder="Password">
+          </div>
+          <div class="field">
+            <label>Confirm password</label>
+            <input name="password2" type="password" autocapitalize="off" required maxlength="512" minlength="7" id="password4" placeholder="Confirm password" onkeyup = "checkPass2(); return false;">
+          </div>
 
-    					{% for avatar in STOCKAVATARS %}
-    					<button type="button" class="avatar clickable {% if avatar==sessUser.profile.avatar %}button-clicked{% endif %}" onclick="selectAvatar( {{ loop.index }} )" style="background-image: url(../avatars/{{ avatar }}); background-color: white;"></button>
-    					{% endfor %}
+          -->
 
-					</div>
-					<input id="register-btn" class="btn" value="Save Changes" type="submit">
-				</div>
-			</form>
-		</div>
-		<!-- END EDITPROFILE -->
+          <div class="field">
+            <label>First Name</label>
+            <input name="fName" autocapitalize="off" maxlength="15" minlength="1" value="{{ user.profile.fName }}" placeholder="First Name">
+          </div>
+          <div class="field">
+            <label>Last Name</label>
+            <input name="lName" maxlength="15" minlength="1" autocapitalize="off" value="{{ user.profile.lName }}" placeholder="Last Name">
+          </div>
+          <div class="field">
+            <label for="email">Email Address</label>
+            <input name="email" maxlength="254" minlength="5" autocapitalize="off" autocomplete="email-address" value="{{ user.email }}" placeholder="Email Address">
+          </div>
+          <!--div class="field">
+            <label>Bio</label>
+            <input name="bio" maxlength="2500" pattern=".{1,}" autocapitalize="off" placeholder="{{ user.profile.bio }}">
+          </div-->
+          <div class="field">
+            <label>Website</label>
+            <input name="website" maxlength="35" minlength="4" autocapitalize="off" value="{{ user.profile.website }}" placeholder="Website">
+          </div>
+          <div class="field">
+            <label>Github Username</label>
+            <input name="githubName" maxlength="39" pminlength="1" autocapitalize="off" value="{{ user.profile.githubName }}" placeholder="Github Username">
+          </div>
+          <div class="field-avatar">
+            <label style="width:100%;">Avatar</label>
 
-		{% else %}
-		<div class="user-profile">
-			<div class="avatar{% if user.flags.online %}-online{% endif %}" style="background-image: url(../avatars/{{ user.profile.avatar }});"></div>
+            <select id="mySelect" style="width:250px; display:none;" name="avatarSelect">
+                {% for avatar in STOCKAVATARS %}
+                  <option value="{{loop.index}}" {% if avatar==sessUser.profile.avatar%}selected="selected"{% endif %}>{{loop.index}}</option>
+                {% endfor %}
+              </select>
 
-			<div style="text-align:center; line-height:14px;"><a href="../user/{{ user.username }}" class="user-title{{ user.title }}">{{ user.username }}</a></div>
+              {% for avatar in STOCKAVATARS %}
+              <button type="button" class="avatar clickable {% if avatar==sessUser.profile.avatar %}button-clicked{% endif %}" onclick="selectAvatar( {{ loop.index }} )" style="background-image: url(../avatars/{{ avatar }}); background-color: white;"></button>
+              {% endfor %}
 
-			{% if user.profile.fName %}
-		    <div class="info-val" style="text-align:center; line-height:14px; font-style:italic;">{{ user.profile.fName }} {{ user.profile.lName }}</div>
-		    {% endif %}
+          </div>
+          <input id="register-btn" class="btn" value="Save Changes" type="submit">
+        </div>
+      </form>
+    </div>
+    <!-- END EDITPROFILE -->
 
-			{% if user.title != 0%}
-  			<div class="banner banner{{ user.title }}" style="margin:0 auto; float:none; margin-top:.5em; margin-bottom:1em;">
-  			{% if user.title == 1%}Member
-  			{% elif user.title == 2%}Officer{% endif %}
-  			</div>
-			{% endif %}
+    {% else %}
+    <div class="user-profile">
+      <div class="avatar{% if user.flags.online %}-online{% endif %}" style="background-image: url(../avatars/{{ user.profile.avatar }});"></div>
 
-			{% if user.flags.forumDev %}
-			<div class="banner banner-forumDev" style="margin:0 auto; float:none;">Forum Dev</div>
-	        {% endif %}
+      <div style="text-align:center; line-height:14px;"><a href="../user/{{ user.username }}" class="user-title{{ user.title }}">{{ user.username }}</a></div>
 
-	        <div style="text-align:center; font-size:.9em; line-height:14px;">Last Active:<br>{{ convertToDate(user.lastActivity) }}</div>
+      {% if user.profile.fName %}
+        <div class="info-val" style="text-align:center; line-height:14px; font-style:italic;">{{ user.profile.fName }} {{ user.profile.lName }}</div>
+        {% endif %}
 
-	        <div style="margin-top:1em;">
+      {% if user.title != 0%}
+        <div class="banner banner{{ user.title }}" style="margin:0 auto; float:none; margin-top:.5em; margin-bottom:1em;">
+        {% if user.title == 1%}Member
+        {% elif user.title == 2%}Officer{% endif %}
+        </div>
+      {% endif %}
 
-		        {% if user.profile.website %}
-		        <div class="info">Website</div>
-		        <div class="info-val">{{ user.profile.website }}</div>
-		        {% endif %}
+      {% if user.flags.forumDev %}
+      <div class="banner banner-forumDev" style="margin:0 auto; float:none;">Forum Dev</div>
+          {% endif %}
 
-		        {% if user.profile.github %}
-		        <div class="info">Github</div>
-		        <div class="info-val">{{ user.profile.github }}</div>
-		        {% endif %}
+          <div style="text-align:center; font-size:.9em; line-height:14px;">Last Active:<br>{{ convertToDate(user.lastActivity) }}</div>
 
-		        {% if user.profile.bio %}
-		        <div class="info">Bio</div>
-		        <div class="info-val">{{ user.profile.bio }}</div>
-		        {% endif %}
-		    </div>
-	    </div>
+          <div style="margin-top:1em;">
 
-		{% endif %}
+            {% if user.profile.website %}
+            <div class="info">Website</div>
+            <div class="info-val">{{ user.profile.website }}</div>
+            {% endif %}
+
+            {% if user.profile.github %}
+            <div class="info">Github</div>
+            <a href="//github.com/{{ user.profile.github }}"><div class="info-val">{{ user.profile.github }}</div></a>
+            {% endif %}
+
+            {% if user.profile.bio %}
+            <div class="info">Bio</div>
+            <div class="info-val">{{ user.profile.bio }}</div>
+            {% endif %}
+        </div>
+      </div>
+
+    {% endif %}
 
 {% endblock %}

@@ -386,6 +386,8 @@ module.exports = function(app) {
 
   var handleUserAvatarChange = function(req, res) {
 
+    /*
+
     // TODO: Check max length on this.
     var avatar = validator.toString(validator.escape(req.body.avatar));
     var user = req.session.user;
@@ -412,6 +414,7 @@ module.exports = function(app) {
     User.changeAvatar(user.username, avatar, function(result) {
       res.send(result);
     });
+  */
   };
 
   var handleGetMembers = function(req, res){
@@ -441,7 +444,7 @@ module.exports = function(app) {
   app.get('/logout'       , handleLogoutRequest);
   app.post('/signup'      , handleSignupRequest);
   app.get('/user/:userid' , handleProfileRequest);
-  app.post('/changeavatar', handleUserAvatarChange);
+  app.post('/changeprofile', handleUserAvatarChange);
   app.get('/members'      , handleGetMembers);
 
 };
