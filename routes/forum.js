@@ -14,7 +14,7 @@ module.exports = function(app) {
   // Convert timestamps into readable human time
   var convertToDate = function(timeStamp) {
 
-      return moment(timeStamp).fromNow();
+    return moment(timeStamp).fromNow();
   };
 
   var handleForumFetch = function(req, res) {
@@ -27,8 +27,6 @@ module.exports = function(app) {
     if ( (page < 1) || (page % 1 !== 0) ) {
       page = 1;
     }
-
-
 
     // Grab all threads.
     Thread.getAll(section, page, function(err, threads, lastPage) {
@@ -78,18 +76,20 @@ module.exports = function(app) {
     }
 
     // Find the thread
-    var threadID = validator.toString(validator.escape(req.params.id));
+    var threadId = validator.toString(validator.escape(req.params.id));
 
-    if (!threadID) {
+    // Check to see if the threadId is valid and if it's 5 characters long
+    if (!threadId || !validator.isLength(threadId, 5, 5) || !validator.isAlphanumeric(threadId)) {
       var templateVars = {
         title: 'Thread not found.',
         code: 404,
         message: 'Thread not found.'
       };
       res.render('error.html', templateVars);
+      return;
     }
 
-    Thread.get(threadID, page, function(err, thread, replies, lastPage) {
+    Thread.get(threadId, page, function(err, thread, replies, lastPage) {
       var templateVars;
       if (err) {
 
@@ -148,6 +148,15 @@ module.exports = function(app) {
       return;
     }
 
+    if (!message) {
+      result = {
+        code    : 400,
+        message : 'Message body may not be blank.'
+      };
+      res.send(result);
+      return;
+    }
+
     // Check to see if the title length is between 1-85 characters
     if (!validator.isLength(subject, 1, 85)) {
       result = {
@@ -158,10 +167,10 @@ module.exports = function(app) {
       return;
     }
 
-    if (!message) {
+    if (!validator.isLength(message, 1, 85)) {
       result = {
         code    : 400,
-        message : 'Message body may not be blank.'
+        message : 'Message body cannot be more than 60,000 characters.'
       };
       res.send(result);
       return;
@@ -202,7 +211,7 @@ module.exports = function(app) {
       return;
     }
 
-    if (!threadId) {
+    if (!threadId || !validator.isLength(threadId, 5, 5) || !validator.isAlphanumeric(threadId)) {
       result = {
         code    : 400,
         message : 'Thread not found.'
@@ -215,6 +224,15 @@ module.exports = function(app) {
       result = {
         code    : 400,
         message : 'Message body cannot be empty.'
+      };
+      res.send(result);
+      return;
+    }
+
+    if (!validator.isLength(message, 1, 85)) {
+      result = {
+        code    : 400,
+        message : 'Message body cannot be more than 60,000 characters.'
       };
       res.send(result);
       return;
@@ -270,5 +288,5 @@ module.exports = function(app) {
   app.post('/makethread'      , handleThreadCreate);
   app.get('/thread/:id'       , handleThreadFetch);
   app.post('/thread/:id/reply', handleThreadReply);
-  
+
 };

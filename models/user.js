@@ -48,7 +48,7 @@ var UserSchema = mongoose.Schema({
   username      : { type: String, required: true,  unique: true },
   usernameLower : { type: String, required: true,  unique: true },
   email         : { type: String, required: true,  unique: true },
-  emailLower    : { type: String, required: true,  unique: true },
+  //emailLower    : { type: String, required: true,  unique: true },
   password      : { type: String, required: true },
   creationDate  : { type: Number, default: Date.now },
   title         : { type: Number, default: 0 },
@@ -99,7 +99,7 @@ setInterval(function(){
 var logInUser = function(usernameEmail, password, callback) {
   var query;
   if (validator.isEmail(usernameEmail)) {
-    query = { emailLower: usernameEmail.toLowerCase() };
+    query = { email: usernameEmail.toLowerCase() };
   } else {
     query = { usernameLower: usernameEmail.toLowerCase() };
   }
@@ -152,7 +152,7 @@ var createUser = function(username, email, password, fName, lName, callback) {
       );
     }
   , function(seriesCallback) {
-      UserMongoModel.findOne({ emailLower: email.toLowerCase() }, '_id',
+      UserMongoModel.findOne({ email: email.toLowerCase() }, '_id',
         function(err, user) {
           var result;
           if (user) {
@@ -177,8 +177,7 @@ var createUser = function(username, email, password, fName, lName, callback) {
           UserMongoModel.create({
             username      : username,
             usernameLower : username.toLowerCase(),
-            email         : email,
-            emailLower    : email.toLowerCase(),
+            email         : email.toLowerCase(),
             password      : hash,
             profile : {
               fName: fName,
@@ -193,6 +192,7 @@ var createUser = function(username, email, password, fName, lName, callback) {
                 code    : 500,
                 message : 'Something went wrong in the database. Try again.'
               };
+              console.error(err);
             }
 
             callback(result, user);
@@ -224,6 +224,7 @@ var getUser = function(usernameOrId, callback) {
         code    : 500,
         message : 'Something went wrong in the database.'
       };
+      console.error(err);
     } else if (!user) {
       errorResult = {
         code    : 404,
@@ -249,6 +250,7 @@ var getUserProfile = function(username, callback) {
           code    : 500,
           message : 'Something went wrong in the database.'
         };
+        console.error(err);
       } else if (!user) {
         errorResult = {
           code    : 404,
@@ -293,6 +295,7 @@ var changeUserTitle = function(username, titleNum, callback) {
           code    : 500,
           message : 'Something went wrong in the database. Try again.'
         };
+        console.error(err);
       } else if (!doc) {
         result = {
           code    : 400,
@@ -318,6 +321,7 @@ var makeUserForumDev = function(username, bool, callback) {
           code    : 500,
           message : 'Something went wrong in the database. Try again.'
         };
+        console.error(err);
       } else if (!doc) {
         result = {
           code    : 400,
@@ -365,6 +369,7 @@ var changeUserAvatar = function(username, avatarStr, callback) {
           code    : 500,
           message : 'Something went wrong in the database. Try again.'
         };
+        console.error(err);
       } else if (!doc) {
         result = {
           code    : 400,
@@ -390,6 +395,7 @@ var getUserAvatar = function(username, callback) {
           code    : 500,
           message : 'Something went wrong in the database. Try again.'
         };
+        console.error(err);
       } else if (!user) {
         result = {
           code    : 400,

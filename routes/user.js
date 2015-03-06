@@ -49,8 +49,8 @@ module.exports = function(app) {
   }
 
   var handleLoginRequest = function(req, res) {
-    var usernameEmail  = validator.toString(validator.escape(req.body.usernameEmail));
-    var password  = validator.toString(validator.escape(req.body.password));
+    var usernameEmail = validator.toString(validator.escape(req.body.usernameEmail));
+    var password = validator.toString(validator.escape(req.body.password));
 
     var result;
 
@@ -79,6 +79,25 @@ module.exports = function(app) {
       res.send(result);
       return;
     }
+
+    if (!validator.isLength(usernameEmail, 1, 254)) {
+      result = {
+        code    : 400,
+        message : 'Can\'t find that username or email.'
+      };
+      res.send(result);
+      return;
+    }
+
+    if (!validator.isLength(password, 1, 512)) {
+      result = {
+        code    : 400,
+        message : 'Invalid password.'
+      };
+      res.send(result);
+      return;
+    }
+
 
     User.login(usernameEmail, password, function(err, user) {
       if (err) {
@@ -137,16 +156,6 @@ module.exports = function(app) {
           result = {
             code    : 400,
             message : 'You already have an account.'
-          };
-          res.send(result);
-          return;
-        }
-
-        // Check to see if username is between 4-20 characters
-        if (!validator.isLength(username, 4, 20)) {
-          result = {
-            code    : 400,
-            message : 'Username must be between 4-20 characters.'
           };
           res.send(result);
           return;
@@ -216,6 +225,70 @@ module.exports = function(app) {
           return;
         }
 
+        // Check to see if username is between 4-20 characters
+        if (!validator.isLength(username, 4, 20)) {
+          result = {
+            code    : 400,
+            message : 'Username must be between 4-20 characters.'
+          };
+          res.send(result);
+          return;
+        }
+
+        if (!validator.isLength(email, 5)) {
+          result = {
+            code    : 400,
+            message : 'Email must be at least 5 characters.'
+          };
+          res.send(result);
+          return;
+        }
+
+        if (!validator.isLength(email, 5, 254)) {
+          result = {
+            code    : 400,
+            message : 'Email is too long.'
+          };
+          res.send(result);
+          return;
+        }
+
+        if (!validator.isLength(password, 7)) {
+          result = {
+            code    : 400,
+            message : 'Password must be at least 7 characters.'
+          };
+          res.send(result);
+          return;
+        }
+
+        if (!validator.isLength(password, 7, 512)) {
+          result = {
+            code    : 400,
+            message : 'Password is too long.'
+          };
+          res.send(result);
+          return;
+        }
+
+        if (!validator.isLength(fName, 1, 15)) {
+          result = {
+            code    : 400,
+            message : 'First Name cannot be more than 15 characters.'
+          };
+          res.send(result);
+          return;
+        }
+
+        if (!validator.isLength(lName, 1, 15)) {
+          result = {
+            code    : 400,
+            message : 'Last Name cannot be more than 15 characters.'
+          };
+          res.send(result);
+          return;
+        }
+
         User.create(username, email, password, fName, lName,
           function(err, user) {
             if (err) {
@@ -277,7 +350,8 @@ module.exports = function(app) {
 
   var handleProfileRequest = function(req, res) {
 
-    //sanitize username
+    // sanitize username
+    // TODO: Check max length of this
     var username = validator.toString(validator.escape(req.params.userid));
 
     //use the User model and get the User
@@ -312,8 +386,9 @@ module.exports = function(app) {
 
   var handleUserAvatarChange = function(req, res) {
 
-  var avatar = validator.toString(validator.escape(req.body.avatar));
-  var user = req.session.user;
+    // TODO: Check max length on this.
+    var avatar = validator.toString(validator.escape(req.body.avatar));
+    var user = req.session.user;
 
     var result;
 
