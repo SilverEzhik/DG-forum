@@ -276,6 +276,7 @@ var getAllMembers = function(callback) {
   //exec() sends docs to a callback
   UserMongoModel.find({}, selectedFields)
   .or([ {title: memberNum}, { title: officerNum}])
+  .sort({title: -1})
     .exec(function(err, docs){
 
       if(docs){
