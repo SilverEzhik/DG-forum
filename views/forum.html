@@ -112,8 +112,8 @@
           <div class="modal-body">
             <form id="createThread_form"action="makethread" method="post" name="makethread">
               <img src="../img/loading.gif" id="loadingIcon_createThread" height="32px" width="32px" style="display:none">
-              <textarea name="subject" id="titlebox" rows="1" dir="ltr" maxlength="50" required placeholder="Title"></textarea>
-              <textarea name="message" id="replybox" name="reply" rows="10" dir="ltr" required placeholder="Message"></textarea>
+              <textarea name="subject" id="titlebox" rows="1" dir="ltr" maxlength="85" minlength="1" required placeholder="Title"></textarea>
+              <textarea name="message" id="replybox" name="reply" rows="10" dir="ltr" maxlength="60000" minlength="1"required placeholder="Message"></textarea>
               <div>
                   <input class="btn" class="button" value="POST" type="submit"/>
                   <label id="error_createThread" style="display:none"></label>

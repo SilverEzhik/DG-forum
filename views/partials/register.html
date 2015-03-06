@@ -10,31 +10,36 @@
 	        <form id="signup_form" action="/signup" method="post">
 	            <div class="fieldset">
 		            <div class="field">
-		              <label for="username">Username</label>
-		              <input name="username" autocapitalize="off" required autocomplete="off" id="username" maxlength="20" placeholder="Username">
+		              <label>Username</label>
+		              <input name="username" autocapitalize="off" autocomplete="off" id="username" maxlength="20" pattern=".{4,}" placeholder="Username">
 		            </div>
 
 		            <div class="field">
-		              <label for="first-name">Password</label>
-		              <input name="password" type="password" autocapitalize="off" required autocomplete="password" id="password" placeholder="Password">
+		              <label>Password</label>
+		              <input name="password" type="password" autocapitalize="off" required maxlength="512" minlength="7" pattern=".{7,}" autocomplete="password" id="password" placeholder="Password">
 		            </div>
 
 		            <div class="field">
-		              <label for="first-name">First Name</label>
-		              <input name="fName" autocapitalize="off" required autocomplete="first-name" id="first-name" maxlength="15" placeholder="First Name">
+		              <label>Confirm password</label>
+		              <input name="password2" type="password" autocapitalize="off" required maxlength="512" pattern=".{7,}" id="password2" placeholder="Confirm password" onkeyup = "checkPass(); return false;">
+		            </div>
+
+		            <div class="field">
+		              <label>First Name</label>
+		              <input name="fName" autocapitalize="off" required maxlength="15" pattern=".{1,}" autocomplete="first-name" id="first-name" placeholder="First Name">
 		            </div>
 
 	                <div class="field">
-	                  <label for="last-name">Last Name</label>
-	                  <input name="lName" autocapitalize="off" required autocomplete="last-name" id="last-name" maxlength="15" placeholder="Last Name">
+	                  <label>Last Name</label>
+	                  <input name="lName" autocapitalize="off" required maxlength="15" pattern=".{1,}" autocomplete="last-name" id="last-name"placeholder="Last Name">
 	                </div>
 
 		            <div class="field">
-		              <label for="first-name">Email Address</label>
-		              <input name="email" autocapitalize="off" required autocomplete="email-address" id="email-address" placeholder="Email Address">
+		              <label>Email Address</label>
+		              <input name="email" autocapitalize="off" required maxlength="254" pattern=".{5,}" autocomplete="email-address" id="email-address" placeholder="Email Address">
 		            </div>
 		            
-		            <div class="g-recaptcha" data-sitekey="6Lc4KAETAAAAANqjmmrIuQm1iojbfFetPmk2TJ-Q"></div>
+		            <div class="g-recaptcha" data-sitekey="6Lc4KAETAAAAANqjmmrIuQm1iojbfFetPmk2TJ-Q" style="margin:1em; margin-left:3em;"></div>
 		            <input id="register-btn" class="btn" value="Create account" type="submit">        	
 		            <label id="error_signup" style="display:none"></label>
 	            </div>

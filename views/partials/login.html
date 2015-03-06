@@ -11,11 +11,11 @@
 		    <div class="fieldset">
 		      <div class="field">
 		        <label for="username">Username/Email</label>
-		        <input name="usernameEmail" autocapitalize="off" required autocomplete="off" id="username" placeholder="Username">
+		        <input name="usernameEmail" autocapitalize="off" required maxlength="20" pattern=".{4,}" autocomplete="off" id="username" placeholder="Username">
 		      </div>
 		      <div class="field">
 		        <label for="first-name">Password</label>
-		        <input name="password" type="password" autocapitalize="off" required autocomplete="password" id="password" placeholder="Password">
+		        <input name="password" type="password" autocapitalize="off" required maxlength="512" pattern=".{7,}" autocomplete="password" id="password" placeholder="Password">
 		      </div>
 		      <input id="register-btn" class="btn" value="Login" type="submit">
 		      <label id="error_login" style="display:none"></label>

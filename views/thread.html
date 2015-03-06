@@ -103,7 +103,7 @@
 				<div class="modal-body">
 					<form id="createReply_form" action = "{{ thread.prettyId }}/reply" method = "post" name = "makereply">
         			<img src="../img/loading.gif" id="loadingIcon_createReply" height="32px" width="32px" style="display:none">
-						<textarea name="message" id="replybox" rows="10" cols="50" dir="ltr" required placeholder="Message"></textarea>
+						<textarea name="message" id="replybox" rows="10" cols="50" dir="ltr" maxlength="60000" minlength="1"required placeholder="Message"></textarea>
 						<div>
 							<input class="btn" class="button" value="POST" type="submit"/>
 							<label id="error_createReply" style="display:none"></label>

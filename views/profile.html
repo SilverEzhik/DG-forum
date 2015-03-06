@@ -17,35 +17,39 @@
 			<form action="/changeprofile" method="post">
 				<div class="fieldset">
 					<div class="field">
-						<label for="password">Password</label>
-						<input name="password" type="password" autocapitalize="off" autocomplete="password" placeholder="Password">
+						<label>Password</label>
+						<input name="password" type="password" autocapitalize="off" maxlength="512" pattern=".{7,}" id="password3"autocomplete="password" placeholder="Password">
 					</div>
 					<div class="field">
-						<label for="fName">First name</label>
-						<input name="fName" autocapitalize="off" placeholder="{{ sessUser.profile.fName }}">
+		              	<label>Confirm password</label>
+		              	<input name="password2" type="password" autocapitalize="off" required maxlength="512" pattern=".{7,}" id="password4" placeholder="Confirm password" onkeyup = "checkPass2(); return false;">
+		            </div>
+					<div class="field">
+						<label>First name</label>
+						<input name="fName" autocapitalize="off" maxlength="15" pattern=".{1,}" placeholder="{{ sessUser.profile.fName }}">
 					</div>
 					<div class="field">
-						<label for="lName">Last name</label>
-						<input name="lName" autocapitalize="off" placeholder="{{ sessUser.profile.lName }}">
+						<label>Last name</label>
+						<input name="lName" maxlength="15" pattern=".{1,}"autocapitalize="off" placeholder="{{ sessUser.profile.lName }}">
 					</div>
 					<div class="field">
 						<label for="email">Email address</label>
-						<input name="email" autocapitalize="off" autocomplete="email-address" placeholder="{{ sessUser.email }}">
+						<input name="email" maxlength="254" pattern=".{5,}"autocapitalize="off" autocomplete="email-address" placeholder="{{ sessUser.email }}">
 					</div>
 					<div class="field">
-						<label for="bio">Bio</label>
-						<input name="bio" autocapitalize="off" placeholder="{{ sessUser.profile.bio }}">
+						<label>Bio</label>
+						<input name="bio" maxlength="2500" pattern=".{1,}" autocapitalize="off" placeholder="{{ sessUser.profile.bio }}">
 					</div>
 					<div class="field">
-						<label for="website">Website</label>
-						<input name="website" autocapitalize="off" placeholder="{{ sessUser.profile.website }}">
+						<label>Website</label>
+						<input name="website" maxlength="35" pattern=".{4,}"autocapitalize="off" placeholder="{{ sessUser.profile.website }}">
 					</div>
 					<div class="field">
-						<label for="githubName">Github name</label>
-						<input name="githubName" autocapitalize="off" placeholder="{{ sessUser.profile.githubName }}">
+						<label>Github name</label>
+						<input name="githubName" maxlength="39" pattern=".{1,}"autocapitalize="off" placeholder="{{ sessUser.profile.githubName }}">
 					</div>
 					<div class="field-avatar">
-						<label for="Avatar" style="width:100%;">Avatar</label>
+						<label style="width:100%;">Avatar</label>
 
 						<select id="mySelect" style="width:250px; display:none;" name="avatarSelect">
 	    					{% for avatar in STOCKAVATARS %}

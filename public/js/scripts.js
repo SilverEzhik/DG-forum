@@ -152,7 +152,7 @@ $('#createReply_form').submit(function() {
   return false;
 });
 
-//sly
+// sly
 jQuery(function ($) {
   $('#frame').sly({
     horizontal: 1,
@@ -171,7 +171,7 @@ jQuery(function ($) {
   });
 });
 
-//jquery-ui
+// jquery-ui
 $(function(){
   $(document).tooltip({
     position: {
@@ -180,15 +180,43 @@ $(function(){
   });
 });
 
-//select val for avatar
+// select val for avatar
 var selectAvatar = function(id) {
   $('#mySelect').val(id).change();
 };
 
-//glow selected avatar
+// glow selected avatar
 $(function(){
   $('.clickable').on('click', function() {
     $('.field-avatar .button-clicked').removeClass('button-clicked');
     $(this).addClass('button-clicked');
   });
 });
+
+// confirm password
+
+function checkPass(){
+  var pass1 = document.getElementById('password');
+  var pass2 = document.getElementById('password2');
+
+  if (pass1.value != pass2.value){
+    pass2.setCustomValidity("Passwords don't match");
+  }
+  else{
+    pass2.setCustomValidity('');
+  }
+}
+
+function checkPass2(){
+  var pass1 = document.getElementById('password3');
+  var pass2 = document.getElementById('password4');
+
+  if (pass1.value != pass2.value){
+    pass2.setCustomValidity("Passwords don't match");
+  }
+  else{
+    pass2.setCustomValidity('');
+  }
+}
+
+
