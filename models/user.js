@@ -83,8 +83,8 @@ setInterval(function(){
 
   // Find users that are flagged as online and have last activity less than TTL
   UserMongoModel.update({ lastActivity: {$lt : ttl},
-  flags: { online: true } },
-  {flags: {online: false} },
+  'flags.online': true},
+  {'flags.online': false}, {multi: true},
    function (err) {
       if (err) {
         console.log(err);
@@ -92,8 +92,6 @@ setInterval(function(){
 
     }
   );
-
-
 
 }, 1000 * 60 * 5);
 
@@ -241,7 +239,7 @@ var getUser = function(usernameOrId, callback) {
 var getUserProfile = function(username, callback) {
 
   UserMongoModel.findOne({usernameLower: username.toLowerCase()},
-  'username usernameLower email creationDate title lastActivity flags profile profile.fName profile.lName',
+  'username usernameLower email creationDate title lastActivity flags profile',
     function(err, user) {
 
       var errorResult;
@@ -269,7 +267,7 @@ var getAllMembers = function(callback) {
 
   var memberNum = 1;
   var officerNum = 2;
-  var selectedFields = 'username usernameLower title forumDev retired lastActivity profile.avatar profile.fName profile.lName';
+  var selectedFields = 'username usernameLower title flags.forumDev flags.retired lastActivity profile.avatar profile.fName profile.lName';
 
   //.find({}) returns a query object, which can do more specific queries like
   //the or function, looking for either memberNum or officerNum
@@ -313,7 +311,7 @@ var changeUserTitle = function(username, titleNum, callback) {
 
 var makeUserForumDev = function(username, bool, callback) {
   UserMongoModel.findOneAndUpdate({ usernameLower: username.toLowerCase() },
-    { flags: {forumDev: bool } }, function(err, doc) {
+    { 'flags.forumDev': bool }, function(err, doc) {
       var result;
       if (err) {
         result = {
@@ -360,7 +358,7 @@ var updateLastActivity = function(username, callback) {
 
 var changeUserAvatar = function(username, avatarStr, callback) {
   UserMongoModel.findOneAndUpdate({ usernameLower: username.toLowerCase() },
-    { profile: {avatar: avatarStr } }, function(err, doc) {
+    { 'profile.avatar': avatarStr }, function(err, doc) {
       var result;
       if (err) {
         result = {
@@ -445,7 +443,7 @@ var getActiveUsers = function(callback) {
 
 var setUserOnlineStatus = function(username, bool, callback) {
   UserMongoModel.findOneAndUpdate({usernameLower: username.toLowerCase()},
-  {flags: {online: bool} }, function(err, user) {
+  {'flags.online': bool }, function(err, user) {
       var result;
       if (err) {
         result = {
