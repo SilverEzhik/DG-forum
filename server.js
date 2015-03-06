@@ -101,7 +101,8 @@ app.use(function(req, res, next) {
   var templateVars =
   {
     code: 404,
-    message: 'Not Found'
+    message: 'Not Found',
+    sessUser: req.session.user
   };
   res.render('error.html', templateVars);
 });

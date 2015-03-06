@@ -14,7 +14,7 @@
     <div class="profile">
       <div class="edit-profile">Edit Profile</div>
       <!-- NOTE: This route isn't configured yet. -->
-      <form action="/changeprofile" method="post">
+      <form id="changeprof_form" action="/changeprofile" method="post">
         <div class="fieldset">
           <!-- Add this in at a later date.
 
@@ -31,23 +31,23 @@
 
           <div class="field">
             <label>First Name</label>
-            <input name="fName" autocapitalize="off" maxlength="15" minlength="1" value="{{ user.profile.fName }}" placeholder="First Name">
+            <input name="fName" autocapitalize="off" maxlength="15" minlength="1" value="{{ user.profile.fName }}" placeholder="First Name" required>
           </div>
           <div class="field">
             <label>Last Name</label>
-            <input name="lName" maxlength="15" minlength="1" autocapitalize="off" value="{{ user.profile.lName }}" placeholder="Last Name">
+            <input name="lName" maxlength="15" minlength="1" autocapitalize="off" value="{{ user.profile.lName }}" placeholder="Last Name" required>
           </div>
-          <div class="field">
+          <!--div class="field">
             <label for="email">Email Address</label>
-            <input name="email" maxlength="254" minlength="5" autocapitalize="off" autocomplete="email-address" value="{{ user.email }}" placeholder="Email Address">
-          </div>
+            <input name="email" maxlength="254" minlength="5" autocapitalize="off" autocomplete="email-address" value="{{ user.email }}" placeholder="Email Address" required>
+          </div-->
           <!--div class="field">
             <label>Bio</label>
             <input name="bio" maxlength="2500" pattern=".{1,}" autocapitalize="off" placeholder="{{ user.profile.bio }}">
           </div-->
           <div class="field">
             <label>Website</label>
-            <input name="website" maxlength="35" minlength="4" autocapitalize="off" value="{{ user.profile.website }}" placeholder="Website">
+            <input name="website" maxlength="35" minlength="1" type="url" autocapitalize="off" value="{{ user.profile.website }}" placeholder="Website">
           </div>
           <div class="field">
             <label>Github Username</label>
@@ -68,6 +68,8 @@
 
           </div>
           <input id="register-btn" class="btn" value="Save Changes" type="submit">
+          <div style="height:32px; width:32px; margin:auto;"><img src="../img/loading.gif" id="loadingIcon_changeprof" height="32px" width="32px" style="display:none"></div>
+          <label id="error_changeprof" style="display:none"></label>
         </div>
       </form>
     </div>
@@ -75,7 +77,7 @@
 
     {% else %}
     <div class="user-profile">
-      <div class="avatar{% if user.flags.online %}-online{% endif %}" style="background-image: url(../avatars/{{ user.profile.avatar }});"></div>
+      <a href="../user/{{ user.username }}"><div class="avatar{% if user.flags.online %}-online{% endif %}" style="background-image: url(../avatars/{{ user.profile.avatar }});"></div></a>
 
       <div style="text-align:center; line-height:14px;"><a href="../user/{{ user.username }}" class="user-title{{ user.title }}">{{ user.username }}</a></div>
 
@@ -91,8 +93,8 @@
       {% endif %}
 
       {% if user.flags.forumDev %}
-      <div class="banner banner-forumDev" style="margin:0 auto; float:none;">Forum Dev</div>
-          {% endif %}
+        <div class="banner banner-forumDev" style="margin:0 auto; float:none;">Forum Dev</div>
+      {% endif %}
 
           <div style="text-align:center; font-size:.9em; line-height:14px;">Last Active:<br>{{ convertToDate(user.lastActivity) }}</div>
 
@@ -100,18 +102,19 @@
 
             {% if user.profile.website %}
             <div class="info">Website</div>
-            <div class="info-val">{{ user.profile.website }}</div>
+            <div class="info-val"><a href="{{ user.profile.website }}">{{ user.profile.website }}</a></div>
             {% endif %}
 
-            {% if user.profile.github %}
-            <div class="info">Github</div>
-            <a href="//github.com/{{ user.profile.github }}"><div class="info-val">{{ user.profile.github }}</div></a>
+            {% if user.profile.githubName %}
+            <div class="info"><a href="//github.com/{{ user.profile.githubName }}">Github Profile</a></div>
             {% endif %}
 
+            <!--
             {% if user.profile.bio %}
             <div class="info">Bio</div>
             <div class="info-val">{{ user.profile.bio }}</div>
             {% endif %}
+            -->
         </div>
       </div>
 

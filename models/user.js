@@ -361,9 +361,11 @@ var updateLastActivity = function(username, callback) {
 
 };
 
-var changeUserAvatar = function(username, avatarStr, callback) {
+var changeUserProfile = function(username, avatar, fName, lName, website, github, callback) {
   UserMongoModel.findOneAndUpdate({ usernameLower: username.toLowerCase() },
-    { 'profile.avatar': avatarStr }, function(err, doc) {
+    { 'profile.avatar': STOCKAVATARS[avatar-1], 'profile.fName': fName, 'profile.lName': lName,
+    'profile.website': website, 'profile.githubName': github},
+    function(err, user) {
       var result;
       if (err) {
         result = {
@@ -371,7 +373,7 @@ var changeUserAvatar = function(username, avatarStr, callback) {
           message : 'Something went wrong in the database. Try again.'
         };
         console.error(err);
-      } else if (!doc) {
+      } else if (!user) {
         result = {
           code    : 400,
           message : 'Couldn\'t find that user.'
@@ -379,10 +381,10 @@ var changeUserAvatar = function(username, avatarStr, callback) {
       } else {
         result = {
           code: 200,
-          message: 'Avatar successfully changed.'
+          message: 'User Profile successfully changed.'
         };
       }
-      callback(result);
+      callback(result, user.profile.avatar);
     }
   );
 };
@@ -522,7 +524,7 @@ var UserModel = {
   makeForumDev: makeUserForumDev,
   updateActivity: updateLastActivity,
   getActiveUsers: getActiveUsers,
-  changeAvatar: changeUserAvatar,
+  changeProfile: changeUserProfile,
   getAvatar: getUserAvatar,
   getTitle: getUserTitle,
   stockAvatarsList: STOCKAVATARS,

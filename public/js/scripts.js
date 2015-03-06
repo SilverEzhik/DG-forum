@@ -152,6 +152,38 @@ $('#createReply_form').submit(function() {
   return false;
 });
 
+$('#changeprof_form').submit(function() {
+  showLoadingIcon('changeprof', true);
+  var err = $('#error_changeprof');
+  err.hide();
+
+  $.ajax({
+    url : $('#changeprof_form').attr('action'),
+    type: $('#changeprof_form').attr('method'),
+    data: $('#changeprof_form').serialize(),
+    success: function(res) {
+      var code = res.code;
+      var message = res.message;
+
+      if (res.code !== 200) {
+        err.text(message);
+        err.show();
+
+        showLoadingIcon('changeprof', false);
+
+      } else {
+
+        // Refresh main page
+        window.location.reload();
+      }
+
+    }
+  });
+
+  // Return false so we don't submit twice
+  return false;
+});
+
 // sly
 jQuery(function ($) {
   $('#frame').sly({

@@ -363,7 +363,8 @@ module.exports = function(app) {
         templateVars = {
           title: 'User not found',
           code: err.code,
-          message: err.message
+          message: err.message,
+          sessUser: req.session.user
         };
 
         // Render template
@@ -384,8 +385,76 @@ module.exports = function(app) {
 
   };
 
-  var handleUserAvatarChange = function(req, res) {
+  var handleUserProfileChange = function(req, res) {
 
+    var fName = validator.toString(validator.escape(req.body.fName));
+    var lName = validator.toString(validator.escape(req.body.lName));
+    var avatar = validator.toInt(validator.escape(
+                  req.body.avatarSelect)) || undefined;
+    var website = encodeURI(validator.toString(
+                  req.body.website)) || '';
+    var github = validator.toString(validator.escape(
+                      req.body.githubName)) || '';
+
+    var user = req.session.user;
+
+    var result;
+
+    if (!user) {
+      result = {
+        code    : 400,
+        message : 'You are not logged in.'
+      };
+      res.send(result);
+      return;
+    }
+
+    if (!fName) {
+      result = {
+        code    : 400,
+        message : 'First Name field may not be empty.'
+      };
+      res.send(result);
+      return;
+    }
+
+    if (!lName) {
+      result = {
+        code    : 400,
+        message : 'Last Name field may not be empty.'
+      };
+      res.send(result);
+      return;
+    }
+
+    if (!avatar) {
+      result = {
+        code    : 400,
+        message : 'You must select an avatar.'
+      };
+      res.send(result);
+      return;
+    }
+
+    if (website && !validator.isURL(website, {protocols: ['http','https'], require_protocol: true} )) {
+      result = {
+        code    : 400,
+        message : 'Invalid URL for website.'
+      };
+      res.send(result);
+      return;
+    }
+    User.changeProfile(user.username, avatar, fName, lName, website, github,
+      function(result, avatar) {
+        if (avatar) {
+
+          req.session.user.profile.avatar = avatar;
+        }
+
+        res.send(result);
+
+      }
+    );
     /*
 
     // TODO: Check max length on this.
@@ -444,7 +513,7 @@ module.exports = function(app) {
   app.get('/logout'       , handleLogoutRequest);
   app.post('/signup'      , handleSignupRequest);
   app.get('/user/:userid' , handleProfileRequest);
-  app.post('/changeprofile', handleUserAvatarChange);
+  app.post('/changeprofile', handleUserProfileChange);
   app.get('/members'      , handleGetMembers);
 
 };

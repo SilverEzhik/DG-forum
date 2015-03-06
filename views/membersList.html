@@ -5,7 +5,7 @@
 <div class="members-list">
 {% for member in members %}
 	<div class="user-profile">
-		<div class="avatar{% if member.flags.online %}-online{% endif %}" style="background-image: url(../avatars/{{ member.profile.avatar }});"></div>
+		<a href="../user/{{ member.username }}"><div class="avatar{% if member.flags.online %}-online{% endif %}" style="background-image: url(../avatars/{{ member.profile.avatar }});"></div></a>
 
 		<div style="text-align:center; line-height:14px;"><a href="../user/{{ member.username }}" class="user-title{{ member.title }}">{{ member.username }}</a></div>
 

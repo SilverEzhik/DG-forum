@@ -83,7 +83,8 @@ module.exports = function(app) {
       var templateVars = {
         title: 'Thread not found.',
         code: 404,
-        message: 'Thread not found.'
+        message: 'Thread not found.',
+        sessUser: req.session.user
       };
       res.render('error.html', templateVars);
       return;
