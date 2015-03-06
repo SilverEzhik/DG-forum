@@ -168,7 +168,7 @@ module.exports = function(app) {
       return;
     }
 
-    if (!validator.isLength(message, 1, 85)) {
+    if (!validator.isLength(message, 1, 60000)) {
       result = {
         code    : 400,
         message : 'Message body cannot be more than 60,000 characters.'
@@ -230,7 +230,7 @@ module.exports = function(app) {
       return;
     }
 
-    if (!validator.isLength(message, 1, 85)) {
+    if (!validator.isLength(message, 1, 60000)) {
       result = {
         code    : 400,
         message : 'Message body cannot be more than 60,000 characters.'
