@@ -68,10 +68,14 @@
 		<div class="user-profile">
 			<div class="avatar{% if user.flags.online %}-online{% endif %}" style="background-image: url(../avatars/{{ user.profile.avatar }});"></div>
 
-			<div style="text-align:center;"><a href="../user/{{ user.username }}" class="user-title{{ user.title }}">{{ user.username }}</a></div>
+			<div style="text-align:center; line-height:14px;"><a href="../user/{{ user.username }}" class="user-title{{ user.title }}">{{ user.username }}</a></div>
+
+			{% if user.profile.fName %}
+		    <div class="info-val" style="text-align:center; line-height:14px; font-style:italic;">{{ user.profile.fName }} {{ user.profile.lName }}</div>
+		    {% endif %}
 
 			{% if user.title != 0%}
-  			<div class="banner banner{{ user.title }}" style="margin:0 auto; float:none;">
+  			<div class="banner banner{{ user.title }}" style="margin:0 auto; float:none; margin-top:.5em; margin-bottom:1em;">
   			{% if user.title == 1%}Member
   			{% elif user.title == 2%}Officer{% endif %}
   			</div>
@@ -81,13 +85,9 @@
 			<div class="banner banner-forumDev" style="margin:0 auto; float:none;">Forum Dev</div>
 	        {% endif %}
 
-	        <div style="text-align:center; font-size:.9em;">Last Active: {{ convertToDate(user.lastActivity) }}</div>
+	        <div style="text-align:center; font-size:.9em; line-height:14px;">Last Active:<br>{{ convertToDate(user.lastActivity) }}</div>
 
 	        <div style="margin-top:1em;">
-	        	{% if user.profile.fName %}
-		        <div class="info">Name</div>
-		        <div class="info-val">{{ user.profile.fName }} {{ user.profile.lName }}</div>
-		        {% endif %}
 
 		        {% if user.profile.website %}
 		        <div class="info">Website</div>
