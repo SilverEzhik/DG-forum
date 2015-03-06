@@ -281,7 +281,7 @@ module.exports = function(app) {
     var username = validator.toString(validator.escape(req.params.userid));
 
     //use the User model and get the User
-    User.get(username, function(err, doc) {
+    User.getProfile(username, function(err, doc) {
 
       var templateVars;
       //not sure if this is clean
@@ -354,7 +354,7 @@ module.exports = function(app) {
 
         res.render('membersList.html', templateVars);
       }
-      
+
     });
 
   };

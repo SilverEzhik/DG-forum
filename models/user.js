@@ -217,7 +217,7 @@ var getUser = function(usernameOrId, callback) {
   }
 
   UserMongoModel.findOne(query,
-  '_id username usernameLower title flags profile.avatar', function(err, user) {
+  '_id username usernameLower title flags profile.avatar profile.fName profile.lName', function(err, user) {
 
     var errorResult;
 
@@ -267,10 +267,10 @@ var getUserProfile = function(username, callback) {
 
 var getAllMembers = function(callback) {
 
-  var memberNum = 1; 
+  var memberNum = 1;
   var officerNum = 2;
   var selectedFields = 'username usernameLower title forumDev retired lastActivity profile.avatar profile.githubName';
-  
+
   //.find({}) returns a query object, which can do more specific queries like
   //the or function, looking for either memberNum or officerNum
   //exec() sends docs to a callback
