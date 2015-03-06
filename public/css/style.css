@@ -822,5 +822,7 @@ textarea{
 	margin: 2em;
 }
 
-
+.modal-backdrop{
+	position: fixed;
+}
 
